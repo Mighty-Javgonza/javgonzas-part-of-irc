@@ -1,0 +1,21 @@
+Recibir string
+
+Separarlo en "sentencias"
+Separarlo en unidades únicas
+
+Partes del mensaje:
+	Preffix:
+		- Opcional V
+		- Indicado por dos puntos ':' después y es el primer caracter del mensaje. V
+		- Sin espacios entre ':' y el mensaje. 
+
+	Command:
+
+	Command parameters:
+		- Max 15
+
+Preffix command y paramaters separados por espacio ' '
+
+¿Multiples espacios? X
+
+Segmentar el prefijo (Opcional porque no se va a trabajar con prefijos)

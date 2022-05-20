@@ -1,0 +1,26 @@
+Servers:
+	Reciben conexiones de clientes y servers
+	Los servers se conectan en árbol (no hay loops)
+	
+
+Clientes:
+	se conectan a los servers
+	2 tipos, usuarios y servicios
+	
+	Clientes usuario:
+		tienen una interfaz
+
+	Clientes servicio:
+		están automatizados
+		pueden acceder a datos privados del server
+		tienen menos acceso a los chats
+		Bots básicamente
+
+Servicios del protocolo IRC:
+	Client Locator:
+		los usuarios se conectan con una label
+		la label se usa para localizar al usuario en la red
+		los servers deben conocer todas las labels
+
+	Message Relaying:
+		los usuarios hablan a través de los servers
