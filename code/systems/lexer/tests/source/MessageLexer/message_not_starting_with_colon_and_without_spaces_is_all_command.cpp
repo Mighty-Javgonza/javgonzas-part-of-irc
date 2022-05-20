@@ -3,7 +3,7 @@
 int main()
 {
 	MessageLexer	lexer;
-	Message			result;
+	LexedMessage	result;
 
 	result = lexer.lex("dododo");
 	if (result.getCommand() != "dododo")

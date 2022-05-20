@@ -2,9 +2,9 @@
 
 int main()
 {
-	Message message;
+	LexedMessage message;
 
-	if (message.preffix != "")
+	if (message.checkHasPreffix() != false)
 		return (-1);
 	return (0);
 }

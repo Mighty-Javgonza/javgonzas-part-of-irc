@@ -4,7 +4,7 @@ int main()
 {
 	MessageLexer	lexer;
 	std::string		str;
-	Message			result;
+	LexedMessage	result;
 
 	try {
 		result = lexer.lex("12a");

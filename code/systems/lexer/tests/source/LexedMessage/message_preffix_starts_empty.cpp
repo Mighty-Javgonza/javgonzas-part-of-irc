@@ -2,9 +2,9 @@
 
 int main()
 {
-	Message message;
+	LexedMessage message;
 
-	if (message.parameters.size() != 0)
+	if (message.preffix != "")
 		return (-1);
 	return (0);
 }

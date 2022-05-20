@@ -3,7 +3,7 @@
 int main()
 {
 	MessageLexer	lexer;
-	Message			result;
+	LexedMessage	result;
 
 	result = lexer.lex(":zzz aaa bbb ccc");
 	if (result.parameters[1] != "ccc")

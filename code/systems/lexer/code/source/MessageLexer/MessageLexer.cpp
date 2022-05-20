@@ -10,7 +10,7 @@ MessageLexer::~MessageLexer()
 
 }
 
-Message	MessageLexer::lex(std::string str)
+LexedMessage	MessageLexer::lex(std::string str)
 {
 	setAnalysisString(str);
 	setMessagePreffixIfItExists();
@@ -51,7 +51,7 @@ std::string	MessageLexer::getNextWord()
 
 void	MessageLexer::setAnalysisString(std::string str)
 {
-	Message	blank_message;
+	LexedMessage	blank_message;
 
 	analysis_string = str;
 	analyzed_chars = 0;

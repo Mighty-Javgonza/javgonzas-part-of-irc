@@ -3,7 +3,7 @@
 int main()
 {
 	MessageLexer	lexer;
-	Message			result;
+	LexedMessage	result;
 
 	lexer.setAnalysisString("");
 	lexer.setMessagePreffixIfItExists();

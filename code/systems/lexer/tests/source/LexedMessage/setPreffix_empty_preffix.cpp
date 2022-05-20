@@ -2,12 +2,12 @@
 
 int main()
 {
-	Message message;
+	LexedMessage message;
 
-	message.setPreffix("aaa");
+	message.setPreffix("");
 	if (message.checkHasPreffix() != true)
 		return (-1);
-	if (message.preffix != "aaa")
+	if (message.preffix != "")
 		return (-1);
 	return (0);
 }

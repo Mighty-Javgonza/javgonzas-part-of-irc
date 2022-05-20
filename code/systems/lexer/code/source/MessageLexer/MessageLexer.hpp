@@ -5,7 +5,7 @@ class MessageLexer;
 
 # include <iostream>
 
-# include "../Message/Message.hpp"
+# include "../LexedMessage/LexedMessage.hpp"
 
 class MessageLexer {
 
@@ -13,7 +13,7 @@ public:
 	MessageLexer();
 	~MessageLexer();
 
-	Message	lex(std::string);
+	LexedMessage	lex(std::string);
 
 private:
 	void	setAnalysisString(std::string str);
@@ -27,7 +27,7 @@ private:
 	void	validateTrailingString(std::string str);
 
 	std::string	analysis_string;
-	Message		in_progress_message;
+	LexedMessage		in_progress_message;
 
 
 

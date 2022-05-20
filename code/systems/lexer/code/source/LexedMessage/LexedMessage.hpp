@@ -1,4 +1,4 @@
-class Message;
+class LexedMessage;
 
 #ifndef MESSAGE_HPP
 # define MESSAGE_HPP
@@ -6,11 +6,11 @@ class Message;
 #include <iostream>
 #include <vector>
 
-class Message {
+class LexedMessage {
 
 public:
-	Message();
-	~Message();
+	LexedMessage();
+	~LexedMessage();
 
 	bool	checkHasPreffix();
 	bool	checkHasCommand();

@@ -2,7 +2,7 @@
 
 int main()
 {
-	Message message;
+	LexedMessage message;
 
 	if (message.checkHasCommand() != false)
 		return (-1);
