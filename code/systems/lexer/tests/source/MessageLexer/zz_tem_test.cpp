@@ -3,14 +3,9 @@
 int main()
 {
 	MessageLexer	lexer;
-	std::string		str;
+	LexedMessage	msg;
 
-	str = "aaa : bbbb";
-	str[7] = '\0';
-	try {
-		lexer.lex(str);
-	} catch (MessageLexer::TrailingContainsInvalidCharacterException) {
-		return (0);
-	}
-	return (-1);
+	msg = lexer.lex(":hola USER abc def ghi :sisisiisiiisisis");
+	msg.printDebug();
+	return (0);
 }

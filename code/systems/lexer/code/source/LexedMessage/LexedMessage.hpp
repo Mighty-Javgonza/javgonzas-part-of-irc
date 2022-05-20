@@ -25,6 +25,8 @@ public:
 	void	setTrailing(std::string str);
 	std::vector<std::string>	parameters;
 
+	void	printDebug();
+
 private:
 	std::string preffix;
 	bool hasPreffix;
