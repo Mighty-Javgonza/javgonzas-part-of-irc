@@ -29,6 +29,9 @@ private:
 	std::string	analysis_string;
 	Message		in_progress_message;
 
+
+
+// VVV All exceptions from here  VVV
 public:
 	class MissingCommandException : public std::exception {
 		public:
