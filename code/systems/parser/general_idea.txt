@@ -1,0 +1,8 @@
+LexedMessage -> ParsedMessage
+
+Por cada comando una clase correspondiente a ese comando.
+
+Todas implementan una interfaz para saber que tipo de comando es. Y después poder ejecutarlos directamente.
+
+
+Si nos pasan demasiados parametros se ignoran.

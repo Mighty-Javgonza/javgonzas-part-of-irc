@@ -1,0 +1,70 @@
+Parseo común: (1/17)
+	target
+	msgtarget
+	msgto
+	channel
+	servername
+	host
+	hostname
+	shortname
+	hostaddr
+	ip4addr
+	ip6addr
+	nickname V
+	targetmask
+	chanstring
+	channelid
+	user
+	key
+
+Wildcards: 
+	??? (Se puede dejar para el ejecutor de comandos. Se puede crear un matcheador de wildcards)
+
+Parseo específico:
+	Connection: (1/8)
+		PASS V
+		NICK
+		USER
+		OPER
+		MODE
+		SERVICE
+		QUIT
+		SQUIT
+
+	Channels: (0/8)
+		JOIN
+		PART
+		MODE
+		TOPIC
+		NAMES
+		LIST
+		INVITE
+		KICK
+
+	Private messages: (0/2)
+		PRIVMSG
+		NOTICE
+
+	Server queries: (0/11)
+		MOTD
+		LUSERS
+		VERSION
+		STATS
+		LINKS
+		TIME
+		CONNECT
+		TRACE
+		ADMIN
+		INFO
+		SERVLIST
+		SQUERY
+
+	User queries: (0/7)
+		WHO
+		WHOIS
+		WHOWAS
+		KILL
+		PING
+		PONG
+		ERROR
+

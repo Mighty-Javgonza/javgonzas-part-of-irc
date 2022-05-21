@@ -78,14 +78,14 @@ public:
 	class ParameterContainsInvalidCharacterException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: A parameter contains an invalid character. Invalid characters are: 'NULL', 'CR' and 'LF'");
+			return ("ERROR: A parameter contains an invalid character. Invalid characters are: 'NULL', 'CR' and 'LF'\n");
 		}
 	} parameterContainsInvalidCharacterException;
 
 	class TrailingContainsInvalidCharacterException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: Trailing contains an invalid character. Invalid characters are: 'NULL', 'CR' and 'LF'");
+			return ("ERROR: Trailing contains an invalid character. Invalid characters are: 'NULL', 'CR' and 'LF'\n");
 		}
 	} trailingContainsInvalidCharacterException;
 };
