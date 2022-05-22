@@ -6,13 +6,13 @@ int main()
 	MessageConnectionModeParser	parser;
 
 	parser.lexedMessage.parameters.push_back("Antonio");
-	parser.lexedMessage.parameters.push_back("-iw+iw");
+	parser.lexedMessage.parameters.push_back("+i");
 	parser.parse_specific_part();
 	int ign = ParsedMessageConnectionMode::IGNORE_MODE;
 	int add = ParsedMessageConnectionMode::ADD_MODE;
 	if (parser.specific_message->mode_i != add)
 		return (-1);
-	if (parser.specific_message->mode_w != add)
+	if (parser.specific_message->mode_w != ign)
 		return (-1);
 	if (parser.specific_message->mode_r != ign)
 		return (-1);

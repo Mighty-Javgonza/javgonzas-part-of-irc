@@ -22,9 +22,19 @@ void	MessageParameterValidator::validate_nickname(std::string str)
 			throw (erroneousNicknameException);
 }
 
+void	MessageParameterValidator::validate_user(std::string str)
+{
+	if (str.length() < 1 || str.length() >= 10)
+		throw (erroneousUserStringException);
+	for (size_t i = 0; i < str.length(); i++)
+		if (str[i] == '\0' || str[i] == '\r' || str[i] == '\n' || str[i] == ' ' || str[i] == '@')
+			throw (erroneousUserStringException);
+}
+
 bool	MessageParameterValidator::is_special_char(char c)
 {
 	return ((c >= 0x5b && c <= 0x60) || (c >= 0x7B && c <= 0x7D));
 }
 
 MessageParameterValidator::ErroneousNicknameException MessageParameterValidator::erroneousNicknameException;
+MessageParameterValidator::ErroneousUserStringException MessageParameterValidator::erroneousUserStringException;

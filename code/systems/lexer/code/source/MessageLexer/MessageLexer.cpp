@@ -88,6 +88,7 @@ void	MessageLexer::putRestOfAnalysisStringInTrailing()
 	trailing_chars = analysis_string.substr(analyzed_chars, analysis_string.size() - analyzed_chars);
 	validateTrailingString(trailing_chars);
 	in_progress_message.setTrailing(trailing_chars);
+	in_progress_message.parameters.push_back(trailing_chars);
 }
 
 void	MessageLexer::validateCommandString(std::string str)

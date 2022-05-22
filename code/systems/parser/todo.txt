@@ -1,4 +1,4 @@
-Parseo común: (1/17)
+Parseo común: (2/17)
 	target
 	msgtarget
 	msgto
@@ -14,22 +14,22 @@ Parseo común: (1/17)
 	targetmask
 	chanstring
 	channelid
-	user
+	user V
 	key
 
 Wildcards: 
 	??? (Se puede dejar para el ejecutor de comandos. Se puede crear un matcheador de wildcards)
 
 Parseo específico:
-	Connection: (1/8)
+	Connection: (6/6/8)
 		PASS V
-		NICK
-		USER
-		OPER
-		MODE
-		SERVICE
-		QUIT
-		SQUIT
+		NICK V
+		USER V
+		OPER V
+		MODE V (Needs to recognise unknown flags)
+		SERVICE -> registers services (bonus)
+		QUIT V
+		SQUIT -> server quit (Not required)
 
 	Channels: (0/8)
 		JOIN

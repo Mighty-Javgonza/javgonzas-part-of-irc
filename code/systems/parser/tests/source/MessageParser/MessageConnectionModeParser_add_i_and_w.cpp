@@ -6,7 +6,7 @@ int main()
 	MessageConnectionModeParser	parser;
 
 	parser.lexedMessage.parameters.push_back("Antonio");
-	parser.lexedMessage.parameters.push_back("-iw+iw");
+	parser.lexedMessage.parameters.push_back("+iw");
 	parser.parse_specific_part();
 	int ign = ParsedMessageConnectionMode::IGNORE_MODE;
 	int add = ParsedMessageConnectionMode::ADD_MODE;
