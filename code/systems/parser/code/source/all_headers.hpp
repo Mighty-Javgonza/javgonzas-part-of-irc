@@ -18,5 +18,6 @@
 # include "MessageParser/ConnectionMessages/MessageConnectionUserParser.hpp"
 # include "ParsedMessage/ConnectionMessages/ParsedMessageConnectionMode.hpp"
 # include "MessageParser/ConnectionMessages/MessageConnectionModeParser.hpp"
+# include "MessageParser/MessageParameterCommonParser.hpp"
 
 #endif

@@ -1,4 +1,4 @@
-Parseo común: (2/17)
+Parseo común: (8/17)
 	target
 	msgtarget
 	msgto
@@ -6,14 +6,14 @@ Parseo común: (2/17)
 	servername
 	host
 	hostname
-	shortname
-	hostaddr
-	ip4addr
-	ip6addr
+	shortname V
+	hostaddr V
+	ip4addr V
+	ip6addr V
 	nickname V
 	targetmask
-	chanstring
-	channelid
+	chanstring V
+	channelid V
 	user V
 	key
 
