@@ -4,6 +4,7 @@ class MessageParameterCommonParser;
 # define MESSAGEPARAMETERCOMMONPARSER_HPP
 
 #include <iostream>
+#include <vector>
 
 #include "MessageParameterValidator.hpp"
 
@@ -18,12 +19,22 @@ typedef struct s_channel_parameter
 typedef struct s_msgto_parameter
 {
 	bool				is_channel; //If not channel then it is a user
-	channel_parameter	channel;
+	bool				is_user;
+	bool				is_nickname;
+	bool				is_targetmask;
 	bool				has_host;
+	bool				has_server;
 	std::string	user;
 	std::string	host;
 	std::string	server;
+	std::string	nickname;
+	channel_parameter	channel;
 }				msgto_parameter;
+
+typedef struct s_msgtarget_parameter
+{
+	std::vector<msgto_parameter> targets;
+}				msgtarget_parameter;
 
 class MessageParameterCommonParser {
 
@@ -33,8 +44,10 @@ public:
 
 	static channel_parameter	parse_channel(std::string str);
 	static msgto_parameter		parse_msgto(std::string str);
+	static msgtarget_parameter	parse_msgtarget(std::string str);
 private:
 	static void	parse_channel_id_part(std::string str, channel_parameter &channel);
+	static void	parse_msgto_without_servername(std::string str, msgto_parameter &mgsto);
 };
 
 #endif

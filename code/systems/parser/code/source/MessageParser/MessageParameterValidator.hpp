@@ -95,6 +95,13 @@ public:
 			return ("ERROR: The msgto provided does not follow the naming rules\n");
 		}
 	} erroneousMsgtoException;
+
+	static class ErroneousMsgtargetException : public std::exception {
+		public:
+			virtual const char *what() const throw() {
+			return ("ERROR: The msgtarget provided does not follow the naming rules\n");
+		}
+	} erroneousMsgtargetException;
 };
 
 #endif

@@ -2,16 +2,14 @@
 
 int main()
 {
-	msgto_parameter	msgto;
+	LexedMessage				lexedMessage;
+	MessageConnectionPrivmsg	parser;
 
-	msgto = MessageParameterCommonParser::parse_msgto("pepito@myirc.fm");
-	if (msgto.is_channel != false)
-		return (-1);
-	if (msgto.user != "pepito")
-		return (-1);
-	if (msgto.has_host != false)
-		return (-1);
-	if (msgto.server != "myirc.fm")
-		return (-1);
-	return (0);
+	parser.lexedMessage.parameters.push_back("");
+	try {
+		parser.parse_specific_part();
+	} catch (MessageParser::NeedMoreParamsException) {
+		return (0);
+	}
+	return (-1);
 }

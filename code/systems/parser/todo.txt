@@ -1,11 +1,11 @@
-Parseo común: (8/17)
+Parseo común: (14/17)
 	target
-	msgtarget
-	msgto
-	channel
-	servername
-	host
-	hostname
+	msgtarget V
+	msgto V -> (falta targetmask)
+	channel V
+	servername V
+	host V
+	hostname V
 	shortname V
 	hostaddr V
 	ip4addr V
@@ -42,7 +42,7 @@ Parseo específico:
 		KICK
 
 	Private messages: (0/2)
-		PRIVMSG
+		PRIVMSG .
 		NOTICE
 
 	Server queries: (0/11)
