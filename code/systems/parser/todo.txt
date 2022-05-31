@@ -31,19 +31,19 @@ Parseo específico:
 		QUIT V
 		SQUIT -> server quit (Not required)
 
-	Channels: (0/8)
+	Channels: (1/8)
 		JOIN
 		PART
 		MODE
-		TOPIC
+		TOPIC V
 		NAMES
 		LIST
 		INVITE
 		KICK
 
-	Private messages: (0/2)
-		PRIVMSG .
-		NOTICE
+	Private messages: (2/2)
+		PRIVMSG V
+		NOTICE V
 
 	Server queries: (0/11)
 		MOTD

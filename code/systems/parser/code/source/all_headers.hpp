@@ -19,5 +19,11 @@
 # include "ParsedMessage/ConnectionMessages/ParsedMessageConnectionMode.hpp"
 # include "MessageParser/ConnectionMessages/MessageConnectionModeParser.hpp"
 # include "MessageParser/MessageParameterCommonParser.hpp"
+# include "ParsedMessage/PrivateMessages/ParsedMessagePrivateMessagesPrivmsg.hpp"
+# include "MessageParser/PrivateMessages/MessagePrivateMessagesPrivmsgParser.hpp"
+# include "MessageParser/PrivateMessages/MessagePrivateMessagesNoticeParser.hpp"
+# include "ParsedMessage/PrivateMessages/ParsedMessagePrivateMessagesNotice.hpp"
+# include "ParsedMessage/ChannelMessages/ParsedMessageChannelTopic.hpp"
+# include "MessageParser/ChannelMessages/MessageChannelTopicParser.hpp"
 
 #endif
