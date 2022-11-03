@@ -6,7 +6,7 @@ class ParsedMessageChannelPart;
 # include "../../MessageParser/MessageParameterCommonParser.hpp"
 # include "../ParsedMessage.hpp"
 
-class ParsedMessageChannelPart : public ParsedMessage{
+class ParsedMessageChannelPart : public ParsedMessage {
 
 public:
 	ParsedMessageChannelPart();

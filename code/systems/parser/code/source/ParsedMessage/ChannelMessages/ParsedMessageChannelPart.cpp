@@ -3,7 +3,7 @@
 
 ParsedMessageChannelPart::ParsedMessageChannelPart()
 {
-
+	has_part_message = false;
 }
 
 ParsedMessageChannelPart::~ParsedMessageChannelPart()
