@@ -36,15 +36,21 @@ typedef struct s_msgtarget_parameter
 	std::vector<msgto_parameter> targets;
 }				msgtarget_parameter;
 
+typedef struct s_channel_list_parameter
+{
+	std::vector<channel_parameter> channels;
+}				channel_list_parameter;
+
 class MessageParameterCommonParser {
 
 public:
 	MessageParameterCommonParser();
 	~MessageParameterCommonParser();
 
-	static channel_parameter	parse_channel(std::string str);
-	static msgto_parameter		parse_msgto(std::string str);
-	static msgtarget_parameter	parse_msgtarget(std::string str);
+	static channel_parameter		parse_channel(std::string str);
+	static channel_list_parameter	parse_channel_list(std::string str);
+	static msgto_parameter			parse_msgto(std::string str);
+	static msgtarget_parameter		parse_msgtarget(std::string str);
 private:
 	static void	parse_channel_id_part(std::string str, channel_parameter &channel);
 	static void	parse_msgto_without_servername(std::string str, msgto_parameter &mgsto);

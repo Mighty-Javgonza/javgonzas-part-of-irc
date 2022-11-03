@@ -2,7 +2,7 @@
 
 int main()
 {
-	ParsedMessageChannelPart	result;
+	ParsedMessageChannelNames	result;
 	ParsedMessage	msg;
 
 	msg = result;

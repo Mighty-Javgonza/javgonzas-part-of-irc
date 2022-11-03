@@ -6,6 +6,10 @@ class MessageParserTestWrapper : public MessageParser{
 	void	create_specific_message() {};
 };
 
+class ParsedMessageTestWrapper : public ParsedMessage {
+
+};
+
 int main()
 {
 	LexedMessage				lexedMessage;
@@ -14,6 +18,7 @@ int main()
 
 	lexedMessage.preffix = "user@host";
 	parser.lexedMessage = lexedMessage;
+	parser.in_progress_message = new ParsedMessageTestWrapper();
 	parser.parse_common_part();
 	result = parser.in_progress_message;
 	if (result->preffix != "user@host")

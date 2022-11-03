@@ -31,12 +31,12 @@ Parseo específico:
 		QUIT V
 		SQUIT -> server quit (Not required)
 
-	Channels: (1/8)
+	Channels: (2/8)
 		JOIN
 		PART
 		MODE
 		TOPIC V
-		NAMES
+		NAMES V
 		LIST
 		INVITE
 		KICK

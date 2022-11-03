@@ -25,5 +25,9 @@
 # include "ParsedMessage/PrivateMessages/ParsedMessagePrivateMessagesNotice.hpp"
 # include "ParsedMessage/ChannelMessages/ParsedMessageChannelTopic.hpp"
 # include "MessageParser/ChannelMessages/MessageChannelTopicParser.hpp"
+# include "ParsedMessage/ChannelMessages/ParsedMessageChannelNames.hpp"
+# include "MessageParser/ChannelMessages/MessageChannelNamesParser.hpp"
+# include "ParsedMessage/ChannelMessages/ParsedMessageChannelPart.hpp"
+# include "MessageParser/ChannelMessages/MessageChannelPartParser.hpp"
 
 #endif

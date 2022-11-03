@@ -1,6 +1,6 @@
 #! bin/bash
 
-make -j8 retests
+make retests
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'

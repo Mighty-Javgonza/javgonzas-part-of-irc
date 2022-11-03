@@ -1,4 +1,5 @@
 #include "MessageParameterCommonParser.hpp"
+#include "../../../../irc_lib_javgonza/code/source/all_headers.hpp"
 
 
 MessageParameterCommonParser::MessageParameterCommonParser()
@@ -136,7 +137,6 @@ void MessageParameterCommonParser::parse_msgto_without_servername(std::string st
 msgtarget_parameter MessageParameterCommonParser::parse_msgtarget(std::string str)
 {
 	msgtarget_parameter msgtarget;
-	std::string	current_msgto;
 	size_t	next_msgto_marker;
 	size_t	temp;
 	size_t	analyzed_chars;
@@ -159,4 +159,22 @@ msgtarget_parameter MessageParameterCommonParser::parse_msgtarget(std::string st
 		next_msgto_marker = temp + 1;
 		msgtarget.targets.push_back(MessageParameterCommonParser::parse_msgto(current_msgto));
 	}
+}
+
+channel_list_parameter MessageParameterCommonParser::parse_channel_list(std::string str)
+{
+	typedef std::vector<std::vector<char> >	split_container;
+
+	channel_list_parameter chanlist;
+	split_container	split_str;
+	split_container::iterator	it;
+
+	split_str = generic_split(str, ',');
+	std::string	channel_string(split_str[0].begin(), split_str[0].end());
+	for (it = split_str.begin(); it != split_str.end(); ++it)
+	{
+		std::string	channel_string((*it).begin(), (*it).end());
+		chanlist.channels.push_back(MessageParameterCommonParser::parse_channel(channel_string));
+	}
+	return (chanlist);
 }
