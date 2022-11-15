@@ -31,40 +31,40 @@ Parseo específico:
 		QUIT V
 		SQUIT -> server quit (Not required)
 
-	Channels: (2/8)
-		JOIN
-		PART
+	Channels: (3/8)
+		JOIN .
+		PART V
 		MODE
 		TOPIC V
 		NAMES V
-		LIST
-		INVITE
-		KICK
+		LIST .
+		INVITE .
+		KICK .
 
 	Private messages: (2/2)
 		PRIVMSG V
 		NOTICE V
 
 	Server queries: (0/11)
-		MOTD
-		LUSERS
-		VERSION
-		STATS
-		LINKS
-		TIME
-		CONNECT
-		TRACE
-		ADMIN
-		INFO
-		SERVLIST
-		SQUERY
+		MOTD .
+		LUSERS ->
+		VERSION .
+		STATS .
+		LINKS ->
+		TIME .
+		CONNECT ->
+		TRACE ->
+		ADMIN .
+		INFO .
+		SERVLIST ->
+		SQUERY .
 
 	User queries: (0/7)
-		WHO
-		WHOIS
-		WHOWAS
-		KILL
-		PING
-		PONG
-		ERROR
+		WHO .
+		WHOIS .
+		WHOWAS .
+		KILL .
+		PING .
+		PONG .
+		ERROR .
 

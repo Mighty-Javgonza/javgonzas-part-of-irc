@@ -1,0 +1,2 @@
+Unregistered user manager:
+Guarda los datos de conexion de un usuario y le prohíbe entrar al server hasta que complete el proceso de 2 comandos.
