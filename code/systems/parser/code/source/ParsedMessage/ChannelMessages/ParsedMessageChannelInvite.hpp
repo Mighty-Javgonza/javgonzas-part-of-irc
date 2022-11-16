@@ -13,7 +13,9 @@ public:
 	ParsedMessageChannelInvite();
 	~ParsedMessageChannelInvite();
 
-private:
+	std::string	nickname;
+	channel_parameter	channel;
+
 
 };
 

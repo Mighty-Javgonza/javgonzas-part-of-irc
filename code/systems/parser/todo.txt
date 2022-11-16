@@ -37,8 +37,8 @@ Parseo específico:
 		MODE
 		TOPIC V
 		NAMES V
-		LIST .
-		INVITE .
+		LIST ~ -> Needs to validate target
+		INVITE . TODO validate nick and check Abort Trap
 		KICK .
 
 	Private messages: (2/2)

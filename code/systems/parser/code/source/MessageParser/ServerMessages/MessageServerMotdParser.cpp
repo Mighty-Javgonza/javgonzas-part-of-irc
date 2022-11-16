@@ -11,35 +11,13 @@ MessageServerMotdParser::~MessageServerMotdParser()
 
 }
 
-MessageServerMotdParser::MessageServerMotdParser()
+void	MessageServerMotdParser::create_specific_message()
 {
-
-}
-
-MessageServerMotdParser::~MessageServerMotdParser()
-{
-
+	specific_message = new ParsedMessageServerMotd();
+	in_progress_message = specific_message;
 }
 
 void	MessageServerMotdParser::parse_specific_part()
 {
 
-}
-
-void	MessageServerMotdParser::create_specific_message()
-{
-	specific_message = new ParsedMessageServerMotd();
-	in_progress_message = specific_message;
-}#include "MessageServerMotdParser.hpp"
-
-
-void	MessageServerMotdParser::parse_specific_part()
-{
-
-}
-
-void	MessageServerMotdParser::create_specific_message()
-{
-	specific_message = new ParsedMessageServerMotd();
-	in_progress_message = specific_message;
 }

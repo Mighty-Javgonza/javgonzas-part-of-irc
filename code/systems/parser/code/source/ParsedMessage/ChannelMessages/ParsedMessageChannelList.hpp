@@ -13,8 +13,11 @@ public:
 	ParsedMessageChannelList();
 	~ParsedMessageChannelList();
 
-private:
+	bool	has_channels;
+	channel_list_parameter	channel_list;
 
+	bool		has_target;
+	std::string	target;
 };
 
 #endif
