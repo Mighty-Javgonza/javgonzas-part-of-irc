@@ -13,8 +13,8 @@ public:
 	ParsedMessageServerMotd();
 	~ParsedMessageServerMotd();
 
-private:
-
+	bool				has_target;
+	target_parameter	target;
 };
 
 #endif

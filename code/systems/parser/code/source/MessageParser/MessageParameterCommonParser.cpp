@@ -178,3 +178,65 @@ channel_list_parameter MessageParameterCommonParser::parse_channel_list(std::str
 	}
 	return (chanlist);
 }
+
+user_list_parameter	MessageParameterCommonParser::parse_user_list(std::string str)
+{
+	typedef std::vector<std::vector<char> >	split_container;
+
+	user_list_parameter userlist;
+	split_container	split_str;
+	split_container::iterator	it;
+
+	split_str = generic_split(str, ',');
+	std::string	user_string(split_str[0].begin(), split_str[0].end());
+	for (it = split_str.begin(); it != split_str.end(); ++it)
+	{
+		std::string	user_string((*it).begin(), (*it).end());
+		MessageParameterValidator::validate_user(user_string);
+		userlist.users.push_back(user_string);
+	}
+	return (userlist);
+}
+
+key_list_parameter	MessageParameterCommonParser::parse_key_list(std::string str)
+{
+	typedef std::vector<std::vector<char> >	split_container;
+
+	key_list_parameter keylist;
+	split_container	split_str;
+	split_container::iterator	it;
+
+	split_str = generic_split(str, ',');
+	std::string	user_string(split_str[0].begin(), split_str[0].end());
+	for (it = split_str.begin(); it != split_str.end(); ++it)
+	{
+		std::string	key_string((*it).begin(), (*it).end());
+		MessageParameterValidator::validate_key(key_string);
+		keylist.keys.push_back(key_string);
+	}
+	return (keylist);
+}
+
+target_parameter	MessageParameterCommonParser::parse_target(std::string str)
+{
+	target_parameter	target;
+
+	try {
+		MessageParameterValidator::validate_nickname(str);
+		target.is_nickname = true;
+		target.is_servername = false;
+		target.nickname = str;
+		return (target);
+	} catch (MessageParameterValidator::ErroneousNicknameException &e) {
+		try {
+			MessageParameterValidator::validate_hostname(str);
+			target.is_servername = true;
+			target.is_nickname = false;
+			target.servername = str;
+			return (target);
+		} catch (MessageParameterValidator::ErroneousHostnameException &e2) {
+			throw (MessageParameterValidator::erroneousTargetException);
+		}
+	}
+	return (target);
+}

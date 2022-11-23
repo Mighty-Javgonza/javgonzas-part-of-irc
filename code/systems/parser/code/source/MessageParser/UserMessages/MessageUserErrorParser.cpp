@@ -13,7 +13,9 @@ MessageUserErrorParser::~MessageUserErrorParser()
 
 void	MessageUserErrorParser::parse_specific_part()
 {
-
+	if (lexedMessage.parameters.size() == 0)
+		throw (MessageParser::needMoreParamsException);
+	specific_message->error_message = lexedMessage.parameters[0];
 }
 
 void	MessageUserErrorParser::create_specific_message()

@@ -31,6 +31,15 @@ typedef struct s_msgto_parameter
 	channel_parameter	channel;
 }				msgto_parameter;
 
+typedef struct s_target_parameter
+{
+	bool	is_nickname;
+	bool	is_servername;
+
+	std::string	nickname;
+	std::string	servername;
+}				target_parameter;
+
 typedef struct s_msgtarget_parameter
 {
 	std::vector<msgto_parameter> targets;
@@ -41,6 +50,16 @@ typedef struct s_channel_list_parameter
 	std::vector<channel_parameter> channels;
 }				channel_list_parameter;
 
+typedef struct s_user_list_parameter
+{
+	std::vector<std::string> users;
+}				user_list_parameter;
+
+typedef struct s_key_list_parameter
+{
+	std::vector<std::string> keys;
+}				key_list_parameter;
+
 class MessageParameterCommonParser {
 
 public:
@@ -49,8 +68,12 @@ public:
 
 	static channel_parameter		parse_channel(std::string str);
 	static channel_list_parameter	parse_channel_list(std::string str);
+	static user_list_parameter		parse_user_list(std::string str);
+	static key_list_parameter		parse_key_list(std::string str);
 	static msgto_parameter			parse_msgto(std::string str);
 	static msgtarget_parameter		parse_msgtarget(std::string str);
+	static target_parameter			parse_target(std::string str);
+
 private:
 	static void	parse_channel_id_part(std::string str, channel_parameter &channel);
 	static void	parse_msgto_without_servername(std::string str, msgto_parameter &mgsto);

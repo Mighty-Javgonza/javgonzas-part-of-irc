@@ -16,8 +16,6 @@ public:
 	msgtarget_parameter	target;
 	std::string			message;
 
-private:
-
 };
 
 #endif

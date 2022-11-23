@@ -13,7 +13,7 @@ public:
 	ParsedMessageUserError();
 	~ParsedMessageUserError();
 
-private:
+	std::string	error_message;
 
 };
 

@@ -53,6 +53,7 @@
 # include "ParsedMessage/UserMessages/ParsedMessageUserPong.hpp"
 # include "MessageParser/UserMessages/MessageUserErrorParser.hpp"
 # include "ParsedMessage/UserMessages/ParsedMessageUserError.hpp"
+# include "MessageParser/ServerMessages/MessageServerMotdParser.hpp"
 # include "ParsedMessage/ServerMessages/ParsedMessageServerMotd.hpp"
 # include "MessageParser/ServerMessages/MessageServerVersionParser.hpp"
 # include "ParsedMessage/ServerMessages/ParsedMessageServerVersion.hpp"

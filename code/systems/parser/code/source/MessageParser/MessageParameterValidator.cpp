@@ -1,6 +1,5 @@
 #include "MessageParameterValidator.hpp"
 
-
 MessageParameterValidator::MessageParameterValidator()
 {
 
@@ -155,6 +154,15 @@ void	MessageParameterValidator::validate_host(std::string str)
 	}
 }
 
+void	MessageParameterValidator::validate_key(std::string str)
+{
+	if (str.length() == 0 || str.length() > 23)
+		throw (erroneousKeyException);
+	for (std::string::iterator it = str.begin(); it != str.end(); ++it)
+		if (*it == '\x0' || *it == '\x09' || *it == '\x0A' || *it == '\x0B' || *it == '\x20')
+			throw (erroneousKeyException);
+}
+
 bool	MessageParameterValidator::is_shortname(std::string str)
 {
 	if (str.length() < 1 && !std::isalpha(str[0]) && !std::isdigit(str[0]))
@@ -191,3 +199,5 @@ MessageParameterValidator::ErroneousHostnameException MessageParameterValidator:
 MessageParameterValidator::ErroneousHostException MessageParameterValidator::erroneousHostException;
 MessageParameterValidator::ErroneousMsgtoException MessageParameterValidator::erroneousMsgtoException;
 MessageParameterValidator::ErroneousMsgtargetException MessageParameterValidator::erroneousMsgtargetException;
+MessageParameterValidator::ErroneousTargetException MessageParameterValidator::erroneousTargetException;
+MessageParameterValidator::ErroneousKeyException MessageParameterValidator::erroneousKeyException;

@@ -13,6 +13,9 @@ public:
 	ParsedMessageUserKill();
 	~ParsedMessageUserKill();
 
+	std::string	nickname;
+	std::string	comment;
+
 private:
 
 };

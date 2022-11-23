@@ -12,8 +12,11 @@ class ParsedMessageChannelKick : public ParsedMessage {
 public:
 	ParsedMessageChannelKick();
 	~ParsedMessageChannelKick();
-
-private:
+	
+	channel_list_parameter	channel_list;
+	user_list_parameter	user_list;
+	bool	has_comment;
+	std::string	comment;
 
 };
 
