@@ -207,7 +207,6 @@ key_list_parameter	MessageParameterCommonParser::parse_key_list(std::string str)
 	split_container::iterator	it;
 
 	split_str = generic_split(str, ',');
-	std::string	user_string(split_str[0].begin(), split_str[0].end());
 	for (it = split_str.begin(); it != split_str.end(); ++it)
 	{
 		std::string	key_string((*it).begin(), (*it).end());
@@ -215,6 +214,42 @@ key_list_parameter	MessageParameterCommonParser::parse_key_list(std::string str)
 		keylist.keys.push_back(key_string);
 	}
 	return (keylist);
+}
+
+mask_list_parameter	MessageParameterCommonParser::parse_mask_list(std::string str)
+{
+	typedef std::vector<std::vector<char> >	split_container;
+
+	mask_list_parameter masklist;
+	split_container	split_str;
+	split_container::iterator	it;
+
+	split_str = generic_split(str, ',');
+	for (it = split_str.begin(); it != split_str.end(); ++it)
+	{
+		std::string	mask_string((*it).begin(), (*it).end());
+		MessageParameterValidator::validate_mask(mask_string);
+		masklist.masks.push_back(mask_string);
+	}
+	return (masklist);
+}
+
+nickname_list_parameter	MessageParameterCommonParser::parse_nickname_list(std::string str)
+{
+	typedef std::vector<std::vector<char> >	split_container;
+
+	nickname_list_parameter nicklist;
+	split_container	split_str;
+	split_container::iterator	it;
+
+	split_str = generic_split(str, ',');
+	for (it = split_str.begin(); it != split_str.end(); ++it)
+	{
+		std::string	nick_string((*it).begin(), (*it).end());
+		MessageParameterValidator::validate_nickname(nick_string);
+		nicklist.nicknames.push_back(nick_string);
+	}
+	return (nicklist);
 }
 
 target_parameter	MessageParameterCommonParser::parse_target(std::string str)

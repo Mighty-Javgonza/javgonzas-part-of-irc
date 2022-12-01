@@ -60,6 +60,16 @@ typedef struct s_key_list_parameter
 	std::vector<std::string> keys;
 }				key_list_parameter;
 
+typedef struct s_mask_list_parameter
+{
+	std::vector<std::string> masks;
+}				mask_list_parameter;
+
+typedef struct s_nickname_list_parameter
+{
+	std::vector<std::string> nicknames;
+}				nickname_list_parameter;
+
 class MessageParameterCommonParser {
 
 public:
@@ -73,6 +83,8 @@ public:
 	static msgto_parameter			parse_msgto(std::string str);
 	static msgtarget_parameter		parse_msgtarget(std::string str);
 	static target_parameter			parse_target(std::string str);
+	static mask_list_parameter		parse_mask_list(std::string str);
+	static nickname_list_parameter		parse_nickname_list(std::string str);
 
 private:
 	static void	parse_channel_id_part(std::string str, channel_parameter &channel);

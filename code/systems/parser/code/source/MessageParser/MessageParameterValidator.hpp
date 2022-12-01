@@ -21,6 +21,7 @@ public:
 	static void	validate_hostname(std::string str);
 	static void	validate_host(std::string str);
 	static void	validate_key(std::string str);
+	static void	validate_mask(std::string str);
 	static bool	is_shortname(std::string str);
 	static bool	is_special_char(char c);
 	static bool	is_hexdigit(char c);
@@ -117,6 +118,20 @@ public:
 			return ("ERROR: The key provided does not follow the naming rules\n");
 		}
 	} erroneousKeyException;
+
+	static class ErroneousQueryException : public std::exception {
+		public:
+			virtual const char *what() const throw() {
+			return ("ERROR: The query provided does not follow the naming rules\n");
+		}
+	} erroneousQueryException;
+
+	static class ErroneousMaskException : public std::exception {
+		public:
+			virtual const char *what() const throw() {
+			return ("ERROR: The mask provided does not follow the naming rules\n");
+		}
+	} erroneousMaskException;
 };
 
 #endif

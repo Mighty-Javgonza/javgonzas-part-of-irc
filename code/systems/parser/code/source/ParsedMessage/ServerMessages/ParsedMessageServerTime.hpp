@@ -13,6 +13,9 @@ public:
 	ParsedMessageServerTime();
 	~ParsedMessageServerTime();
 
+	bool	has_target;
+	target_parameter target;
+
 private:
 
 };

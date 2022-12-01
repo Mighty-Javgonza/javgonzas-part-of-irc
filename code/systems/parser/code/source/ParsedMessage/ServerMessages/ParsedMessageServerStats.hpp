@@ -13,7 +13,17 @@ public:
 	ParsedMessageServerStats();
 	~ParsedMessageServerStats();
 
-private:
+	bool	has_query;
+	struct	s_query {
+		int	id;
+		bool	list_server_connections;
+		bool	command_usage_count;
+		bool	list_configured_privileged_users;
+		bool	display_server_time_alive;
+	};
+	struct s_query query;
+	bool				has_target;
+	target_parameter	target;
 
 };
 

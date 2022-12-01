@@ -13,8 +13,8 @@ public:
 	ParsedMessageServerVersion();
 	~ParsedMessageServerVersion();
 
-private:
-
+	bool				has_target;
+	target_parameter	target;
 };
 
 #endif

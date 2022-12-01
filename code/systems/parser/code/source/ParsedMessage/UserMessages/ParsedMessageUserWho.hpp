@@ -13,8 +13,9 @@ public:
 	ParsedMessageUserWho();
 	~ParsedMessageUserWho();
 
-private:
-
+	bool		has_mask;
+	std::string	mask;
+	bool		just_operators;
 };
 
 #endif

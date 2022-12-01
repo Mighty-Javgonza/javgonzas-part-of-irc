@@ -13,8 +13,8 @@ public:
 	ParsedMessageServerAdmin();
 	~ParsedMessageServerAdmin();
 
-private:
-
+	bool 				has_target;
+	target_parameter	target;
 };
 
 #endif

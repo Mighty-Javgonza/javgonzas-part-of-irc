@@ -13,7 +13,8 @@ public:
 	ParsedMessageServerInfo();
 	~ParsedMessageServerInfo();
 
-private:
+	bool 				has_target;
+	target_parameter	target;
 
 };
 

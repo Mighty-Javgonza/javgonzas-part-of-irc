@@ -13,7 +13,9 @@ public:
 	ParsedMessageUserWhois();
 	~ParsedMessageUserWhois();
 
-private:
+	mask_list_parameter	mask_list;
+	bool	has_target;
+	target_parameter	target;
 
 };
 

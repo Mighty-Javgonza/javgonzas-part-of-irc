@@ -13,7 +13,11 @@ public:
 	ParsedMessageUserWhowas();
 	~ParsedMessageUserWhowas();
 
-private:
+	nickname_list_parameter	nicklist;
+	bool	has_count;
+	size_t	count;
+	bool	has_target;
+	target_parameter	target;
 
 };
 

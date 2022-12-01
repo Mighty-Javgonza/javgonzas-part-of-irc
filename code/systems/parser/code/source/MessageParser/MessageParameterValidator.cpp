@@ -163,6 +163,14 @@ void	MessageParameterValidator::validate_key(std::string str)
 			throw (erroneousKeyException);
 }
 
+void	MessageParameterValidator::validate_mask(std::string str)
+{
+	size_t	first_invalid_char = str.find('\0');
+
+	if (first_invalid_char != std::string::npos)
+		throw (erroneousMaskException);
+}
+
 bool	MessageParameterValidator::is_shortname(std::string str)
 {
 	if (str.length() < 1 && !std::isalpha(str[0]) && !std::isdigit(str[0]))
@@ -201,3 +209,5 @@ MessageParameterValidator::ErroneousMsgtoException MessageParameterValidator::er
 MessageParameterValidator::ErroneousMsgtargetException MessageParameterValidator::erroneousMsgtargetException;
 MessageParameterValidator::ErroneousTargetException MessageParameterValidator::erroneousTargetException;
 MessageParameterValidator::ErroneousKeyException MessageParameterValidator::erroneousKeyException;
+MessageParameterValidator::ErroneousQueryException MessageParameterValidator::erroneousQueryException;
+MessageParameterValidator::ErroneousMaskException MessageParameterValidator::erroneousMaskException;

@@ -13,7 +13,9 @@ public:
 	ParsedMessageUserPong();
 	~ParsedMessageUserPong();
 
-private:
+	target_parameter	origin_target;
+	bool				has_destination_target;
+	target_parameter	destination_target;
 
 };
 

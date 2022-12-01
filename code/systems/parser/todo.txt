@@ -1,5 +1,5 @@
-Parseo común: (14/17)
-	target
+Parseo común: (17/17)
+	target V
 	msgtarget V
 	msgto V -> (falta targetmask)
 	channel V
@@ -15,7 +15,9 @@ Parseo común: (14/17)
 	chanstring V
 	channelid V
 	user V
-	key
+	key V
+
+	mask V
 
 Wildcards: 
 	??? (Se puede dejar para el ejecutor de comandos. Se puede crear un matcheador de wildcards)
@@ -31,40 +33,42 @@ Parseo específico:
 		QUIT V
 		SQUIT -> server quit (Not required)
 
-	Channels: (3/8)
-		JOIN .
+	Channels: (7/8)
+		JOIN V
 		PART V
 		MODE
 		TOPIC V
 		NAMES V
-		LIST ~ -> Needs to validate target
-		INVITE . TODO validate nick and check Abort Trap
-		KICK .
+		LIST ~ Needs to validate target
+		INVITE V
+		KICK V
 
 	Private messages: (2/2)
 		PRIVMSG V
 		NOTICE V
 
-	Server queries: (0/11)
-		MOTD .
+	Server queries: (6/6/12)
+		MOTD V
 		LUSERS ->
-		VERSION .
-		STATS .
+		VERSION V
+		STATS V
 		LINKS ->
-		TIME .
+		TIME V
 		CONNECT ->
 		TRACE ->
-		ADMIN .
-		INFO .
+		ADMIN V
+		INFO V
 		SERVLIST ->
-		SQUERY .
+		SQUERY -> query for a service (bonus)
 
-	User queries: (0/7)
-		WHO .
-		WHOIS .
-		WHOWAS .
-		KILL .
-		PING .
-		PONG .
-		ERROR .
+	User queries: (3/3)
+		WHO V
+		WHOIS V
+		WHOWAS V
+
+	Miscellaneous (4/4)
+		KILL V
+		PING V
+		PONG V
+		ERROR V
 
