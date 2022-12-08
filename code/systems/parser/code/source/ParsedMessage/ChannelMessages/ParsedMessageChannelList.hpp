@@ -16,8 +16,8 @@ public:
 	bool	has_channels;
 	channel_list_parameter	channel_list;
 
-	bool		has_target;
-	std::string	target;
+	bool				has_target;
+	target_parameter	target;
 };
 
 #endif

@@ -22,6 +22,7 @@ Parseo común: (17/17)
 Wildcards: 
 	??? (Se puede dejar para el ejecutor de comandos. Se puede crear un matcheador de wildcards)
 
+
 Parseo específico:
 	Connection: (6/6/8)
 		PASS V
@@ -33,13 +34,14 @@ Parseo específico:
 		QUIT V
 		SQUIT -> server quit (Not required)
 
-	Channels: (7/8)
+	Channels: (8/8)
 		JOIN V
 		PART V
-		MODE
+	???? PUEDE HABER UN PROBLEMA AL PARSEAR MENSAJES DE MODO CON DEMASIADOS PARAMETROS????
+		MODE V
 		TOPIC V
 		NAMES V
-		LIST ~ Needs to validate target
+		LIST V
 		INVITE V
 		KICK V
 
