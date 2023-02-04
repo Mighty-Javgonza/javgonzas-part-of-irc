@@ -1,5 +1,5 @@
-#ifndef ALL_HEADERS_HPP
-# define ALL_HEADERS_HPP
+#ifndef ALL_HEADERS_PARSER_HPP
+# define ALL_HEADERS_PARSER_HPP
 
 # include "LexedMessage/LexedMessage.hpp"
 

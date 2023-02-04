@@ -1,5 +1,9 @@
 .DS_Store
 *.swp
 *.o
+*.a
 *.test
 *TestMessages*
+tomartin
+vicmarti
+commands_repo

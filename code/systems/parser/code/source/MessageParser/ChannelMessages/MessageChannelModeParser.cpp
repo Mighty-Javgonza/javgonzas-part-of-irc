@@ -31,7 +31,6 @@ void	MessageChannelModeParser::parse_specific_part()
 			flag_index++;
 		}
 	}
-
 }
 
 void	MessageChannelModeParser::create_specific_message()

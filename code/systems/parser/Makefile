@@ -48,6 +48,9 @@ tests: tests_build_dirs code_build_dirs  $(ALL_CODE_TESTABLE_OBJECTS) $(ALL_TEST
 
 retests: clean_tests tests
 
+parser.a: source_objects
+	ar -crs $@ $(ALL_CODE_BUILD_OBJECTS)
+
 clean_tests:
 	rm -f $(ALL_TESTS_BUILD_EXECUTABLES)
 

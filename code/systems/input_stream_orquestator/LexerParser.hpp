@@ -1,12 +1,12 @@
 #ifndef LEXERPARSER_HPP
 # define LEXERPARSER_HPP
 
-//Clase principal usada para llamar al Lexer y luego al Parser.
+//Clase principal que llama al Lexer y luego al Parser.
 class LexerParserConnector;
 # include "code/source/LexerParserConnector/LexerParserConnector.hpp"
 
-//El resultado de usar parse_string de la clase LexerParser connector
-// es una de las clases que se pueden ver aquí: (o NULL)
+//El resultado de usar parse_string de la clase LexerParserConnector es
+// una de las clases que se pueden ver aquí: (o NULL)
 # include "AllParsedMessages.hpp"
 
 //Algunos ParsedMessage usan algún parámetro custom de entre estos:

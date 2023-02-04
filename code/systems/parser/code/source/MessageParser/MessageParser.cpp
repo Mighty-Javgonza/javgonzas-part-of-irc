@@ -13,7 +13,10 @@ MessageParser::~MessageParser()
 
 ParsedMessage	*MessageParser::parse(LexedMessage lexed)
 {
-	(void)lexed;
+	lexedMessage = lexed;
+	create_specific_message();
+	parse_common_part();
+	parse_specific_part();
 	return (in_progress_message);
 }
 
