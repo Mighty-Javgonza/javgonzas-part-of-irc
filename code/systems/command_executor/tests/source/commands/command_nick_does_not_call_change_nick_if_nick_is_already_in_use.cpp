@@ -4,36 +4,32 @@ class	MockDB : public DatabasableMock {
 public:
 	int	calls_to_user_registered;
 
-	bool	user_is_registered(user *usr) {
+	bool	user_is_registered(UserID *usr) {
 		(void) usr;
 		calls_to_user_registered++;
 		return (true); //Important part of the test
 	}
 
-	bool	nick_is_in_use(std::string *str) {
+	bool	nick_is_in_use(std::string str) {
 		(void) str;
 		calls_to_nick_is_in_use++;
 		return (true); //Important part of the test
 	}
 };
 
-class	MockReplier : public Replierable {
-};
-
-CommandActionAssociator commandActionAssociator;
+replies_generator rp;
 
 int main()
 {
 	MockDB	db;
-	MockReplier	rp;
 	LexerParserConnector parser;
-	user	usr(0, 'a');
+	UserID	user;
 
 	SentMessage msg;
 	msg.message = parser.parse_string("NICK Javgonza");
-	msg.sender = &usr;
+	msg.sender = &user;
 
-	command_nick(&db, &msg, &rp);
+	command_nick((Databasable *)&db, &msg, &rp);
 
 	if (db.calls_to_register_user != 0)
 		return (-1);

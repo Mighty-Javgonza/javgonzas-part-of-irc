@@ -2,28 +2,19 @@
 
 class	MockDB : public DatabasableMock {
 public:
-	bool	user_is_registered(user *usr) {
-		(void) usr;
-		calls_to_user_registered++;
-		return (false); // Important part of the test
-	}
-
 	bool	nick_is_in_use(std::string str) {
+		(void) str;
 		return (false);
 	}
 };
 
-class	MockReplier : public Replierable {
-};
-
-CommandActionAssociator commandActionAssociator;
+replies_generator rp;
 
 int main()
 {
 	MockDB	db;
-	MockReplier	rp;
 	LexerParserConnector parser;
-	user	usr(0, 'a');
+	UserID	usr;
 
 	SentMessage msg;
 	msg.message = parser.parse_string("NICK Javgonza");
@@ -31,7 +22,7 @@ int main()
 
 	command_nick(&db, &msg, &rp);
 
-	if (db.calls_to_register_user != 1)
+	if (db.calls_to_change_nick != 1)
 		return (-1);
 
 	return (0);

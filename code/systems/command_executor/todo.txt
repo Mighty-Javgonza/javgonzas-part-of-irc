@@ -1,3 +1,17 @@
 Cambiar todas las instancias de user por UserID
 
-Arreglar la compilación
+V Arreglar la compilación
+
+Comando pass
+
+Constructores copia a ParsedMessages
+
+Me he cargado una línea
+
+Meter in_progress_message en todas las funciones
+
+V Crear un UserID.
+
+V Crear la clase User
+
+V Arreglar compilación

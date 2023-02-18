@@ -1,0 +1,18 @@
+Pasasr el parsed message con un sender que sea a la vez una referencia a un user
+
+
+Procedimiento de entrada:
+	1) Se abre una conexión
+	2) Se da de alta un usuario no registrado
+	3) El usuario se registra
+	4) Se sustituye el usuario no registrado por uno registrado
+
+Triple mapa. String y "Parser, Ejecutor"
+
+Usar la demo de vicmarti para crear un comando de nick
+V Elegir donde poner los comandos
+
+Los comandos los llama una clase. El Command Executor. El Command Excutor se instancia l principio y tiene una referencia al BDD y al replier.
+
+Elegir el formato base de los comandos
+database, parsed_message y replier

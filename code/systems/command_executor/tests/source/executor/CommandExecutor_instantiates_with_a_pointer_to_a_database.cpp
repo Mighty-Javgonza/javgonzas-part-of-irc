@@ -1,17 +1,15 @@
 #include "../tests.hpp"
 
-class	MockDB : public Databasable {
-	void	set_nick(user *usr, std::string nick) {
-		(void)usr;
-		(void)nick;
-	}
+class	MockDB : public DatabasableMock {
 };
+
+
 
 int main()
 {
 	MockDB	*db = new MockDB();
 
-	CommandExecutor command_executor(db);
+	CommandExecutor command_executor((Databasable *)db);
 
 	if (command_executor.database != (Databasable *)db)
 		return (-1);

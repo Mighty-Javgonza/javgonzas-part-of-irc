@@ -114,6 +114,7 @@ void MessageParameterCommonParser::parse_msgto_without_servername(std::string st
 
 	host_marker = str.find_first_of('%');
 	msgto.has_server = false;
+	msgto.is_user = false; //TODO: setear variables a False
 	if (host_marker == std::string::npos)
 	{
 		try {
@@ -126,7 +127,9 @@ void MessageParameterCommonParser::parse_msgto_without_servername(std::string st
 		//	throw (MessageParameterValidator::erroneousMsgtoException);
 		}
 		msgto.is_channel = true;
+		return ;
 	}
+	msgto.is_user = true;
 	msgto.has_host = true;
 	msgto.user = str.substr(0, host_marker);
 	msgto.host = str.substr(host_marker + 1, str.length() - (host_marker + 1));

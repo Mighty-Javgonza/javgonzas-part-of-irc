@@ -20,15 +20,12 @@ int main()
 	UserID	user;
 
 	SentMessage msg;
-	msg.message = parser.parse_string("KILL javgonza :For being too beautiful");
+	msg.message = parser.parse_string("PRIVMSG javgonza,tomartin,vicmarti :Hola");
 	msg.sender = &user;
 
-	command_kill(&db, &msg, &rp);
+	command_privmsg(&db, &msg, &rp);
 
-	if (db.calls_to_get_user_from_nickname != 1)
-		return (-1);
-
-	if (db.calls_to_kill_user != 1)
+	if (db.calls_to_get_user_from_nickname!= 3)
 		return (-1);
 
 	return (0);

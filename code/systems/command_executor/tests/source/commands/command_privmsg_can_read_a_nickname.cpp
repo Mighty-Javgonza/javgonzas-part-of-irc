@@ -17,18 +17,15 @@ int main()
 {
 	MockDB	db;
 	LexerParserConnector parser;
-	UserID	user;
+	UserID	usr;
 
 	SentMessage msg;
-	msg.message = parser.parse_string("KILL javgonza :For being too beautiful");
-	msg.sender = &user;
+	msg.message = parser.parse_string("PRIVMSG javgonza :Hola como va");
+	msg.sender = &usr;
 
-	command_kill(&db, &msg, &rp);
+	command_privmsg(&db, &msg, &rp);
 
 	if (db.calls_to_get_user_from_nickname != 1)
-		return (-1);
-
-	if (db.calls_to_kill_user != 1)
 		return (-1);
 
 	return (0);

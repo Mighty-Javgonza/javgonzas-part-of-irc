@@ -22,4 +22,5 @@ void	MessagePrivateMessagesPrivmsgParser::parse_specific_part(void)
 void	MessagePrivateMessagesPrivmsgParser::create_specific_message(void)
 {
 	specific_message = new ParsedMessagePrivateMessagesPrivmsg();
+	in_progress_message = specific_message;
 }

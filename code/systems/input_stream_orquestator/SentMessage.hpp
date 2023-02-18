@@ -2,12 +2,12 @@
 # define SENTMESSAGE_HPP
 
 #include "code/source/ParsedMessage/ParsedMessage.hpp"
-#include "../tomartin/inc/user.hpp" //TODO Provisional user. Use the one form the DB when created
+#include "../command_executor/code/source/UserID.hpp"
 
 typedef struct s_SentMessage
 {
 	ParsedMessage	*message;
-	user			*sender;
+	UserID			*sender;
 }				SentMessage;
 
 #endif

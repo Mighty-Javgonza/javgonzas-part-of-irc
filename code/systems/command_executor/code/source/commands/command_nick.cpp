@@ -1,17 +1,16 @@
 #include "commands.hpp"
 
-void	command_nick(Databasable *database, SentMessage *message, Replierable *replier)
+void	command_nick(Databasable *database, SentMessage *message, replies_generator *replier)
 {
 	ParsedMessageConnectionNick	*nick_msg = static_cast<ParsedMessageConnectionNick*>(message->message);
 
 	if (database->nick_is_in_use(nick_msg->nickname))
 	{
-		(void)replier;
-		return ;
+		User user = database->get_user_from_fd(message->sender->fd);
+		user << replier->nick_nicknameinuse(nick_msg->nickname);
 	}
-	if (database->user_is_registered(message->sender) == false)
-		database->register_user(message->sender);
 	else
+	{
 		database->change_nick(message->sender, nick_msg->nickname);
-	(void)replier;
+	}
 }
