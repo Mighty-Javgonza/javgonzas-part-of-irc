@@ -9,7 +9,8 @@ typedef struct s_UserID {
 	int			fd;
 	std::string nickname;
 	std::string user;
-	std::string host;
+	std::string hostname;
+	std::string	realname;
 } UserID;
 
 #endif

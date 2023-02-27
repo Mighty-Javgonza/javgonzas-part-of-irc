@@ -15,6 +15,10 @@ public:
 	int	calls_to_get_user_from_fd;
 	int	calls_to_get_channel_users;
 	int	calls_to_kill_user;
+	int	calls_to_set_user_invisible_mode;
+	int	calls_to_set_user_receive_wallops_mode;
+
+	User mock_user;
 
 	DatabasableMock() : calls_to_change_nick(0),
 						calls_to_user_registered(0),
@@ -24,7 +28,9 @@ public:
 						calls_to_get_user_from_nickname(0),
 						calls_to_get_user_from_fd(0),
 						calls_to_get_channel_users(0),
-						calls_to_kill_user(0)
+						calls_to_kill_user(0),
+						calls_to_set_user_invisible_mode(0),
+						calls_to_set_user_receive_wallops_mode(0)
 	{}
 
 	virtual void	change_nick(UserID *user, std::string nick) {
@@ -39,6 +45,16 @@ public:
 		return (false); //Change in test
 	}
 
+	virtual void	set_user_invisible_mode(UserID *user) {
+		(void) user;
+		calls_to_set_user_invisible_mode++;
+	}
+
+	virtual void	set_user_receive_wallops_mode(UserID *user) {
+		(void) user;
+		calls_to_set_user_receive_wallops_mode++;
+	}
+
 	virtual void	register_user(UserID *user) {
 		(void) user;
 		calls_to_register_user++;
@@ -50,39 +66,32 @@ public:
 		return (false); //Change in test
 	};
 
-	virtual User get_user_from_target() {
-		User	user;
-
-		return (user);
+	virtual User* get_user_from_target() {
+		return (&mock_user);
 	};
 
-	virtual User get_user_from_user_host(std::string user_str, std::string host) {
+	virtual User* get_user_from_user_host(std::string user_str, std::string host) {
 		(void)user_str;
 		(void)host;
 		calls_to_get_user_from_user_host++;
-		User	user;
-
-		return (user);
+		return (&mock_user);
 	};
 
-	virtual User get_user_from_nickname(std::string nickname) {
+	virtual User* get_user_from_nickname(std::string nickname) {
 		(void)nickname;
 		calls_to_get_user_from_nickname++;
-		User	user;
-
-		return (user);
+		return (&mock_user);
 	};
 
-	virtual User get_user_from_fd(int fd) {
+	virtual User* get_user_from_fd(int fd) {
 		(void)fd;
 		calls_to_get_user_from_fd++;
-		User	user;
-
-		return (user);
+		return (&mock_user);
 	};
 
-	virtual std::vector<User> get_channel_users(std::string channel) {
+	virtual std::vector<User> get_channel_users(std::string channel, User *authority) {
 		(void)channel;
+		(void)authority;
 		calls_to_get_channel_users++;
 		User	user;
 		std::vector<User>	users;

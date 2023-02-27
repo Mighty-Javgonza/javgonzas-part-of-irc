@@ -12,7 +12,6 @@ public:
 	User();
 	~User();
 
-	bool exists_in_db;
 	UserID	id;
 	user	com;
 

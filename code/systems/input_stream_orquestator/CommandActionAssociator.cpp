@@ -5,6 +5,7 @@
 CommandActionAssociator::CommandActionAssociator()
 {
 	action_map.insert(std::make_pair("NICK", (commandActuators){.parser = new MessageConnectionNickParser}));
+	action_map.insert(std::make_pair("USER", (commandActuators){.parser = new MessageConnectionUserParser}));
 	action_map.insert(std::make_pair("PRIVMSG", (commandActuators){.parser = new MessagePrivateMessagesPrivmsgParser}));
 	action_map.insert(std::make_pair("KILL", (commandActuators){.parser = new MessageUserKillParser}));
 }

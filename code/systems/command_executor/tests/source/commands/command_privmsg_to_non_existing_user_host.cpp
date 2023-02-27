@@ -1,13 +1,13 @@
 #include "../tests.hpp"
 
+User	db_user;
 class	MockDB : public DatabasableMock {
-	User	user;
-	virtual User* get_user_from_user_host(std::string user_str, std::string host) {
-		(void)user_str;
+	virtual User* get_user_from_user_host(std::string user, std::string host) {
+		(void)user;
 		(void)host;
 		calls_to_get_user_from_user_host++;
 
-		return (&user);
+		return (NULL); //User does not exist
 	};
 };
 
@@ -20,13 +20,14 @@ int main()
 	UserID	user;
 
 	SentMessage msg;
-	msg.message = parser.parse_string("PRIVMSG javgonza%c3r2s2 :Hola como va");
+	msg.message = parser.parse_string("PRIVMSG javgonza%c2r3s3 Hola");
 	msg.sender = &user;
 
 	command_privmsg(&db, &msg, &rp);
 
-	if (db.calls_to_get_user_from_user_host != 1)
+	if (db_user.com.msg_out.msg_q_size() != 0)
 		return (-1);
 
 	return (0);
 }
+
