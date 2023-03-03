@@ -16,9 +16,16 @@ void	MessageConnectionModeParser::parse_specific_part()
 		throw (needMoreParamsException);
 	MessageParameterValidator::validate_nickname(lexedMessage.parameters[0]);
 	specific_message->nickname = lexedMessage.parameters[0];
-	if (lexedMessage.parameters.size() < 2 || lexedMessage.parameters[1].length() < 2)
+	if (lexedMessage.parameters.size() < 2)
+	{
+		specific_message->intends_to_change_modes = false;
 		return ;
-	parse_modes();
+	}
+	else
+	{
+		specific_message->intends_to_change_modes = true;
+		parse_modes();
+	}
 }
 
 void	MessageConnectionModeParser::parse_modes()
@@ -49,6 +56,8 @@ void	MessageConnectionModeParser::parse_modes()
 
 void	MessageConnectionModeParser::add_mode(char mode_name)
 {
+	if (mode_name == 'a')
+		specific_message->mode_a = ParsedMessageConnectionMode::ADD_MODE;
 	if (mode_name == 'i')
 		specific_message->mode_i = ParsedMessageConnectionMode::ADD_MODE;
 	if (mode_name == 'w')
@@ -59,10 +68,14 @@ void	MessageConnectionModeParser::add_mode(char mode_name)
 		specific_message->mode_o = ParsedMessageConnectionMode::ADD_MODE;
 	if (mode_name == 'O')
 		specific_message->mode_O = ParsedMessageConnectionMode::ADD_MODE;
+	if (mode_name == 's')
+		specific_message->mode_s = ParsedMessageConnectionMode::ADD_MODE;
 }
 
 void	MessageConnectionModeParser::remove_mode(char mode_name)
 {
+	if (mode_name == 'a')
+		specific_message->mode_a = ParsedMessageConnectionMode::REMOVE_MODE;
 	if (mode_name == 'i')
 		specific_message->mode_i = ParsedMessageConnectionMode::REMOVE_MODE;
 	if (mode_name == 'w')
@@ -73,6 +86,8 @@ void	MessageConnectionModeParser::remove_mode(char mode_name)
 		specific_message->mode_o = ParsedMessageConnectionMode::REMOVE_MODE;
 	if (mode_name == 'O')
 		specific_message->mode_O = ParsedMessageConnectionMode::REMOVE_MODE;
+	if (mode_name == 's')
+		specific_message->mode_s = ParsedMessageConnectionMode::REMOVE_MODE;
 }
 
 void	MessageConnectionModeParser::create_specific_message(void)

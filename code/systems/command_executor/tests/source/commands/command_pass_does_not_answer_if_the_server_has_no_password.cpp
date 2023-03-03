@@ -27,6 +27,7 @@ int main()
 	UserID	user;
 	SentMessage msg;
 
+	db_user.register_pass_correct = true;
 	server_info.password = "incorrect";
 	server_info.has_password = false;
 

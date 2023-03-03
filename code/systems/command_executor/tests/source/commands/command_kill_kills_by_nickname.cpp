@@ -25,9 +25,6 @@ int main()
 
 	command_kill(&db, &msg, &rp);
 
-	if (db.calls_to_get_user_from_nickname != 1)
-		return (-1);
-
 	if (db.calls_to_kill_user != 1)
 		return (-1);
 

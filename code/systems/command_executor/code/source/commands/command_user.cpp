@@ -14,12 +14,14 @@ void	command_user(Databasable *database, SentMessage *message, replies_generator
 		UserID	registration_id;
 
 		registration_id = *message->sender;
+		registration_id.user = user_msg->user;
 		registration_id.realname = user_msg->realname;
+		// TODO registration_id.hostname = ***
 		database->register_user(&registration_id);
 		if (user_msg->mode & 0b1000)
 			database->set_user_invisible_mode(&registration_id);
 		if (user_msg->mode & 0b100)
 			database->set_user_receive_wallops_mode(&registration_id);
-//		**user << replier-> REPLY with welcome
+//		TODO **user << replier-> REPLY with welcome
 	}
 }
