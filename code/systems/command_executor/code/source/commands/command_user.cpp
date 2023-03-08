@@ -3,25 +3,23 @@
 void	command_user(Databasable *database, SentMessage *message, replies_generator *replier)
 {
 	ParsedMessageConnectionUser	*user_msg = static_cast<ParsedMessageConnectionUser*>(message->message);
-	User *user = database->get_user_from_fd(message->sender->fd);
+	User *registering_user = database->get_user_from_fd(message->sender->fd);
 
 	if (database->user_is_registered(message->sender))
 	{
-		*user << replier->user_alreadyregistred();
+		*registering_user << replier->user_alreadyregistred();
 	}
 	else
 	{
-		UserID	registration_id;
-
-		registration_id = *message->sender;
-		registration_id.user = user_msg->user;
-		registration_id.realname = user_msg->realname;
-		// TODO registration_id.hostname = ***
-		database->register_user(&registration_id);
+		registering_user->set_username(user_msg->user);
+		registering_user->set_realname(user_msg->user);
+		registering_user->set_hostname(message->sender->hostname);
+		database->register_user(registering_user);
+		User *registered_user = database->get_user_from_fd(message->sender->fd);
 		if (user_msg->mode & 0b1000)
-			database->set_user_invisible_mode(&registration_id);
+			registered_user->set_invisible_mode();
 		if (user_msg->mode & 0b100)
-			database->set_user_receive_wallops_mode(&registration_id);
+			registered_user->set_receive_wallops_mode();
 //		TODO **user << replier-> REPLY with welcome
 	}
 }

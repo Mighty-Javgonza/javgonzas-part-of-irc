@@ -10,11 +10,11 @@ class	MockChan : public ChannelMock {
 
 	bool	topic_flag()
 	{
-		return (false);
+		return (true);
 	}
 };
 
-MockChan	mock_chan;
+MockChan mock_chan;
 
 class	MockDB : public DatabasableMock {
 	Channel	*get_channel(std::string name)
@@ -36,16 +36,16 @@ int main()
 
 	db_user.id.nickname = "javgonza";
 	mock_chan.name = "bienvenida";
+	mock_chan.has_topic = true;
+	mock_chan.topic = "A channel for discussing LOVE";
 	msg.message = parser.parse_string("TOPIC #bienvenida :NEWTOPIC");
 	msg.sender = &user;
 
 	command_topic(&db, &msg, &rp, &server_info);
 
-	if (db_user.com.msg_out.msg_q_size() != 1)
-		return (-1);
-
-	if (mock_chan.has_topic != true)
+	if (mock_chan.topic != "NEWTOPIC")
 		return (-1);
 
 	return (0);
 }
+

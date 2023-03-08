@@ -19,6 +19,8 @@ public:
 	std::string	oper_name;
 	std::string	oper_password;
 
+	std::string	get_preffix_string();
+
 private:
 
 };

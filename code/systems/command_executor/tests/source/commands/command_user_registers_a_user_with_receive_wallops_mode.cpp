@@ -1,11 +1,18 @@
 #include "../tests.hpp"
 
+User db_user;
 class	MockDB : public DatabasableMock {
 	virtual bool user_is_registered(UserID *user)
 	{
 		(void)user;
 		calls_to_user_registered++;
 		return (false); //IMPORTANT
+	}
+
+	User *get_user_from_fd(int fd)
+	{
+		(void)fd;
+		return (&db_user);
 	}
 };
 
@@ -23,7 +30,7 @@ int main()
 
 	command_user(&db, &msg, &rp);
 
-	if (db.calls_to_set_user_receive_wallops_mode != 1)
+	if (db_user.modes.receive_wallops != 1)
 		return (-1);
 
 	return (0);

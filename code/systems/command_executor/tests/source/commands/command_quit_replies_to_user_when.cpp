@@ -3,13 +3,6 @@
 User db_user;
 
 class	MockDB : public DatabasableMock {
-	virtual bool user_is_registered(UserID *user)
-	{
-		(void)user;
-		calls_to_user_registered++;
-		return (false); //IMPORTANT
-	}
-
 	User *get_user_from_fd(int fd)
 	{
 		(void)fd;
@@ -19,20 +12,23 @@ class	MockDB : public DatabasableMock {
 
 replies_generator rp;
 
+ServerInfo	server_info;
+
 int main()
 {
 	MockDB	db;
 	LexerParserConnector parser;
 	UserID	user;
-
 	SentMessage msg;
-	msg.message = parser.parse_string("USER javgonza 8 * :Javier Gonzalez");
+
+	msg.message = parser.parse_string("QUIT");
 	msg.sender = &user;
 
-	command_user(&db, &msg, &rp);
+	command_quit(&db, &msg, &rp, &server_info);
 
-	if (db_user.modes.invisible != 1)
+	if (db_user.com.msg_out.msg_q_size() != 1)
 		return (-1);
 
 	return (0);
 }
+

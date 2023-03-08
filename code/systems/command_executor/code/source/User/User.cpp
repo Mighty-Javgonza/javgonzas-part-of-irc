@@ -36,3 +36,35 @@ std::string	User::get_modes_string(void)
 		modes_str += "s";
 	return (modes_str);
 }
+std::string	User::get_preffix_string(void)
+{
+	std::string	preffix;
+
+	preffix = id.nickname + "!" + id.user + "@" + id.hostname;
+	return (preffix);
+}
+
+void	User::set_username(std::string username)
+{
+	id.user = username;
+}
+
+void	User::set_hostname(std::string hostname)
+{
+	id.hostname = hostname;
+}
+
+void	User::set_realname(std::string realname)
+{
+	id.realname = realname;
+}
+
+void	User::set_invisible_mode(void)
+{
+	modes.invisible = true;
+}
+
+void	User::set_receive_wallops_mode(void)
+{
+	modes.receive_wallops = true;
+}

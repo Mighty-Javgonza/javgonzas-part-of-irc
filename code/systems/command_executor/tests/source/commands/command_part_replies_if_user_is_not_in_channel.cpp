@@ -1,38 +1,42 @@
 #include "../tests.hpp"
 
 User db_user;
+ChannelMock	mock_chan;
 
 class	MockDB : public DatabasableMock {
-	virtual bool user_is_registered(UserID *user)
-	{
-		(void)user;
-		calls_to_user_registered++;
-		return (false); //IMPORTANT
-	}
-
 	User *get_user_from_fd(int fd)
 	{
 		(void)fd;
 		return (&db_user);
 	}
+
+	Channel	*get_channel(std::string name)
+	{
+		(void)name;
+		return (&mock_chan);
+	}
 };
 
 replies_generator rp;
+
+ServerInfo	server_info;
 
 int main()
 {
 	MockDB	db;
 	LexerParserConnector parser;
 	UserID	user;
-
 	SentMessage msg;
-	msg.message = parser.parse_string("USER javgonza 8 * :Javier Gonzalez");
+
+	mock_chan.name = "bienvenida";
+	msg.message = parser.parse_string("PART #bienvenida");
 	msg.sender = &user;
 
-	command_user(&db, &msg, &rp);
+	command_part(&db, &msg, &rp, &server_info);
 
-	if (db_user.modes.invisible != 1)
+	if (db_user.com.msg_out.msg_q_size() != 1)
 		return (-1);
 
 	return (0);
 }
+

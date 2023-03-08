@@ -14,11 +14,11 @@ public:
 	int	calls_to_get_user_from_nickname;
 	int	calls_to_get_user_from_fd;
 	int	calls_to_get_channel_users;
+	int	calls_to_get_all_users;
 	int	calls_to_kill_user;
-	int	calls_to_set_user_invisible_mode;
-	int	calls_to_set_user_receive_wallops_mode;
 
 	User mock_user;
+	std::vector<User>	mock_user_vector;
 
 	DatabasableMock() : calls_to_change_nick(0),
 						calls_to_user_registered(0),
@@ -28,9 +28,8 @@ public:
 						calls_to_get_user_from_nickname(0),
 						calls_to_get_user_from_fd(0),
 						calls_to_get_channel_users(0),
-						calls_to_kill_user(0),
-						calls_to_set_user_invisible_mode(0),
-						calls_to_set_user_receive_wallops_mode(0)
+						calls_to_get_all_users(0),
+						calls_to_kill_user(0)
 	{}
 
 	virtual void	change_nick(UserID *user, std::string nick) {
@@ -45,17 +44,7 @@ public:
 		return (false); //Change in test
 	}
 
-	virtual void	set_user_invisible_mode(UserID *user) {
-		(void) user;
-		calls_to_set_user_invisible_mode++;
-	}
-
-	virtual void	set_user_receive_wallops_mode(UserID *user) {
-		(void) user;
-		calls_to_set_user_receive_wallops_mode++;
-	}
-
-	virtual void	register_user(UserID *user) {
+	virtual void	register_user(User *user) {
 		(void) user;
 		calls_to_register_user++;
 	}
@@ -89,6 +78,12 @@ public:
 		return (&mock_user);
 	};
 
+	virtual std::vector<User>&	get_all_users() {
+		calls_to_get_all_users++;
+
+		return (mock_user_vector);
+	};
+
 	virtual std::vector<User> get_channel_users(std::string channel, User *authority) {
 		(void)channel;
 		(void)authority;
@@ -104,6 +99,11 @@ public:
 	virtual void kill_user(UserID *user) {
 		(void)user;
 		calls_to_kill_user++;
+	};
+
+	virtual Channel*	get_channel(std::string name) {
+		(void)name;
+		return (NULL);
 	};
 };
 #endif

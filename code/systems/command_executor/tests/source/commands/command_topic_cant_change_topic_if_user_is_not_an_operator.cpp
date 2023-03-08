@@ -5,12 +5,11 @@ User db_user;
 class	MockChan : public ChannelMock {
 	bool	is_operator(User *user)
 	{
-		return (true); //Important part of test
+		return (false); //Important part of test
 	}
-
 	bool	topic_flag()
 	{
-		return (false);
+		return (true);
 	}
 };
 
@@ -36,7 +35,9 @@ int main()
 
 	db_user.id.nickname = "javgonza";
 	mock_chan.name = "bienvenida";
-	msg.message = parser.parse_string("TOPIC #bienvenida :NEWTOPIC");
+	mock_chan.has_topic = true;
+	mock_chan.topic = "A channel for discussing LOVE";
+	msg.message = parser.parse_string("TOPIC #bienvenida :");
 	msg.sender = &user;
 
 	command_topic(&db, &msg, &rp, &server_info);
@@ -49,3 +50,4 @@ int main()
 
 	return (0);
 }
+

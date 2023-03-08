@@ -14,5 +14,10 @@ void	command_privmsg(Databasable *database, SentMessage *message, replies_genera
 void	command_kill(Databasable *database, SentMessage *message, replies_generator *replier);
 void	command_mode(Databasable *database, SentMessage *message, replies_generator *replier);
 void	command_oper(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
+void	command_quit(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
+void	command_part(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
+void	command_topic(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
+
+void	send_message_to_user_vector(std::vector<User> users, std::string message);
 
 #endif

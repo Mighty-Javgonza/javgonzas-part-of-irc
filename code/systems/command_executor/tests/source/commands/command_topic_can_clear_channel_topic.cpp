@@ -7,10 +7,9 @@ class	MockChan : public ChannelMock {
 	{
 		return (true); //Important part of test
 	}
-
 	bool	topic_flag()
 	{
-		return (false);
+		return (true);
 	}
 };
 
@@ -36,16 +35,19 @@ int main()
 
 	db_user.id.nickname = "javgonza";
 	mock_chan.name = "bienvenida";
-	msg.message = parser.parse_string("TOPIC #bienvenida :NEWTOPIC");
+	mock_chan.has_topic = true;
+	mock_chan.topic = "A channel for discussing LOVE";
+	msg.message = parser.parse_string("TOPIC #bienvenida :");
 	msg.sender = &user;
 
 	command_topic(&db, &msg, &rp, &server_info);
 
-	if (db_user.com.msg_out.msg_q_size() != 1)
+	if (mock_chan.topic != "")
 		return (-1);
 
-	if (mock_chan.has_topic != true)
+	if (mock_chan.has_topic != false)
 		return (-1);
 
 	return (0);
 }
+
