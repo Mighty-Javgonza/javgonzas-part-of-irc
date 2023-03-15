@@ -5,5 +5,6 @@ void	command_list(Databasable *database, SentMessage *message, replies_generator
 	(void)database;
 	(void)replier;
 	(void)server_info;
-	ParsedMessageChannelList	*list_msg = static_cast<ParsedMessageChannelList*>(message->message);
+	(void)message;
+//	ParsedMessageChannelList	*list_msg = static_cast<ParsedMessageChannelList*>(message->message);
 }

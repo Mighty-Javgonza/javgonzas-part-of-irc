@@ -11,9 +11,9 @@ public:
 	ChannelMock(){}
 	~ChannelMock(){}
 
-	std::vector<User> mock_users;
+	std::vector<User *> mock_users;
 
-	std::vector<User>	get_users()
+	std::vector<User *>	get_users()
 	{
 		return (mock_users);
 	}
@@ -29,13 +29,13 @@ public:
 	{
 		(void)user;
 		user_count++;
-		mock_users.push_back(*user);
+		mock_users.push_back(user);
 	}
 
 	bool	user_in_chan(User *user)
 	{
-		for (std::vector<User>::iterator it = mock_users.begin(); it != mock_users.end(); it++)
-			if (it->id.nickname == user->id.nickname)
+		for (std::vector<User *>::iterator it = mock_users.begin(); it != mock_users.end(); it++)
+			if ((*it)->id.nickname == user->id.nickname)
 				return (true);
 		return (false);
 	}
@@ -47,6 +47,11 @@ public:
 	}
 
 	bool	topic_flag()
+	{
+		return (false);
+	}
+
+	bool	invite_only_flag()
 	{
 		return (false);
 	}

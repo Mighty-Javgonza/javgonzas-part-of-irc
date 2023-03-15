@@ -1,7 +1,8 @@
 #include "commands.hpp"
 
-void	command_nick(Databasable *database, SentMessage *message, replies_generator *replier)
+void	command_nick(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {
+	(void)server_info;
 	ParsedMessageConnectionNick	*nick_msg = static_cast<ParsedMessageConnectionNick*>(message->message);
 
 	if (database->nick_is_in_use(nick_msg->nickname))
@@ -13,4 +14,5 @@ void	command_nick(Databasable *database, SentMessage *message, replies_generator
 	{
 		database->change_nick(message->sender, nick_msg->nickname);
 	}
+
 }

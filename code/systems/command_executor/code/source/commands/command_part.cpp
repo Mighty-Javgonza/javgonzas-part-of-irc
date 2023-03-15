@@ -1,16 +1,28 @@
 #include "commands.hpp"
 
-static std::string	build_reply(ParsedMessageChannelPart *part_msg, std::string chan_name, std::string user_preffix)
+static std::string	build_reply(User *user, Channel *chan, bool has_comment, std::string comment)
 {
 	std::string reply;
-	if (part_msg->has_part_message)
-		reply = ":" + user_preffix + " PART #" + chan_name + " :" + part_msg->part_message + "\r\n";
+	std::string	user_preffix = user->get_preffix_string();
+	std::string	chan_name = chan->name;
+
+	if (has_comment)
+		reply = ":" + user_preffix + " PART #" + chan_name + " :" + comment + "\r\n";
 	else
 		reply = ":" + user_preffix + " PART #" + chan_name + " :Has left the channel\r\n";
 	return (reply);
 }
 
-static void	part_from_chan(Databasable *database, std::string channel_name, ParsedMessageChannelPart *part_msg, User *user, replies_generator *replier)
+//Unprotected funcion, make sure you are sure everything is ok before calling
+void	part_user_from_chan(User *user, Channel *chan, bool has_comment, std::string comment, Databasable *database)
+{
+	std::string	reply = build_reply(user, chan, has_comment, comment);
+
+	chan->user_part(user);
+	send_message_to_users_in_chan(reply, chan, database);
+}
+
+void	part_from_chan(Databasable *database, std::string channel_name, ParsedMessageChannelPart *part_msg, User *user, replies_generator *replier)
 {
 	Channel	*chan = database->get_channel(channel_name);
 
@@ -19,13 +31,7 @@ static void	part_from_chan(Databasable *database, std::string channel_name, Pars
 	else if (!chan->user_in_chan(user))
 		*user << replier->part_notonchannel(*chan);
 	else
-	{
-		chan->user_part(user);
-
-		std::string reply = build_reply(part_msg, chan->name, user->get_preffix_string());
-		std::vector<User>	chan_users = chan->get_users();
-		send_message_to_user_vector(chan_users, reply);
-	}
+		part_user_from_chan(user, chan, part_msg->has_part_message, part_msg->part_message, database);
 }	
 void	command_part(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {

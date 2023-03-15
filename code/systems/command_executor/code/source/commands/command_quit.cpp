@@ -19,7 +19,7 @@ static void	relay_quit_to_users_in_shared_channels(Databasable *database, User *
 //
 //	for (std::vector<Channel *>::iterator it = user_channels.begin(); it != user_channels.end(); it++)
 //
-//	for (std::vector<User>::iterator it = all_users.begin(); it != all_users.end(); it++)
+//	for (std::vector<User *>::iterator it = all_users.begin(); it != all_users.end(); it++)
 //		*it << relay_quit_msg;
 }
 
@@ -30,6 +30,6 @@ void	command_quit(Databasable *database, SentMessage *message, replies_generator
 	User *user = database->get_user_from_fd(message->sender->fd);
 
 	*user << ":" + server_info->get_preffix_string() + " ERROR :Your connection was closed\r\n";
-	database->kill_user(message->sender);
+	database->kill_user(user);
 	relay_quit_to_users_in_shared_channels(database, user, quit_msg);
 }

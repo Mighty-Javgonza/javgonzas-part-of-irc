@@ -1,6 +1,6 @@
 #include "../tests.hpp"
 
-User	db_user;
+UserMock	db_user;
 class	MockDB : public DatabasableMock {
 	virtual User* get_user_from_nickname(std::string nickname) {
 		(void)nickname;

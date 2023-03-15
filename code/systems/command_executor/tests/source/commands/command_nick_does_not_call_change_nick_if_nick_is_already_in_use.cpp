@@ -29,7 +29,7 @@ int main()
 	msg.message = parser.parse_string("NICK Javgonza");
 	msg.sender = &user;
 
-	command_nick((Databasable *)&db, &msg, &rp);
+	command_nick(&db, &msg, &rp, NULL);
 
 	if (db.calls_to_register_user != 0)
 		return (-1);

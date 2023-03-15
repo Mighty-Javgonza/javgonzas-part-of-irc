@@ -18,10 +18,10 @@ static void	priv_to_user_host(Databasable *database, msgto_parameter *t, std::st
 
 static void	priv_to_chan(Databasable *database, msgto_parameter *t, User *sender, std::string sender_preffix, std::string message)
 {
-	std::vector<User> users = database->get_channel_users(t->channel.name, sender);
+	std::vector<User *> users = database->get_channel_users(t->channel.name, sender);
 	std::string reply_msg = sender_preffix + " PRIVMSG #" + t->channel.name + " " + message + "\x0d\x0a";
-	for (std::vector<User>::iterator user_it = users.begin(); user_it != users.end(); user_it++)
-		*user_it << reply_msg;
+	for (std::vector<User *>::iterator user_it = users.begin(); user_it != users.end(); user_it++)
+		**user_it << reply_msg;
 }
 
 static void	send_privmsg_to_target(User *sender, std::string message_str, msgto_parameter *t, Databasable *database, replies_generator *replier)

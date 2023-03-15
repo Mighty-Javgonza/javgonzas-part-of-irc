@@ -45,6 +45,8 @@ tests_build_dirs:
 
 source_objects: code_build_dirs $(ALL_CODE_BUILD_OBJECTS)
 
+test_objects: $(ALL_CODE_TESTABLE_OBJECTS) 
+
 tests: tests_build_dirs code_build_dirs  $(ALL_CODE_TESTABLE_OBJECTS) $(ALL_TESTS_BUILD_EXECUTABLES)
 
 retests: clean_tests tests

@@ -20,7 +20,7 @@ int main()
 	msg.message = parser.parse_string("NICK Javgonza");
 	msg.sender = &usr;
 
-	command_nick(&db, &msg, &rp);
+	command_nick(&db, &msg, &rp, NULL);
 
 	if (db.calls_to_change_nick != 1)
 		return (-1);

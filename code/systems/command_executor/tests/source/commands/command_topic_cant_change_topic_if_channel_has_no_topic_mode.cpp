@@ -1,10 +1,11 @@
 #include "../tests.hpp"
 
-User db_user;
+UserMock db_user;
 
 class	MockChan : public ChannelMock {
 	bool	is_operator(User *user)
 	{
+		(void)user;
 		return (true); //Important part of test
 	}
 
@@ -17,8 +18,14 @@ class	MockChan : public ChannelMock {
 MockChan	mock_chan;
 
 class	MockDB : public DatabasableMock {
+	User *get_user_from_fd(int fd)
+	{
+		(void)fd;
+		return (&db_user);
+	}
 	Channel	*get_channel(std::string name)
 	{
+		(void)name;
 		return (&mock_chan);
 	}
 };
@@ -35,8 +42,11 @@ int main()
 	SentMessage msg;
 
 	db_user.id.nickname = "javgonza";
+	mock_chan.user_join(&db_user);
 	mock_chan.name = "bienvenida";
-	msg.message = parser.parse_string("TOPIC #bienvenida :NEWTOPIC");
+	mock_chan.has_topic = true;
+	mock_chan.topic = "A channel for loving each other";
+	msg.message = parser.parse_string("TOPIC #bienvenida :");
 	msg.sender = &user;
 
 	command_topic(&db, &msg, &rp, &server_info);

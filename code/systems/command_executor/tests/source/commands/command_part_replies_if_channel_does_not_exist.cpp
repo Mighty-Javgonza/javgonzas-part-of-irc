@@ -1,6 +1,6 @@
 #include "../tests.hpp"
 
-User db_user;
+UserMock db_user;
 ChannelMock	mock_chan;
 
 class	MockDB : public DatabasableMock {

@@ -5,6 +5,7 @@ class User;
 
 #include "../UserID.hpp"
 #include "../../../../tomartin/inc/user.hpp"
+#include "../Channel/Channel.hpp"
 
 typedef struct	s_modes
 {
@@ -21,7 +22,7 @@ class User {
 
 public:
 	User();
-	~User();
+	virtual ~User();
 
 	UserID	id;
 	user	com;
@@ -35,6 +36,8 @@ public:
 
 	void		set_invisible_mode();
 	void		set_receive_wallops_mode();
+
+	virtual std::vector<Channel *>	get_channels() = 0;
 
 	std::string get_name() const {return "USER NAME";}
 	std::string get_nickname() const {return "USER NICKNAME";}

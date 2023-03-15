@@ -5,5 +5,6 @@ void	command_notice(Databasable *database, SentMessage *message, replies_generat
 	(void)database;
 	(void)replier;
 	(void)server_info;
-	ParsedMessagePrivateMessagesNotice	*notice_msg = static_cast<ParsedMessagePrivateMessagesNotice*>(message->message);
+	(void)message;
+//	ParsedMessagePrivateMessagesNotice	*notice_msg = static_cast<ParsedMessagePrivateMessagesNotice*>(message->message);
 }

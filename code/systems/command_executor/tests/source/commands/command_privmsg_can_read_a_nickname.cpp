@@ -1,7 +1,7 @@
 #include "../tests.hpp"
 
 class	MockDB : public DatabasableMock {
-	User	user;
+	UserMock	user;
 	virtual User* get_user_from_user_host(std::string user_str, std::string host) {
 		(void)user_str;
 		(void)host;

@@ -1,6 +1,6 @@
 #include "../tests.hpp"
 
-User db_user;
+UserMock db_user;
 
 class	MockDB : public DatabasableMock {
 	virtual bool user_is_registered(UserID *user)

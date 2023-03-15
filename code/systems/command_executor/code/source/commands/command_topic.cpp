@@ -7,6 +7,7 @@ static void	try_to_reply_with_the_channel_topic(Channel *chan, User *user,replie
 		if (chan->has_topic)
 			*user << replier->topic_ok(*chan);
 		else
+			//TODO: wait for tomartin pulling
 			*user << replier->topic_no(*chan);
 	}
 	else
@@ -27,9 +28,9 @@ void	command_topic(Databasable *database, SentMessage *message, replies_generato
 	User	*user = database->get_user_from_fd(message->sender->fd);
 	Channel	*chan = database->get_channel(topic_msg->channel.name);
 
-	if (!chan->topic_flag() == true)
+	if (chan->topic_flag() == false)
 	{
-		//TODO: wait for topic_nochanmodes to be added
+		//TODO: wait for pulling topic_nochanmodes
 //		else
 //			*user << replier->topic_nochanmodes(*chan);
 		return ;

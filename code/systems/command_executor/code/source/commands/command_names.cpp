@@ -5,5 +5,6 @@ void	command_names(Databasable *database, SentMessage *message, replies_generato
 	(void)database;
 	(void)replier;
 	(void)server_info;
-	ParsedMessageChannelNames	*names_msg = static_cast<ParsedMessageChannelNames*>(message->message);
+	(void)message;
+//	ParsedMessageChannelNames	*names_msg = static_cast<ParsedMessageChannelNames*>(message->message);
 }

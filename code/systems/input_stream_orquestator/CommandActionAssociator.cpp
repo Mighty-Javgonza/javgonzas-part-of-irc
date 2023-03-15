@@ -14,6 +14,8 @@ CommandActionAssociator::CommandActionAssociator()
 	action_map.insert(std::make_pair("QUIT", (commandActuators){.parser = new MessageConnectionQuitParser}));
 	action_map.insert(std::make_pair("PART", (commandActuators){.parser = new MessageChannelPartParser}));
 	action_map.insert(std::make_pair("TOPIC", (commandActuators){.parser = new MessageChannelTopicParser}));
+	action_map.insert(std::make_pair("INVITE", (commandActuators){.parser = new MessageChannelInviteParser}));
+	action_map.insert(std::make_pair("KICK", (commandActuators){.parser = new MessageChannelKickParser}));
 }
 
 CommandActionAssociator::~CommandActionAssociator()
