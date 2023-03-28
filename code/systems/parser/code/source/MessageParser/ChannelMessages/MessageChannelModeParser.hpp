@@ -11,7 +11,7 @@ class MessageChannelModeParser;
 # define MODE_FLAGS_WITH_NO_PARAMS "Oovaimnqpsrt"
 # define MODE_FLAGS_WITH_PARAMS "klbeI"
 
-class MessageChannelModeParser : public MessageParser {
+class MessageChannelModeParser : virtual public MessageParser {
 
 public:
 	MessageChannelModeParser();
@@ -19,10 +19,10 @@ public:
 
 	ParsedMessageChannelMode	*specific_message;
 	typedef	ParsedMessageChannelMode::channel_mode_flag	channel_mode_flag;
-
-protected:
 	void	parse_specific_part();
 	void	create_specific_message();
+
+protected:
 
 	bool	is_valid_mode_flag(char flag);
 	channel_mode_flag	set_needs_parameter(channel_mode_flag &chanflag);

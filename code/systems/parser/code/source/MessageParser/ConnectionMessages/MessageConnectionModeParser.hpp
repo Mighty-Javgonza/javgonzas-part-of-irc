@@ -8,17 +8,17 @@ class MessageConnectionModeParser;
 # include "../../ParsedMessage/ConnectionMessages/ParsedMessageConnectionMode.hpp"
 # include "../MessageParameterValidator.hpp"
 
-class MessageConnectionModeParser : public MessageParser {
+class MessageConnectionModeParser : virtual public MessageParser {
 
 public:
 	MessageConnectionModeParser();
 	~MessageConnectionModeParser();
 
 	ParsedMessageConnectionMode	*specific_message;
-
-protected:
 	void	parse_specific_part();
 	void	create_specific_message();
+
+protected:
 
 private:
 	void	add_mode(char mode_name);

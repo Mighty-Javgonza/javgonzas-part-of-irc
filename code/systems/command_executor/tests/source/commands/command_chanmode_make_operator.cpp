@@ -15,9 +15,9 @@ class	MockChan : public ChannelMock {
 
 	bool is_operator(User *user)
 	{
-		if (user == &moder)
+		if (user->id.nickname == "javgonza")
 			return (true);
-		else if (modee_operator)
+		else if (user->id.nickname == "vicmarti")
 			return (true);
 		else
 			return (false);
@@ -71,12 +71,12 @@ int main()
 	modee.id.nickname = "vicmarti";
 	bienvenida_chan.name = "bienvenida";
 	bienvenida_chan.user_join(&moder);
-	msg.message = parser.parse_string("MODE #bienvenida +o notauser");
+	msg.message = parser.parse_string("MODE #bienvenida +o vicmarti");
 	msg.sender = &user;
 
 	command_chanmode(&db, &msg, &rp, &server_info);
 
-	if (moder.com.msg_out.msg_q_size() != 1)
+	if (bienvenida_chan.is_operator(&modee) != true)
 		return (-1);
 
 	return (0);

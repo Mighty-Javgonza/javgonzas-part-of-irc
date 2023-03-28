@@ -20,6 +20,7 @@ public:
 
 	UserMock mock_user;
 	std::vector<User *>	mock_user_vector;
+	std::vector<Channel *>	mock_chan_vector;
 
 	DatabasableMock() : calls_to_change_nick(0),
 						calls_to_user_registered(0),
@@ -105,5 +106,9 @@ public:
 		(void)name;
 		return (NULL);
 	};
+
+	virtual std::vector<Channel *>	get_all_channels() {
+		return (mock_chan_vector);
+	}
 };
 #endif

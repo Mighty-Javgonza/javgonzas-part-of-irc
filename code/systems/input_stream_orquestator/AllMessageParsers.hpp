@@ -1,6 +1,7 @@
 #ifndef ALLMESSAGEPARSERS_HPP
 # define ALLMESSAGEPARSERS_HPP
 
+#include "code/source/MessageParser/MixedParsers/ModeParser.hpp"
 #include "code/source/MessageParser/ChannelMessages/MessageChannelInviteParser.hpp"
 #include "code/source/MessageParser/ChannelMessages/MessageChannelJoinParser.hpp"
 #include "code/source/MessageParser/ChannelMessages/MessageChannelKickParser.hpp"

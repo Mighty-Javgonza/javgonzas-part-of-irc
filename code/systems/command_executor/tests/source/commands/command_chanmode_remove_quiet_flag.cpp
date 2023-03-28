@@ -1,26 +1,12 @@
 #include "../tests.hpp"
 
 UserMock moder;
-UserMock modee;
 
 class	MockChan : public ChannelMock {
-	public:
-	bool modee_operator;
-
-	void make_operator(User *user)
+	bool	is_operator(User *user)
 	{
-		(void) user;
-		modee_operator = true;
-	}
-
-	bool is_operator(User *user)
-	{
-		if (user == &moder)
-			return (true);
-		else if (modee_operator)
-			return (true);
-		else
-			return (false);
+		(void)user;
+		return (true);
 	}
 };
 
@@ -36,8 +22,6 @@ class	MockDB : public DatabasableMock {
 	{
 		if (nickname == "javgonza")
 			return (&moder);
-		else if (nickname == "vicmarti")
-			return (&modee);
 		return (NULL);
 	}
 	std::vector<Channel *> get_all_channels()
@@ -68,15 +52,15 @@ int main()
 
 	server_info.hostname = "localhost";
 	moder.id.nickname = "javgonza";
-	modee.id.nickname = "vicmarti";
 	bienvenida_chan.name = "bienvenida";
 	bienvenida_chan.user_join(&moder);
-	msg.message = parser.parse_string("MODE #bienvenida +o notauser");
+	bienvenida_chan.quiet_flag = true;
+	msg.message = parser.parse_string("MODE #bienvenida -q");
 	msg.sender = &user;
 
 	command_chanmode(&db, &msg, &rp, &server_info);
 
-	if (moder.com.msg_out.msg_q_size() != 1)
+	if (bienvenida_chan.quiet_flag != false)
 		return (-1);
 
 	return (0);

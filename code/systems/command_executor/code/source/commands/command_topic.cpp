@@ -28,7 +28,7 @@ void	command_topic(Databasable *database, SentMessage *message, replies_generato
 	User	*user = database->get_user_from_fd(message->sender->fd);
 	Channel	*chan = database->get_channel(topic_msg->channel.name);
 
-	if (chan->topic_flag() == false)
+	if (chan->topic_flag == false)
 	{
 		//TODO: wait for pulling topic_nochanmodes
 //		else

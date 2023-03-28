@@ -2,9 +2,15 @@
 
 void	command_notice(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {
-	(void)database;
-	(void)replier;
 	(void)server_info;
-	(void)message;
-//	ParsedMessagePrivateMessagesNotice	*notice_msg = static_cast<ParsedMessagePrivateMessagesNotice*>(message->message);
+	ParsedMessagePrivateMessagesNotice	*notice_msg = static_cast<ParsedMessagePrivateMessagesNotice*>(message->message);
+
+	msgto_parameter	*t;
+
+	for (size_t i = 0; i < notice_msg->target.targets.size(); i++)
+	{
+		t = &notice_msg->target.targets[i];
+		User *sender = database->get_user_from_fd(message->sender->fd);
+		send_text_message_to_target(sender, notice_msg->message, t, database, "NOTICE", replier);
+	}
 }

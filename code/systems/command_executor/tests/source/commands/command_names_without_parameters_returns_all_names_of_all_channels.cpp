@@ -1,43 +1,26 @@
 #include "../tests.hpp"
 
-UserMock moder;
-UserMock modee;
+UserMock namer;
+UserMock namee;
 
 class	MockChan : public ChannelMock {
-	public:
-	bool modee_operator;
-
-	void make_operator(User *user)
-	{
-		(void) user;
-		modee_operator = true;
-	}
-
-	bool is_operator(User *user)
-	{
-		if (user == &moder)
-			return (true);
-		else if (modee_operator)
-			return (true);
-		else
-			return (false);
-	}
 };
 
 MockChan	bienvenida_chan;
+MockChan	random_chan;
 
 class	MockDB : public DatabasableMock {
 	User *get_user_from_fd(int fd)
 	{
 		(void)fd;
-		return (&moder);
+		return (&namer);
 	}
 	User *get_user_from_nickname(std::string nickname)
 	{
-		if (nickname == "javgonza")
-			return (&moder);
-		else if (nickname == "vicmarti")
-			return (&modee);
+		if (nickname == "vicmarti")
+			return (&namee);
+		else if (nickname == "javgonza")
+			return (&namer);
 		return (NULL);
 	}
 	std::vector<Channel *> get_all_channels()
@@ -45,12 +28,15 @@ class	MockDB : public DatabasableMock {
 		std::vector<Channel *> channels;
 
 		channels.push_back(&bienvenida_chan);
+		channels.push_back(&random_chan);
 		return (channels);
 	}
 	Channel	*get_channel(std::string name)
 	{
 		if (name == "bienvenida")
 			return (&bienvenida_chan);
+		else if (name == "random")
+			return (&random_chan);
 		return (NULL);
 	}
 };
@@ -66,17 +52,20 @@ int main()
 	UserID	user;
 	SentMessage msg;
 
-	server_info.hostname = "localhost";
-	moder.id.nickname = "javgonza";
-	modee.id.nickname = "vicmarti";
+	namer.id.nickname = "javgonza";
+	namee.id.nickname = "vicmarti";
 	bienvenida_chan.name = "bienvenida";
-	bienvenida_chan.user_join(&moder);
-	msg.message = parser.parse_string("MODE #bienvenida +o notauser");
+	bienvenida_chan.user_join(&namer);
+	bienvenida_chan.user_join(&namee);
+	random_chan.name = "random";
+	random_chan.user_join(&namer);
+	random_chan.user_join(&namee);
+	msg.message = parser.parse_string("NAMES");
 	msg.sender = &user;
 
-	command_chanmode(&db, &msg, &rp, &server_info);
+	command_names(&db, &msg, &rp, &server_info);
 
-	if (moder.com.msg_out.msg_q_size() != 1)
+	if (namer.com.msg_out.msg_q_size() != 4)
 		return (-1);
 
 	return (0);

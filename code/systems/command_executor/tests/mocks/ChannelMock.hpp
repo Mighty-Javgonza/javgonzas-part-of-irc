@@ -46,15 +46,21 @@ public:
 		return (false);
 	}
 
-	bool	topic_flag()
+	std::string	get_typed_channel_string()
 	{
-		return (false);
+		if (secret_flag)
+			return ("@" + name);
+		if (private_flag)
+			return ("*" + name);
+		else
+			return ("=" + name);
 	}
 
-	bool	invite_only_flag()
+	void make_operator(User *user)
 	{
-		return (false);
+		(void)user;
 	}
+
 
 private:
 

@@ -14,8 +14,10 @@ MessageChannelModeParser::~MessageChannelModeParser()
 
 void	MessageChannelModeParser::parse_specific_part()
 {
+std::cout << lexedMessage.parameters.size() << std::endl;
 	if (lexedMessage.parameters.size() == 0)
 		throw (needMoreParamsException);
+std::cout << "CONTINUE FROM HERE" << std::endl;
 	specific_message->channel = MessageParameterCommonParser::parse_channel(lexedMessage.parameters[0]);
 	if (lexedMessage.parameters.size() > 1)
 		parse_flag_list(lexedMessage.parameters[1]);

@@ -14,7 +14,7 @@ void	command_invite(Databasable *database, SentMessage *message, replies_generat
 	{
 		*inviter << replier->invite_notonchannel(chan_name);
 	}
-	else if (channel->invite_only_flag() && !channel->is_operator(inviter))
+	else if (channel->invite_only_flag && !channel->is_operator(inviter))
 	{
 		//TODO: await tomartin answer
 		*inviter << replier->invite_chanoprivsneeded(*channel);

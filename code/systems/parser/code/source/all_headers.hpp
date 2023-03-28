@@ -69,5 +69,6 @@
 # include "ParsedMessage/ServerMessages/ParsedMessageServerSquery.hpp"
 # include "MessageParser/ChannelMessages/MessageChannelModeParser.hpp"
 # include "ParsedMessage/ChannelMessages/ParsedMessageChannelMode.hpp"
+# include "MessageParser/MixedParsers/ModeParser.hpp"
 
 #endif
