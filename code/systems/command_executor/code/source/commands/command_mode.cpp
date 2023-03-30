@@ -1,21 +1,16 @@
 #include "commands.hpp"
 
-void	command_mode(Databasable *database, SentMessage *message, replies_generator *replier)
+void	command_mode(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {
-	ParsedMessageConnectionMode	*mode_msg = static_cast<ParsedMessageConnectionMode*>(message->message);
-	(void)database;
-	(void)message;
 	(void)replier;
-	(void)mode_msg;
-
+	ParsedMessageConnectionMode	*mode_msg = static_cast<ParsedMessageConnectionMode*>(message->message);
 	User *user = database->get_user_from_nickname(mode_msg->nickname);	
 
 	if (user == NULL)
 		return ;
 	if (!mode_msg->intends_to_change_modes)
 	{
-		//TODO: construir el header del server
-		*user << (":localhost MODE " + mode_msg->nickname + " " + user->get_modes_string() + "\x0d\x0a");
+		*user << (":" + server_info->get_preffix_string() + " MODE " + mode_msg->nickname + " " + user->get_modes_string() + "\x0d\x0a");
 		return ;
 	}
 	else

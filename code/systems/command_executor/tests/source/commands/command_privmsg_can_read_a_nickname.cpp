@@ -23,7 +23,7 @@ int main()
 	msg.message = parser.parse_string("PRIVMSG javgonza :Hola como va");
 	msg.sender = &usr;
 
-	command_privmsg(&db, &msg, &rp);
+	command_privmsg(&db, &msg, &rp, NULL);
 
 	if (db.calls_to_get_user_from_nickname != 1)
 		return (-1);

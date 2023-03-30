@@ -23,7 +23,7 @@ int main()
 	msg.message = parser.parse_string("MODE javgonza");
 	msg.sender = &user;
 
-	command_mode(&db, &msg, &rp);
+	command_mode(&db, &msg, &rp, NULL);
 
 	if (db_user.com.msg_out.msg_q_size() != 0)
 		return (-1);

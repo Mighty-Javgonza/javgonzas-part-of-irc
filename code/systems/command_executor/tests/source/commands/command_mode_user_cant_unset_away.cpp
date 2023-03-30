@@ -24,7 +24,7 @@ int main()
 	msg.message = parser.parse_string("MODE javgonza -a");
 	msg.sender = &user;
 
-	command_mode(&db, &msg, &rp);
+	command_mode(&db, &msg, &rp, NULL);
 
 	if (db_user.modes.away == false)
 		return (-1);

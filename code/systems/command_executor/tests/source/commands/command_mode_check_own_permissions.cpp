@@ -12,6 +12,8 @@ class	MockDB : public DatabasableMock {
 
 replies_generator rp;
 
+ServerInfo si;
+
 int main()
 {
 	MockDB	db;
@@ -23,7 +25,7 @@ int main()
 	msg.message = parser.parse_string("MODE javgonza");
 	msg.sender = &user;
 
-	command_mode(&db, &msg, &rp);
+	command_mode(&db, &msg, &rp, &si);
 
 	if (db_user.com.msg_out.msg_q_size() != 1)
 		return (-1);

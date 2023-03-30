@@ -18,6 +18,8 @@ public:
 	bool	has_password;
 	std::string	oper_name;
 	std::string	oper_password;
+	std::string	version;
+	std::string	date;
 
 	std::string	get_preffix_string();
 

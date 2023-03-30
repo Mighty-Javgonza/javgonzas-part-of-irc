@@ -54,8 +54,8 @@ int main()
 	kickee_r.id.nickname = "tomartin";
 	bienvenida_chan.name = "bienvenida";
 	bienvenida_chan.user_join(&kicker);
-	bienvenida_chan.user_join(&kickee_b);
 	bienvenida_chan.user_join(&kickee_r);
+	bienvenida_chan.user_join(&kickee_b);
 	msg.message = parser.parse_string("KICK #bienvenida vicmarti,tomartin");
 	msg.sender = &user;
 

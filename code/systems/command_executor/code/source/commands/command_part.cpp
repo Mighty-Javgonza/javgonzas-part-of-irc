@@ -29,7 +29,7 @@ void	part_from_chan(Databasable *database, std::string channel_name, ParsedMessa
 	if (chan == NULL)
 		*user << replier->part_nosuchchannel(channel_name);
 	else if (!chan->user_in_chan(user))
-		*user << replier->part_notonchannel(*chan);
+		*user << replier->part_notonchannel(chan->name);
 	else
 		part_user_from_chan(user, chan, part_msg->has_part_message, part_msg->part_message, database);
 }	

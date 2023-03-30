@@ -24,7 +24,7 @@ int main()
 	msg.message = parser.parse_string("MODE javgonza -i");
 	msg.sender = &user;
 
-	command_mode(&db, &msg, &rp);
+	command_mode(&db, &msg, &rp, NULL);
 
 	if (db_user.modes.invisible != false)
 		return (-1);

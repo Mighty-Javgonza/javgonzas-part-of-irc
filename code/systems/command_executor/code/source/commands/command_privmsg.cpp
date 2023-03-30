@@ -38,8 +38,9 @@ void	send_text_message_to_target(User *sender, std::string message_str, msgto_pa
 		priv_to_chan(database, t, sender, sender_preffix, level, message_str);
 }
 
-void	command_privmsg(Databasable *database, SentMessage *message, replies_generator *replier)
+void	command_privmsg(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {
+	(void)server_info;
 	ParsedMessagePrivateMessagesPrivmsg	*privmsg_msg = static_cast<ParsedMessagePrivateMessagesPrivmsg*>(message->message);
 
 	msgto_parameter	*t;

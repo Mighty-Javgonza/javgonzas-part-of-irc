@@ -14,5 +14,4 @@ void	command_nick(Databasable *database, SentMessage *message, replies_generator
 	{
 		database->change_nick(message->sender, nick_msg->nickname);
 	}
-
 }

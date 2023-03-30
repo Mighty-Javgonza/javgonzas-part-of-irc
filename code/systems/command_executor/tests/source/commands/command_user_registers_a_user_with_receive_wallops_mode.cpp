@@ -17,6 +17,7 @@ class	MockDB : public DatabasableMock {
 };
 
 replies_generator rp;
+ServerInfo si;
 
 int main()
 {
@@ -28,7 +29,7 @@ int main()
 	msg.message = parser.parse_string("USER javgonza 4 * :Javier Gonzalez");
 	msg.sender = &user;
 
-	command_user(&db, &msg, &rp);
+	command_user(&db, &msg, &rp, &si);
 
 	if (db_user.modes.receive_wallops != 1)
 		return (-1);

@@ -5,13 +5,12 @@ static void	try_to_reply_with_the_channel_topic(Channel *chan, User *user,replie
 	if (chan->user_in_chan(user))
 	{
 		if (chan->has_topic)
-			*user << replier->topic_ok(*chan);
+			*user << replier->topic_ok(chan->name, chan->topic);
 		else
-			//TODO: wait for tomartin pulling
-			*user << replier->topic_no(*chan);
+			*user << replier->topic_no(chan->name);
 	}
 	else
-		*user << replier->topic_notonchannel(*chan);
+		*user << replier->topic_notonchannel(chan->name);
 }
 
 static void	change_channel_topic(Channel *chan, ParsedMessageChannelTopic *topic_msg)
@@ -30,9 +29,7 @@ void	command_topic(Databasable *database, SentMessage *message, replies_generato
 
 	if (chan->topic_flag == false)
 	{
-		//TODO: wait for pulling topic_nochanmodes
-//		else
-//			*user << replier->topic_nochanmodes(*chan);
+		*user << replier->topic_nochanmodes(chan->name);
 		return ;
 	}
 	if (!topic_msg->has_topic)
@@ -42,6 +39,6 @@ void	command_topic(Databasable *database, SentMessage *message, replies_generato
 		if (chan->is_operator(user))
 			change_channel_topic(chan, topic_msg);
 		else
-			*user << replier->topic_chanoprivsneeded(*chan);
+			*user << replier->topic_chanoprivsneeded(chan->name);
 	}
 }

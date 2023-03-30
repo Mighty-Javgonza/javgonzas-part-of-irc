@@ -16,15 +16,15 @@ void	command_chanmode(Databasable *database, SentMessage *message, replies_gener
 	User *user = database->get_user_from_fd(message->sender->fd);
 	Channel	*channel = database->get_channel(chanmode_msg->channel.name);
 
-	//TODO: change to mode_nosuchchannel
 	if (channel == NULL)
-		*user << replier->part_nosuchchannel(chanmode_msg->channel.name);
-	//TODO: change to mode_needmoreparams
+		*user << replier->mode_nosuchchannel(chanmode_msg->channel.name);
 	else if (chanmode_msg->flags.size() == 0)
-		*user << replier->topic_needmoreparams("MODE");
+		*user << replier->mode_needmoreparams();
 	//TODO: Revisar esta reply
 	else if (!channel->is_operator(user))
-		*user << replier->mode_chanoprivsneeded(channel->name);
+	{
+		*user << replier->kick_chanoprivsneeded(channel->name);
+	}
 	else
 	{
 		ParsedMessageChannelMode::channel_mode_flag	mode_flag = chanmode_msg->flags[0];
@@ -46,11 +46,21 @@ void	command_chanmode(Databasable *database, SentMessage *message, replies_gener
 		{
 			User *oper = database->get_user_from_nickname(mode_flag.parameter);
 
-			//TODO change to mode_usernotonchannel
 			if (oper == NULL)
-				*user << replier->invite_useronchannel(*oper, *channel);
+				*user << replier->mode_usernotinchannel(mode_flag.parameter, channel->name);
 			else
-				channel->make_operator(oper);
+			{
+				if (mode_flag.action == CHANNEL_MODE_FLAG_ACTION_ADD)
+				{
+					if (!channel->is_operator(oper))
+						channel->make_operator(oper);
+				}
+				else
+				{
+					if (channel->is_operator(oper))
+						channel->remove_operator(oper);
+				}
+			}
 		}
 	}
 }

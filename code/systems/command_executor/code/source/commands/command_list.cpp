@@ -16,8 +16,8 @@ void	command_list(Databasable *database, SentMessage *message, replies_generator
 		}
 	}
 
-	std::queue<std::string>	channel_queue;
-	std::queue<std::string>	topic_queue;
+	std::queue<const std::string>	channel_queue;
+	std::queue<const std::string>	topic_queue;
 	if (list_msg->has_channels)
 	{
 		std::vector<channel_parameter> chans = list_msg->channel_list.channels;

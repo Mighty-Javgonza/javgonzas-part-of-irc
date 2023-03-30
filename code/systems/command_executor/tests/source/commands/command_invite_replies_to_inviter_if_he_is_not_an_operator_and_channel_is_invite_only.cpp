@@ -9,10 +9,6 @@ class	MockChan : public ChannelMock {
 		(void)user;
 		return (false); //Important part of test
 	}
-	bool	invite_only_flag()
-	{
-		return (true); //Important part of test
-	}
 };
 
 MockChan	mock_chan;
@@ -50,6 +46,7 @@ int main()
 	invitee.id.nickname = "vicmarti";
 	mock_chan.name = "bienvenida";
 	mock_chan.user_join(&inviter);
+	mock_chan.invite_only_flag = true;
 	msg.message = parser.parse_string("INVITE vicmarti #bienvenida");
 	msg.sender = &user;
 

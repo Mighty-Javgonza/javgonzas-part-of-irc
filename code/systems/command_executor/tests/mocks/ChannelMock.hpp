@@ -35,8 +35,10 @@ public:
 	bool	user_in_chan(User *user)
 	{
 		for (std::vector<User *>::iterator it = mock_users.begin(); it != mock_users.end(); it++)
+		{
 			if ((*it)->id.nickname == user->id.nickname)
 				return (true);
+		}
 		return (false);
 	}
 
@@ -57,6 +59,11 @@ public:
 	}
 
 	void make_operator(User *user)
+	{
+		(void)user;
+	}
+
+	void remove_operator(User *user)
 	{
 		(void)user;
 	}

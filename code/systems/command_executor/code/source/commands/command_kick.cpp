@@ -3,21 +3,15 @@
 void	kick_user_chan(Databasable *database, User *kicker, User *kickee, Channel *channel, replies_generator *replier, ParsedMessageChannelKick *kick_msg)
 {
 	if (channel == NULL)
-		*kicker << replier->kick_nosuchchannel(*channel);
+		*kicker << replier->kick_nosuchchannel(channel->name);
 	else if (!channel->user_in_chan(kicker))
-		*kicker << replier->kick_notonchannel(*channel);
+		*kicker << replier->kick_notonchannel(channel->name);
 	else if (kickee == NULL)
-		return ;
-		//TODO: await tomartin answer
-	//	*kicker << replier->kick_msg_usernotonchannel(*channel);
+		*kicker << replier->kick_notonchannel(channel->name);
 	else if (!channel->user_in_chan(kickee))
-	{
-		return ;
-		//TODO: await tomartin answer
-	//	*kicker << replier->kick_msg_usernotonchannel(*channel);
-	}
+		*kicker << replier->kick_notonchannel(channel->name);
 	else if (!channel->is_operator(kicker))
-		*kicker << replier->kick_chanoprivsneeded(*channel);
+		*kicker << replier->kick_chanoprivsneeded(channel->name);
 	else
 	{
 		std::string	kick_reply = ":" + kicker->get_preffix_string() + " KICK " + " #" + channel->name + " " + kickee->id.nickname;
@@ -28,7 +22,6 @@ void	kick_user_chan(Databasable *database, User *kicker, User *kickee, Channel *
 		std::vector<User *> chan_users = channel->get_users();
 		for (std::vector<User *>::iterator it = chan_users.begin(); it != chan_users.end(); it++)
 		{
-			//TODO: preguntar a vicmarti por la devolución de usuarios copia
 			User *chan_user = database->get_user_from_nickname((*it)->id.nickname);
 			*chan_user << kick_reply;
 		}
@@ -47,7 +40,7 @@ void	command_kick(Databasable *database, SentMessage *message, replies_generator
 
 	if (channel_count != 1 && channel_count != user_count)
 	{
-		*kicker << replier->kick_needmoreparams("KICK");
+		*kicker << replier->kick_needmoreparams();
 	}
 	else if (channel_count != 1)
 	{

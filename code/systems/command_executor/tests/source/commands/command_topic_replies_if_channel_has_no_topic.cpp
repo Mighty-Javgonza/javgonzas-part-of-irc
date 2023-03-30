@@ -49,7 +49,6 @@ int main()
 
 	command_topic(&db, &msg, &rp, &server_info);
 
-std::cout << db_user.com.msg_out.msg_q_size() << std::endl;
 	if (db_user.com.msg_out.msg_q_size() != 1)
 		return (-1);
 

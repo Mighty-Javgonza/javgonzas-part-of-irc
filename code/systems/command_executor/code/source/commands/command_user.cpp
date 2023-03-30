@@ -1,6 +1,6 @@
 #include "commands.hpp"
 
-void	command_user(Databasable *database, SentMessage *message, replies_generator *replier)
+void	command_user(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {
 	ParsedMessageConnectionUser	*user_msg = static_cast<ParsedMessageConnectionUser*>(message->message);
 	User *registering_user = database->get_user_from_fd(message->sender->fd);
@@ -20,6 +20,6 @@ void	command_user(Databasable *database, SentMessage *message, replies_generator
 			registered_user->set_invisible_mode();
 		if (user_msg->mode & 0b100)
 			registered_user->set_receive_wallops_mode();
-//		TODO **user << replier-> REPLY with welcome
+		*registered_user << replier->welcome(registered_user->id.nickname, server_info->hostname, server_info->version, "aiwroOs", "oimt", server_info->date, server_info->hostname, server_info->version);
 	}
 }

@@ -30,6 +30,7 @@ public:
 	virtual bool				is_operator(User *user) = 0;
 	virtual std::string			get_typed_channel_string() = 0;
 	virtual void				make_operator(User *user) = 0;
+	virtual void				remove_operator(User *user) = 0;
 
 private:
 

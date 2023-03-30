@@ -1,8 +1,9 @@
 #include "commands.hpp"
 
-void	command_kill(Databasable *database, SentMessage *message, replies_generator *replier)
+void	command_kill(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {
 	(void)replier;
+	(void)server_info;
 	ParsedMessageUserKill	*kill_msg = static_cast<ParsedMessageUserKill*>(message->message);
 	User *user = database->get_user_from_nickname(kill_msg->nickname);
 	std::vector<Channel *>user_channels = user->get_channels();

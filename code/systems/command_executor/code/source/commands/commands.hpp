@@ -9,10 +9,10 @@
 
 void	command_nick(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
 void	command_pass(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
-void	command_user(Databasable *database, SentMessage *message, replies_generator *replier);
-void	command_privmsg(Databasable *database, SentMessage *message, replies_generator *replier);
-void	command_kill(Databasable *database, SentMessage *message, replies_generator *replier);
-void	command_mode(Databasable *database, SentMessage *message, replies_generator *replier);
+void	command_user(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
+void	command_privmsg(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
+void	command_kill(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
+void	command_mode(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
 void	command_oper(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
 void	command_quit(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
 void	command_part(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);

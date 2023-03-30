@@ -16,27 +16,25 @@ void	command_invite(Databasable *database, SentMessage *message, replies_generat
 	}
 	else if (channel->invite_only_flag && !channel->is_operator(inviter))
 	{
-		//TODO: await tomartin answer
-		*inviter << replier->invite_chanoprivsneeded(*channel);
+std::cout << "REPLYING" << std::endl;
+		*inviter << replier->invite_chanoprivsneeded(channel->name);
 	}
 	else if (invitee == NULL)
 	{
-		//TODO: await tomartin answer
-//		*inviter << replier->invite_nosuchnick(invite_msg->nickname);
+		*inviter << replier->invite_nosuchnick(invite_msg->nickname);
 	}
 	else if (channel->user_in_chan(invitee))
 	{
-		*inviter << replier->invite_useronchannel(*invitee, *channel);
+		*inviter << replier->invite_useronchannel(invitee->id.nickname, channel->name);
 	}
 	else if (invitee->modes.away)
 	{
-		*inviter << replier->invite_away(*invitee);
+		*inviter << replier->invite_away(invitee->id.nickname, invitee->away_msg);
 	}
 	else
 	{
-		//TODO: await tomartin answer
-//		inviter << replier->invite_ok(chan, inviter);
-		std::string invitation = ":" + inviter->get_preffix_string() + " INVITE " + inviter->id.nickname + " #" + channel->name;
+		*inviter << replier->invite_ok(channel->name, inviter->id.nickname);
+		std::string invitation = ":" + inviter->get_preffix_string() + " INVITE " + inviter->id.nickname + " #" + channel->name + "\r\n";
 		*invitee << invitation;
 	}
 }

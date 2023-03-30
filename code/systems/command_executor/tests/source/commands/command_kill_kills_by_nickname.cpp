@@ -23,7 +23,7 @@ int main()
 	msg.message = parser.parse_string("KILL javgonza :For being too beautiful");
 	msg.sender = &user;
 
-	command_kill(&db, &msg, &rp);
+	command_kill(&db, &msg, &rp, NULL);
 
 	if (db.calls_to_kill_user != 1)
 		return (-1);
