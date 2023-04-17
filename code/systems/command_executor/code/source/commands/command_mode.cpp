@@ -4,43 +4,45 @@ void	command_mode(Databasable *database, SentMessage *message, replies_generator
 {
 	(void)replier;
 	ParsedMessageConnectionMode	*mode_msg = static_cast<ParsedMessageConnectionMode*>(message->message);
-	User *user = database->get_user_from_nickname(mode_msg->nickname);	
+	Client *client = database->get_user_from_nickname(mode_msg->nickname);	
 
-	if (user == NULL)
+	if (client == NULL)
 		return ;
 	if (!mode_msg->intends_to_change_modes)
 	{
-		*user << (":" + server_info->get_preffix_string() + " MODE " + mode_msg->nickname + " " + user->get_modes_string() + "\x0d\x0a");
+		*client << (":" + server_info->get_preffix_string() + " MODE " + mode_msg->nickname + " " + client->ModeString() + "\x0d\x0a");
 		return ;
 	}
 	else
 	{
 		if (mode_msg->mode_i == ParsedMessageConnectionMode::ADD_MODE)
-			if (user->modes.invisible == false)
-				user->modes.invisible = true;
+			if (client->Mode(ClientData::Invisible) == false)
+				client->Mode(ClientData::Invisible, true);
 		if (mode_msg->mode_w == ParsedMessageConnectionMode::ADD_MODE)
-			if (user->modes.receive_wallops== false)
-				user->modes.receive_wallops= true;
-		if (mode_msg->mode_r == ParsedMessageConnectionMode::ADD_MODE)
-			if (user->modes.restricted_user_connection == false)
-				user->modes.restricted_user_connection = true;
+			if (client->Mode(ClientData::Wallops) == false)
+				client->Mode(ClientData::Wallops, true);
+					//TODO: Delete if it won't be implemented
+//		if (mode_msg->mode_r == ParsedMessageConnectionMode::ADD_MODE)
+//			if (client->modes.restricted_user_connection == false)
+//				client->modes.restricted_user_connection = true;
 		if (mode_msg->mode_s == ParsedMessageConnectionMode::ADD_MODE)
-			if (user->modes.server_notices== false)
-				user->modes.server_notices = true;
+			if (client->Mode(ClientData::ServerNotice) == false)
+				client->Mode(ClientData::ServerNotice, true);
 		if (mode_msg->mode_i == ParsedMessageConnectionMode::REMOVE_MODE)
-			if (user->modes.invisible == true)
-				user->modes.invisible = false;
+			if (client->Mode(ClientData::Invisible) == true)
+				client->Mode(ClientData::Invisible, false);
 		if (mode_msg->mode_w == ParsedMessageConnectionMode::REMOVE_MODE)
-			if (user->modes.receive_wallops== true)
-				user->modes.receive_wallops= false;
+			if (client->Mode(ClientData::Wallops) == true)
+				client->Mode(ClientData::Wallops, false);
 		if (mode_msg->mode_o == ParsedMessageConnectionMode::REMOVE_MODE)
-			if (user->modes.is_operator == true)
-				user->modes.is_operator = false;
-		if (mode_msg->mode_O == ParsedMessageConnectionMode::REMOVE_MODE)
-			if (user->modes.local_operator == true)
-				user->modes.local_operator = false;
+			if (client->Mode(ClientData::Operator) == true)
+				client->Mode(ClientData::Operator, false);
+					//TODO: Await for implementation
+//		if (mode_msg->mode_O == ParsedMessageConnectionMode::REMOVE_MODE)
+//			if (client->modes.local_operator == true)
+//				client->modes.local_operator = false;
 		if (mode_msg->mode_s == ParsedMessageConnectionMode::REMOVE_MODE)
-			if (user->modes.server_notices== true)
-				user->modes.server_notices = false;
+			if (client->Mode(ClientData::ServerNotice) == true)
+				client->Mode(ClientData::ServerNotice, false);
 	}
 }

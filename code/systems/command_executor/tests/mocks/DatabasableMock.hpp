@@ -19,8 +19,8 @@ public:
 	int	calls_to_kill_user;
 
 	UserMock mock_user;
-	std::vector<User *>	mock_user_vector;
-	std::vector<Channel *>	mock_chan_vector;
+	std::vector<Client *>	mock_user_vector;
+	std::vector<Chan *>		mock_chan_vector;
 
 	DatabasableMock() : calls_to_change_nick(0),
 						calls_to_user_registered(0),
@@ -34,19 +34,19 @@ public:
 						calls_to_kill_user(0)
 	{}
 
-	virtual void	change_nick(UserID *user, std::string nick) {
+	virtual void	change_nick(ClientId *user, std::string nick) {
 		(void)user;
 		(void)nick;
 		calls_to_change_nick++;
 	}
 
-	virtual bool	user_is_registered(UserID *user) {
+	virtual bool	user_is_registered(ClientId *user) {
 		(void) user;
 		calls_to_user_registered++;
 		return (false); //Change in test
 	}
 
-	virtual void	register_user(User *user) {
+	virtual void	register_user(Client *user) {
 		(void) user;
 		calls_to_register_user++;
 	}
@@ -57,47 +57,47 @@ public:
 		return (false); //Change in test
 	};
 
-	virtual User* get_user_from_target() {
+	virtual Client* get_user_from_target() {
 		return (&mock_user);
 	};
 
-	virtual User* get_user_from_user_host(std::string user_str, std::string host) {
+	virtual Client* get_user_from_user_host(std::string user_str, std::string host) {
 		(void)user_str;
 		(void)host;
 		calls_to_get_user_from_user_host++;
 		return (&mock_user);
 	};
 
-	virtual User* get_user_from_nickname(std::string nickname) {
+	virtual Client* get_user_from_nickname(std::string nickname) {
 		(void)nickname;
 		calls_to_get_user_from_nickname++;
 		return (&mock_user);
 	};
 
-	virtual User* get_user_from_fd(int fd) {
+	virtual Client* get_user_from_fd(int fd) {
 		(void)fd;
 		calls_to_get_user_from_fd++;
 		return (&mock_user);
 	};
 
-	virtual std::vector<User *>&	get_all_users() {
+	virtual std::vector<Client *>&	get_all_users() {
 		calls_to_get_all_users++;
 
 		return (mock_user_vector);
 	};
 
-	virtual std::vector<User *> get_channel_users(std::string channel, User *authority) {
+	virtual std::vector<Client *> get_channel_users(std::string channel, Client *authority) {
 		(void)channel;
 		(void)authority;
 		calls_to_get_channel_users++;
-		std::vector<User *>	users;
+		std::vector<Client *>	users;
 
 		users.push_back(&mock_user);
 
 		return (users);
 	};
 
-	virtual void kill_user(User *user) {
+	virtual void kill_user(Client *user) {
 		(void)user;
 		calls_to_kill_user++;
 	};
@@ -107,7 +107,7 @@ public:
 		return (NULL);
 	};
 
-	virtual std::vector<Channel *>	get_all_channels() {
+	virtual std::vector<Chan *>	get_all_channels() {
 		return (mock_chan_vector);
 	}
 };

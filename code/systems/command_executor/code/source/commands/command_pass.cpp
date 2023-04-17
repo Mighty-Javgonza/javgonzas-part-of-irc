@@ -1,23 +1,28 @@
 #include "commands.hpp"
+#include "../../../../vicmarti/src/db/Unregistered.hpp"
 
-static void	set_password_flag(User *user, ParsedMessageConnectionPass *pass_msg, ServerInfo *server_info)
+static void	set_password_flag(Unregistered *client)
 {
-	if (pass_msg->password == server_info->password)
-		user->register_pass_correct = true;
-	else
-		user->register_pass_correct = false;
+(void) client;
+	//TODO: Uncomment this
+//	client->ValidatePass();
 }
 
 static void	try_accepting_password_for_user(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {
 	ParsedMessageConnectionPass	*pass_msg = static_cast<ParsedMessageConnectionPass*>(message->message);
 
-	User *user = database->get_user_from_fd(message->sender->fd);
-
 	if (database->user_is_registered(message->sender))
-		*user << replier->pass_alreadyregistred();
+	{
+		Client *client = database->get_user_from_fd(message->sender->Fd());
+		*client << replier->pass_alreadyregistred();
+	}
 	else
-		set_password_flag(user, pass_msg, server_info);
+	{
+		Unregistered *client = database->get_unregistered_from_fd(message->sender->Fd());
+		if (pass_msg->password == server_info->password)
+			set_password_flag(client);
+	}
 }
 
 void	command_pass(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)

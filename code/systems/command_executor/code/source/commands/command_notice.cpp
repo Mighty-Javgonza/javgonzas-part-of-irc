@@ -10,7 +10,7 @@ void	command_notice(Databasable *database, SentMessage *message, replies_generat
 	for (size_t i = 0; i < notice_msg->target.targets.size(); i++)
 	{
 		t = &notice_msg->target.targets[i];
-		User *sender = database->get_user_from_fd(message->sender->fd);
+		Client *sender = database->get_user_from_fd(message->sender->Fd());
 		send_text_message_to_target(sender, notice_msg->message, t, database, "NOTICE", replier);
 	}
 }

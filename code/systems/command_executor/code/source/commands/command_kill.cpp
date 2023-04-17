@@ -5,14 +5,16 @@ void	command_kill(Databasable *database, SentMessage *message, replies_generator
 	(void)replier;
 	(void)server_info;
 	ParsedMessageUserKill	*kill_msg = static_cast<ParsedMessageUserKill*>(message->message);
-	User *user = database->get_user_from_nickname(kill_msg->nickname);
-	std::vector<Channel *>user_channels = user->get_channels();
+	Client *client = database->get_user_from_nickname(kill_msg->nickname);
+	std::vector<ChanId> *user_channels = client->Subscriptions();
  
-	for (std::vector<Channel *>::iterator it = user_channels.begin(); it != user_channels.end(); it++)
+	for (std::vector<ChanId>::iterator it = user_channels->begin(); it != user_channels->end(); it++)
 	{
-		Channel	*channel = database->get_channel((*it)->name);
+	//TODO: Waiting for vicmarti's implementation
+	//	Chan	*channel = database->get_channel(*it); 
 
-		part_user_from_chan(user, channel, false, "", database);
+//		part_user_from_chan(client, channel, false, "", database);
 	}
-	database->kill_user(user);
+	database->kill_user(client);
+	delete (user_channels);
 }

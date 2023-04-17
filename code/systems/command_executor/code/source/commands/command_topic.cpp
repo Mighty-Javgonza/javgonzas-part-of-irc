@@ -1,44 +1,47 @@
 #include "commands.hpp"
 
-static void	try_to_reply_with_the_channel_topic(Channel *chan, User *user,replies_generator *replier)
+static void	try_to_reply_with_the_channel_topic(Chan *chan, Client *client,replies_generator *replier)
 {
-	if (chan->user_in_chan(user))
-	{
-		if (chan->has_topic)
-			*user << replier->topic_ok(chan->name, chan->topic);
-		else
-			*user << replier->topic_no(chan->name);
-	}
-	else
-		*user << replier->topic_notonchannel(chan->name);
+	//TODO: Await for vicmarti's implementation
+//	if (chan->user_in_chan(client))
+//	{
+//		if (chan->Mode(Chan::Topic))
+//			*client << replier->topic_ok(chan->Name(), chan->topic);
+//		else
+//			*client << replier->topic_no(chan->Name());
+//	}
+//	else
+		*client << replier->topic_notonchannel(chan->Name());
 }
 
-static void	change_channel_topic(Channel *chan, ParsedMessageChannelTopic *topic_msg)
+static void	change_channel_topic(Chan *chan, ParsedMessageChannelTopic *topic_msg)
 {
 	chan->topic = topic_msg->topic;
-	if (topic_msg->topic == "")
-		chan->has_topic = false;
+	//TODO: Await for vicmarti's implementation
+//	if (topic_msg->topic == "")
+//		chan->Mode(Chan::Topic, false);
 }
 
 void	command_topic(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {
 	(void)server_info;
 	ParsedMessageChannelTopic	*topic_msg = static_cast<ParsedMessageChannelTopic*>(message->message);
-	User	*user = database->get_user_from_fd(message->sender->fd);
-	Channel	*chan = database->get_channel(topic_msg->channel.name);
+	Client	*client = database->get_user_from_fd(message->sender->Fd());
+	Chan	*chan = database->get_channel(topic_msg->channel.name);
 
-	if (chan->topic_flag == false)
-	{
-		*user << replier->topic_nochanmodes(chan->name);
-		return ;
-	}
+	//TODO: Await for vicmarti's implementation
+//	if (chan->Mode(Chan::Topic) == false)
+//	{
+//		*client << replier->topic_nochanmodes(chan->Name());
+//		return ;
+//	}
 	if (!topic_msg->has_topic)
-		try_to_reply_with_the_channel_topic(chan, user, replier);
+		try_to_reply_with_the_channel_topic(chan, client, replier);
 	else
 	{
-		if (chan->is_operator(user))
+		if (chan->IsChop(*client))
 			change_channel_topic(chan, topic_msg);
 		else
-			*user << replier->topic_chanoprivsneeded(chan->name);
+			*client << replier->topic_chanoprivsneeded(chan->Name());
 	}
 }
