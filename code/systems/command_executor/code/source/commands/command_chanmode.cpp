@@ -25,10 +25,10 @@ void	command_chanmode(Databasable *database, SentMessage *message, replies_gener
 	else if (chanmode_msg->flags.size() == 0)
 		*client << replier->mode_needmoreparams();
 	//TODO: Revisar esta reply
-	else if (!channel->IsChop(*client))
+	else if (!channel->IsChop(client->Id()))
 	{
 		//TODO: Await for vicmartis implementation
-	//	*client << replier->mode_chanoprivsneeded(channel->Name());
+	//	*client << replier->mode_chanoprivsneeded(channel->Title());
 	}
 	else
 	{
@@ -41,29 +41,29 @@ void	command_chanmode(Databasable *database, SentMessage *message, replies_gener
 			set_flag(client->Id(), mode_flag.action, Chan::Quiet, channel);
 		if (mode_flag.flag == 'p')
 			set_flag(client->Id(), mode_flag.action, Chan::Private, channel);
-		//TODO decide not to implement Secret
-//		if (mode_flag.flag == 's')
-//			set_flag(client->Id(),mode_flag.action, Secret);
+		if (mode_flag.flag == 's')
+			set_flag(client->Id(),mode_flag.action, Chan::Secret, channel);
 		if (mode_flag.flag == 'r')
 			set_flag(client->Id(), mode_flag.action, Chan::Reop, channel);
 		if (mode_flag.flag == 't')
-			set_flag(client->Id(), mode_flag.action, Chan::Topic, channel);
+			set_flag(client->Id(), mode_flag.action, Chan::TopicRestricted, channel);
 		if (mode_flag.flag == 'o')
 		{
 			Client *oper = database->get_user_from_nickname(mode_flag.parameter);
 
 			if (oper == NULL)
-				*client << replier->mode_usernotinchannel(mode_flag.parameter, channel->Name());
+				// TODO: Preguntar a vicmarti si el title es el nombre
+				*client << replier->mode_usernotinchannel(mode_flag.parameter, channel->Title());
 			else
 			{
 				if (mode_flag.action == CHANNEL_MODE_FLAG_ACTION_ADD)
 				{
-					if (!channel->IsChop(*oper))
+					if (!channel->IsChop(oper->Id()))
 						channel->Chop(client->Id(), oper->Id());
 				}
 				else
 				{
-					if (channel->IsChop(*oper))
+					if (channel->IsChop(oper->Id()))
 						channel->Unchop(client->Id(), oper->Id());
 				}
 			}

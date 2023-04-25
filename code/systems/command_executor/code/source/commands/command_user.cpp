@@ -12,8 +12,10 @@ void	command_user(Databasable *database, SentMessage *message, replies_generator
 	}
 	else
 	{
+std::cout << message->sender->Fd() << std::endl;
 		Unregistered *registering_user = database->get_unregistered_from_fd(message->sender->Fd());
-		registering_user->Name(user_msg->user);
+std::cout << user_msg->user << std::endl;
+//		registering_user->Id().User(user_msg->user);
 		database->register_user(registering_user);
 		Client *registered_user = database->get_user_from_fd(message->sender->Fd());
 		//TODO: Await for vicmarits imlementation

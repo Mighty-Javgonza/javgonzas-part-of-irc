@@ -7,7 +7,7 @@ static void	relay_quit_to_users_in_shared_channels(Databasable *database, Client
 	(void)client;
 	(void)quit_msg;
 //	std::vector <Chan *> user_channels = database->get_channels_of_user(client);
-//	std::string user_preffix = ":" + client->MessagePreffix();
+//	std::string user_preffix = ":" + client->MessagePrefix();
 
 
 

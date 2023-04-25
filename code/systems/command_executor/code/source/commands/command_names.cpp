@@ -3,7 +3,7 @@
 static void	reply_with_all_nicks_in_chan(Databasable *database, Client *receiver, Chan *channel, replies_generator *replier)
 {
 	std::string	all_nicknames = "";
-	std::vector<ClientId>	*chan_users = channel->Subscribers();
+	std::vector<ClientId>	*chan_users = channel->Subscribers(receiver->Id());
 
 	for (std::vector<ClientId>::iterator it = chan_users->begin(); it != chan_users->end(); it++)
 	{

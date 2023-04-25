@@ -1,9 +1,9 @@
 #include "../tests.hpp"
 
-UserMock moder;
+Client moder;
 
-class	MockChan : public ChannelMock {
-	bool	is_operator(User *user)
+class	MockChan : public Chan {
+	bool	is_operator(*user)
 	{
 		(void)user;
 		return (true);

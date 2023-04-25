@@ -9,7 +9,7 @@ class Databasable;
 #include "../../../input_stream_orquestator/SentMessage.hpp"
 #include "../../../vicmarti/src/db/Client.hpp"
 #include "../../../vicmarti/src/db/Unregistered.hpp"
-#include "../../../vicmarti/src/db/chan.hpp"
+#include "../../../vicmarti/src/db/Chan.hpp"
 
 class Databasable {
 
@@ -18,7 +18,6 @@ public:
 	virtual bool					user_is_registered(ClientId *user) = 0;
 	virtual void					register_user(Unregistered *user) = 0;
 	virtual bool					nick_is_in_use(std::string nick) = 0;
-	virtual Client*					get_user_from_target() = 0;
 	virtual std::vector<Client *>&	get_all_users() = 0;
 	virtual Client*					get_user_from_user_host(std::string user_str, std::string host) = 0;
 	virtual Client*					get_user_from_nickname(std::string nickname) = 0;

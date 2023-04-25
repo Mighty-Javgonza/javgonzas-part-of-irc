@@ -17,7 +17,7 @@ void	command_invite(Databasable *database, SentMessage *message, replies_generat
 	}
 //	else if (channel->Mode(Chan::Invite) && !channel->IsChop(inviter))
 //	{
-//		*inviter << replier->invite_chanoprivsneeded(channel->Name());
+//		*inviter << replier->invite_chanoprivsneeded(channel->Title());
 //	}
 	else if (invitee == NULL)
 	{
@@ -25,7 +25,7 @@ void	command_invite(Databasable *database, SentMessage *message, replies_generat
 	}
 //	else if (channel->user_in_chan(invitee))
 //	{
-//		*inviter << replier->invite_useronchannel(invitee->Nick(), channel->Name());
+//		*inviter << replier->invite_useronchannel(invitee->Nick(), channel->Title());
 //	}
 // NOT IMPLEMENTED IN CLIENT
 //	else if (invitee->Modes(Away))
@@ -34,8 +34,8 @@ void	command_invite(Databasable *database, SentMessage *message, replies_generat
 //	}
 	else
 	{
-		*inviter << replier->invite_ok(channel->Name(), inviter->Nick());
-		std::string invitation = ":" + inviter->MessagePreffix() + " INVITE " + inviter->Nick() + " #" + channel->Name() + "\r\n";
+		*inviter << replier->invite_ok(channel->Title(), inviter->Nick());
+		std::string invitation = ":" + inviter->MessagePrefix() + " INVITE " + inviter->Nick() + " #" + channel->Title() + "\r\n";
 		*invitee << invitation;
 	}
 }

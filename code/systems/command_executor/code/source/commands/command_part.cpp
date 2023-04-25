@@ -3,8 +3,8 @@
 static std::string	build_reply(Client *client, Chan *chan, bool has_comment, std::string comment)
 {
 	std::string reply;
-	std::string	user_preffix = client->MessagePreffix();
-	std::string	chan_name = chan->Name();
+	std::string	user_preffix = client->MessagePrefix();
+	std::string	chan_name = chan->Title();
 
 	if (has_comment)
 		reply = ":" + user_preffix + " PART #" + chan_name + " :" + comment + "\r\n";
@@ -15,10 +15,11 @@ static std::string	build_reply(Client *client, Chan *chan, bool has_comment, std
 
 void	part_user_from_chan(Client *authority, Client *client, Chan *chan, bool has_comment, std::string comment, Databasable *database)
 {
+(void)database;
 	std::string	reply = build_reply(client, chan, has_comment, comment);
 
 	chan->Leave(authority->Id(), *client);
-	send_message_to_users_in_chan(reply, chan, database);
+//	send_message_to_users_in_chan(reply, chan, database);
 }
 
 void	part_from_chan(Databasable *database, std::string channel_name, ParsedMessageChannelPart *part_msg, Client *client, replies_generator *replier)
@@ -29,10 +30,11 @@ void	part_from_chan(Databasable *database, std::string channel_name, ParsedMessa
 		*client << replier->part_nosuchchannel(channel_name);
 	//TODO: Await for vicmarti's implementation
 //	else if (!chan->user_in_chan(client))
-//		*client << replier->part_notonchannel(chan->Name());
+//		*client << replier->part_notonchannel(chan->Title());
 	else
-		part_user_from_chan(client, chan, part_msg->has_part_message, part_msg->part_message, database);
+		part_user_from_chan(client, client, chan, part_msg->has_part_message, part_msg->part_message, database);
 }	
+
 void	command_part(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {
 	(void)server_info;

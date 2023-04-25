@@ -3,7 +3,6 @@ class	DatabasableMock;
 # define DATABASABLEMOCK_HPP
 
 #include "../../code/source/all_headers.hpp"
-#include "UserMock.hpp"
 
 class	DatabasableMock : public Databasable{
 public:
@@ -18,7 +17,7 @@ public:
 	int	calls_to_get_all_users;
 	int	calls_to_kill_user;
 
-	UserMock mock_user;
+	Client mock_user;
 	std::vector<Client *>	mock_user_vector;
 	std::vector<Chan *>		mock_chan_vector;
 
@@ -46,7 +45,7 @@ public:
 		return (false); //Change in test
 	}
 
-	virtual void	register_user(Client *user) {
+	virtual void	register_user(Unregistered *user) {
 		(void) user;
 		calls_to_register_user++;
 	}
@@ -102,7 +101,7 @@ public:
 		calls_to_kill_user++;
 	};
 
-	virtual Channel*	get_channel(std::string name) {
+	virtual Chan*	get_channel(std::string name) {
 		(void)name;
 		return (NULL);
 	};

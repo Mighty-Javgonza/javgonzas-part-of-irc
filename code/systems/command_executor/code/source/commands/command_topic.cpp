@@ -6,21 +6,21 @@ static void	try_to_reply_with_the_channel_topic(Chan *chan, Client *client,repli
 //	if (chan->user_in_chan(client))
 //	{
 //		if (chan->Mode(Chan::Topic))
-//			*client << replier->topic_ok(chan->Name(), chan->topic);
+//			*client << replier->topic_ok(chan->Title(), chan->topic);
 //		else
-//			*client << replier->topic_no(chan->Name());
+//			*client << replier->topic_no(chan->Title());
 //	}
 //	else
-		*client << replier->topic_notonchannel(chan->Name());
+		*client << replier->topic_notonchannel(chan->Title());
 }
 
-static void	change_channel_topic(Chan *chan, ParsedMessageChannelTopic *topic_msg)
-{
-	chan->topic = topic_msg->topic;
+//static void	change_channel_topic(Chan *chan, ParsedMessageChannelTopic *topic_msg)
+//{
+//	chan->topic = topic_msg->Topic();
 	//TODO: Await for vicmarti's implementation
 //	if (topic_msg->topic == "")
 //		chan->Mode(Chan::Topic, false);
-}
+//}
 
 void	command_topic(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {
@@ -32,16 +32,16 @@ void	command_topic(Databasable *database, SentMessage *message, replies_generato
 	//TODO: Await for vicmarti's implementation
 //	if (chan->Mode(Chan::Topic) == false)
 //	{
-//		*client << replier->topic_nochanmodes(chan->Name());
+//		*client << replier->topic_nochanmodes(chan->Title());
 //		return ;
 //	}
 	if (!topic_msg->has_topic)
 		try_to_reply_with_the_channel_topic(chan, client, replier);
 	else
 	{
-		if (chan->IsChop(*client))
-			change_channel_topic(chan, topic_msg);
+		if (chan->IsChop(client->Id()))
+			chan->Topic(client->Id(), topic_msg->topic);
 		else
-			*client << replier->topic_chanoprivsneeded(chan->Name());
+			*client << replier->topic_chanoprivsneeded(chan->Title());
 	}
 }

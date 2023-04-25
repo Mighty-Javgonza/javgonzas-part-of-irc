@@ -3,25 +3,26 @@
 void	kick_user_chan(Databasable *database, Client *kicker, Client *kickee, Chan *channel, replies_generator *replier, ParsedMessageChannelKick *kick_msg)
 {
 	if (channel == NULL)
-		*kicker << replier->kick_nosuchchannel(channel->Name());
+		*kicker << replier->kick_nosuchchannel(channel->Title());
 //TODO: Await for vicmarti's implementation
 //	else if (!channel->user_in_chan(kicker))
-//		*kicker << replier->kick_notonchannel(channel->Name());
+//		*kicker << replier->kick_notonchannel(channel->Title());
 	else if (kickee == NULL)
-		*kicker << replier->kick_notonchannel(channel->Name());
+		*kicker << replier->kick_notonchannel(channel->Title());
 //TODO: Await for vicmarti's implementation
 //	else if (!channel->user_in_chan(kickee))
-//		*kicker << replier->kick_notonchannel(channel->Name());
+//		*kicker << replier->kick_notonchannel(channel->Title());
 	else if (!channel->IsChop(kicker->Id()))
-		*kicker << replier->kick_chanoprivsneeded(channel->Name());
+		*kicker << replier->kick_chanoprivsneeded(channel->Title());
 	else
 	{
-		std::string	kick_reply = ":" + kicker->MessagePreffix() + " KICK " + " #" + channel->Name() + " " + kickee->Nick();
+		std::string	kick_reply = ":" + kicker->MessagePrefix() + " KICK " + " #" + channel->Title() + " " + kickee->Nick();
 		if (kick_msg->has_comment)
 			kick_reply += " " + kick_msg->comment + "\r\n";
 		else
 			kick_reply += "\r\n";
-		std::vector<ClientId> *chan_users = channel->Subscribers();
+		//TODO: Change to everyone on channel
+		std::vector<ClientId> *chan_users = channel->Subscribers(kicker->Id());
 		for (std::vector<ClientId>::iterator it = chan_users->begin(); it != chan_users->end(); it++)
 		{
 			Client *chan_user = database->get_user_from_fd(it->Fd());

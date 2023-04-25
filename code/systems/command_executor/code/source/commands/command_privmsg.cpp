@@ -24,7 +24,7 @@ static void	priv_to_chan(Databasable *database, msgto_parameter *t, Client *send
 
 void	send_text_message_to_target(Client *sender, std::string message_str, msgto_parameter *t, Databasable *database, std::string level, replies_generator *replier)
 {
-	std::string	sender_preffix = sender->MessagePreffix();
+	std::string	sender_preffix = sender->MessagePrefix();
 	if (t->is_nickname)
 		priv_to_nick(database, t, sender_preffix, level, message_str);
 	else if (t->is_user)

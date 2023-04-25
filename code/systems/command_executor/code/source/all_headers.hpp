@@ -3,7 +3,6 @@
 
 # include "executor/CommandExecutor.hpp"
 # include "Databasable.hpp"
-# include "User/User.hpp"
 # include "ServerInfo/ServerInfo.hpp"
 
 #include "LexerParserConnector/LexerParserConnector.hpp"
