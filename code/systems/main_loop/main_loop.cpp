@@ -9,13 +9,13 @@
 void	update_listener(orchestator &orchest, Database &db)
 {
 	orchest.preparation_com(); 
-	orchest.accept_new_connect(db);
-	orchest.orchestation();
-	orchest.check_status();
+	orchest.accept_new_connect();
+//	orchest.orchestation();
+//	orchest.check_status();
 //	orchest.clean_up();
 }
 
-void	process_one_message_from_each_queue(Database &database, orchestator orchest, ServerInfo &server_info)
+void	process_one_message_from_each_queue(Database &database, orchestator &orchest, ServerInfo &server_info)
 {
 	std::vector<ClientId> *all_clients = database.get_all_users();
 	std::vector<ClientId> *all_unclients = database.UnregisteredClients().Vector();
@@ -23,31 +23,56 @@ void	process_one_message_from_each_queue(Database &database, orchestator orchest
 	SentMessage				sent_message;
 	replies_generator		rg;
 
-//	for (std::vector<ClientId>::iterator it = all_clients->begin(); it != all_clients->end(); it++) 
-//	{
-//		sent_message.message = parser.parse_string(orchest.recv_msg(it->Fd()));
-//		sent_message.sender = &(*it);
-//		CommandActionAssociator::command_function	executor = commandActionAssociator.get_executor(sent_message.message->command);
-//		executor(&database, &sent_message, &rg, &server_info);
-//	}
-	for (std::vector<ClientId>::iterator it = all_unclients->begin(); it != all_unclients->end(); it++) 
+
+	for (std::vector<ClientId>::iterator it = all_clients->begin(); it != all_clients->end(); it++) 
 	{
+		orchest.recv_msgs(it->Fd());
+		orchest.send_msgs(it->Fd());
 		try {
-			if (orchest.users.find(it->Fd())->second.msg_in.check_if_empty() == false)
+			Client *client = database.get_user_from_fd(it->Fd());
+			if (client->msg_in.msg_q_size() != 0)
 			{
-				std::string message = orchest.users.find(it->Fd())->second.msg_in.extract_msg();
+  				std::string message = client->msg_in.extract_msg();
+				client->msg_in.pop_msg();
 				if (message != "")
 				{
-std::cout << "FD of unclient:" << it->Fd() << std::endl;
 					sent_message.message = parser.parse_string(message);
-std::cout << "THE MESSAGE IS:" << sent_message.message << std::endl;
 					if (sent_message.message != NULL)
 					{
 						sent_message.sender = &(*it);
 						CommandActionAssociator::command_function	executor = commandActionAssociator.get_executor(sent_message.message->command);
-						std::cout << "CUANTOS UNCLIENTES:" << database.UnregisteredClients().Vector()->size() << std::endl;
 						executor(&database, &sent_message, &rg, &server_info);
-						std::cout << "CUANTOS CLIENTES:" << database.Clients().Vector()->size() << std::endl;
+std::cout << "EXECUTED A COMMAND FOR: " << it->Fd() << std::endl;
+					}
+				}
+			}
+		} catch(MessageLexer::MissingCommandException) {
+std::cout << "This is fine" << std::endl;
+		} catch (std::exception &e) {
+std::cout << "SOMETHING IS NOT" << std::endl;
+std::cout << e.what() << std::endl;
+		}
+	}
+
+	for (std::vector<ClientId>::iterator it = all_unclients->begin(); it != all_unclients->end(); it++) 
+	{
+		orchest.recv_msgs(it->Fd());
+		orchest.send_msgs(it->Fd());
+		try {
+			Unregistered *client = database.get_unregistered_from_fd(it->Fd());
+			if (client->msg_in.msg_q_size() != 0)
+			{
+  				std::string message = client->msg_in.extract_msg();
+				client->msg_in.pop_msg();
+				if (message != "")
+				{
+					sent_message.message = parser.parse_string(message);
+					if (sent_message.message != NULL)
+					{
+						sent_message.sender = &(*it);
+						CommandActionAssociator::command_function	executor = commandActionAssociator.get_executor(sent_message.message->command);
+						executor(&database, &sent_message, &rg, &server_info);
+std::cout << "EXECUTED A COMMAND FOR: " << it->Fd() << std::endl;
 					}
 				}
 			}
@@ -62,7 +87,7 @@ std::cout << e.what() << std::endl;
 	delete all_unclients;
 }
 
-void	send_first_message_of_one_client(orchestator orchest, Client *client)
+void	send_first_message_of_one_client(orchestator &orchest, Client *client)
 {
 	int send_leng;
 	int	cfd = client->Id().Fd();
@@ -81,7 +106,7 @@ void	send_first_message_of_one_client(orchestator orchest, Client *client)
     }
 }
 
-void	process_one_reply_from_each_queue(Databasable &database, orchestator orchest)
+void	process_one_reply_from_each_queue(Databasable &database, orchestator &orchest)
 {
 	std::vector<ClientId> *all_clients = database.get_all_users();
 
@@ -128,8 +153,8 @@ void	update_pinger_ponger(Database &database, ServerInfo &server_info)
 
 void	main_loop(int port)
 {
-	orchestator	orchest(port);
 	Database	database;
+	orchestator	orchest(port, database);
 	ServerInfo	server_info;
 
 std::cout << "SERVER IS UP" << std::endl;
@@ -140,6 +165,7 @@ std::cout << "SERVER IS UP" << std::endl;
 //	update_database(database);
 //	update_pinger_ponger(database, server_info);
 //	process_one_reply_from_each_queue(database, orchest);
+		usleep(300000);	
 	}
 }
 
