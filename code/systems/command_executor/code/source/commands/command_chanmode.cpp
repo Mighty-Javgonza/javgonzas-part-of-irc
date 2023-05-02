@@ -1,16 +1,11 @@
 #include "commands.hpp"
 
-static void	set_flag(ClientId const &changer, int action, int flag, Chan *channel)
+static void	set_flag(ClientId const &changer, int action, enum Chan::Mode flag, Chan *channel)
 {
-	(void)changer;
-	(void)action;
-	(void)flag;
-	(void)channel;
-	//TODO: wait for vicmartis implementation
-//	if (action == CHANNEL_MODE_FLAG_ACTION_ADD)
-//		channel->SetMode(changer, flag);
-//	else if (action == CHANNEL_MODE_FLAG_ACTION_REMOVE)
-//		channel->UnsetMode(changer, flag);
+	if (action == CHANNEL_MODE_FLAG_ACTION_ADD)
+		channel->Mode(changer, flag, true);
+	else if (action == CHANNEL_MODE_FLAG_ACTION_REMOVE)
+		channel->Mode(changer, flag, false);
 }
 
 void	command_chanmode(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
@@ -24,12 +19,8 @@ void	command_chanmode(Databasable *database, SentMessage *message, replies_gener
 		*client << replier->mode_nosuchchannel(chanmode_msg->channel.name);
 	else if (chanmode_msg->flags.size() == 0)
 		*client << replier->mode_needmoreparams();
-	//TODO: Revisar esta reply
 	else if (!channel->IsChop(client->Id()))
-	{
-		//TODO: Await for vicmartis implementation
-	//	*client << replier->mode_chanoprivsneeded(channel->Title());
-	}
+		*client << replier->mode_chanoprivsneeded(channel->Title());
 	else
 	{
 		ParsedMessageChannelMode::channel_mode_flag	mode_flag = chanmode_msg->flags[0];
@@ -52,7 +43,6 @@ void	command_chanmode(Databasable *database, SentMessage *message, replies_gener
 			Client *oper = database->get_user_from_nickname(mode_flag.parameter);
 
 			if (oper == NULL)
-				// TODO: Preguntar a vicmarti si el title es el nombre
 				*client << replier->mode_usernotinchannel(mode_flag.parameter, channel->Title());
 			else
 			{

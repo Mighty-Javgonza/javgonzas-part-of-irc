@@ -3,9 +3,7 @@
 
 static void	set_password_flag(Unregistered *client)
 {
-(void) client;
-	//TODO: Uncomment this
-//	client->ValidatePass();
+	client->ValidatePass();
 }
 
 static void	try_accepting_password_for_user(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)

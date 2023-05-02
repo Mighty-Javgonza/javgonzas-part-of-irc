@@ -10,12 +10,11 @@ void	command_oper(Databasable *database, SentMessage *message, replies_generator
 	{
 		if (oper_msg->password == server_info->oper_password)
 		{
-			//TODO: Await for vicmarti's implementation
-//			if (client->Mode(Chan::LocalOperator) == false)
-//			{
-//				client->Mode(Chan::LocalOperator) = true;
-//				*client << replier->oper_ok();
-//			}
+			if (client->Mode(Client::LocalOperator) == false)
+			{
+				client->Mode(Client::LocalOperator, true);
+				*client << replier->oper_ok();
+			}
 		}
 		else
 		{

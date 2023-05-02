@@ -29,12 +29,11 @@ void	command_topic(Databasable *database, SentMessage *message, replies_generato
 	Client	*client = database->get_user_from_fd(message->sender->Fd());
 	Chan	*chan = database->get_channel(topic_msg->channel.name);
 
-	//TODO: Await for vicmarti's implementation
-//	if (chan->Mode(Chan::Topic) == false)
-//	{
-//		*client << replier->topic_nochanmodes(chan->Title());
-//		return ;
-//	}
+	if (chan->Mode(Chan::TopicRestricted) == false)
+	{
+		*client << replier->topic_nochanmodes(chan->Title());
+		return ;
+	}
 	if (!topic_msg->has_topic)
 		try_to_reply_with_the_channel_topic(chan, client, replier);
 	else

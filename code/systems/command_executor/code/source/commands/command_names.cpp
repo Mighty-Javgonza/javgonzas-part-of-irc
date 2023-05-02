@@ -25,11 +25,13 @@ static void	reply_with_all_nicks_of_msg_chans(ParsedMessageChannelNames *names_m
 
 static void	reply_with_all_nicks_of_all_chans(Databasable *database, Client *client, replies_generator *replier)
 {
-	std::vector<Chan *> all_chans = database->get_all_channels();
-	for (std::vector<Chan *>::iterator it = all_chans.begin(); it != all_chans.end(); it++)
+	std::vector<ChanId> *all_chans = database->get_all_channels();
+	for (std::vector<ChanId>::iterator it = all_chans->begin(); it != all_chans->end(); it++)
 	{
-		reply_with_all_nicks_in_chan(database, client, *it, replier);
+		Chan *chan = database->get_channel_from_id(*it);
+		reply_with_all_nicks_in_chan(database, client, chan, replier);
 	}
+	delete all_chans;
 }
 
 void	command_names(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)

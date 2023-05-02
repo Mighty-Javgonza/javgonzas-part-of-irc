@@ -35,15 +35,17 @@ void	command_list(Databasable *database, SentMessage *message, replies_generator
 	}
 	else
 	{
-		std::vector<Chan *> all_chans = database->get_all_channels();
+		std::vector<ChanId> *all_chans = database->get_all_channels();
 
-		for (std::vector<Chan *>::iterator it = all_chans.begin(); it != all_chans.end(); it++)
+		for (std::vector<ChanId>::iterator it = all_chans->begin(); it != all_chans->end(); it++)
 		{
+			Chan *chan = database->get_channel_from_id(*it);
 			std::pair<std::string, std::string> channel_topic;
-			channel_topic.first = (*it)->Title();
-			channel_topic.second = (*it)->Topic();
+			channel_topic.first = chan->Title();
+			channel_topic.second = chan->Topic();
 			channel_topic_queue.push(channel_topic);
 		}
+		delete all_chans;
 	}
 	*client << replier->list_ok(channel_topic_queue);
 }

@@ -19,7 +19,7 @@ void	part_user_from_chan(Client *authority, Client *client, Chan *chan, bool has
 	std::string	reply = build_reply(client, chan, has_comment, comment);
 
 	chan->Leave(authority->Id(), *client);
-//	send_message_to_users_in_chan(reply, chan, database);
+	send_message_to_users_in_chan(reply, chan, database);
 }
 
 void	part_from_chan(Databasable *database, std::string channel_name, ParsedMessageChannelPart *part_msg, Client *client, replies_generator *replier)
@@ -28,9 +28,8 @@ void	part_from_chan(Databasable *database, std::string channel_name, ParsedMessa
 
 	if (chan == NULL)
 		*client << replier->part_nosuchchannel(channel_name);
-	//TODO: Await for vicmarti's implementation
-//	else if (!chan->user_in_chan(client))
-//		*client << replier->part_notonchannel(chan->Title());
+	else if (!chan->IsSubsciptor(client->Id()))
+		*client << replier->part_notonchannel(chan->Title());
 	else
 		part_user_from_chan(client, client, chan, part_msg->has_part_message, part_msg->part_message, database);
 }	

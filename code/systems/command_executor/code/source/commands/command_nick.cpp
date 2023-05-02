@@ -7,7 +7,7 @@ void	command_nick(Databasable *database, SentMessage *message, replies_generator
 
 	if (database->nick_is_in_use(nick_msg->nickname))
 	{
-		Client* client = database->get_user_from_fd(message->sender->Fd());
+		ClientData* client = database->get_client_data_from_fd(message->sender->Fd());
 		*client << replier->nick_nicknameinuse(nick_msg->nickname);
 	}
 	else

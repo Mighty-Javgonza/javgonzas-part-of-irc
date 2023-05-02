@@ -10,11 +10,10 @@ void	command_kill(Databasable *database, SentMessage *message, replies_generator
  
 	for (std::vector<ChanId>::iterator it = user_channels->begin(); it != user_channels->end(); it++)
 	{
-	//TODO: Waiting for vicmarti's implementation
-	//	Chan	*channel = database->get_channel(*it); 
+		Chan	*channel = database->get_channel_from_id(*it); 
 
-//		part_user_from_chan(client, channel, false, "", database);
+		channel->Leave(*message->sender, *client);
 	}
-	database->kill_user(client);
+	database->kill_user((ClientId *)&client->Id());
 	delete (user_channels);
 }
