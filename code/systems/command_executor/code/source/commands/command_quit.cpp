@@ -32,6 +32,6 @@ void	command_quit(Databasable *database, SentMessage *message, replies_generator
 	Client *client = database->get_user_from_fd(message->sender->Fd());
 
 	*client << ":" + server_info->get_preffix_string() + " ERROR :Your connection was closed\r\n";
-	database->kill_user((ClientId *)&client->Id());
 	relay_quit_to_users_in_shared_channels(database, client, quit_msg);
+	database->kill_user((ClientId *)&client->Id());
 }

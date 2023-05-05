@@ -28,7 +28,7 @@ void	part_from_chan(Databasable *database, std::string channel_name, ParsedMessa
 
 	if (chan == NULL)
 		*client << replier->part_nosuchchannel(channel_name);
-	else if (!chan->IsSubsciptor(client->Id()))
+	else if (!chan->IsSubscriptor(client->Id()))
 		*client << replier->part_notonchannel(chan->Title());
 	else
 		part_user_from_chan(client, client, chan, part_msg->has_part_message, part_msg->part_message, database);
@@ -40,8 +40,8 @@ void	command_part(Databasable *database, SentMessage *message, replies_generator
 	ParsedMessageChannelPart	*part_msg = static_cast<ParsedMessageChannelPart*>(message->message);
 
 	Client *client = database->get_user_from_fd(message->sender->Fd());
-
 	
+	//TODO delete channel if empty
 	for (std::vector<channel_parameter>::iterator it = part_msg->channel_list.channels.begin(); it != part_msg->channel_list.channels.end(); it++)
 	{
 		std::string channel_name = (*it).name;

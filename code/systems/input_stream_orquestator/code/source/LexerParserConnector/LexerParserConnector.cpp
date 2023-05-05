@@ -27,8 +27,12 @@ ParsedMessage	*LexerParserConnector::parse_string(std::string str)
 	lexed = lexer.lex(str);
 	std::string	command = lexed.getCommand();
 	parser = commandActionAssociator.get_parser(command);
+//std::cout << "param" << lexed.parameters[0] << std::endl;
+//std::cout << "param_len" << lexed.parameters.size() << std::endl;
 	if (parser == NULL)
+	{
 		return (NULL); // TODO: BORRAR
+	}
 	parsed = parser->parse(lexed);
 	return (parsed);
 }

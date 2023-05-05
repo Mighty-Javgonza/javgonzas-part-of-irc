@@ -1,0 +1,5 @@
+NICK tomartin
+USER tom 0 * :Tomartin
+JOIN #bienvenida
+PRIVMSG #bienvenida :Chan, voy a cambiar el TOPIC
+TOPIC #bienvenida :El tom topic

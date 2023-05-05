@@ -4,7 +4,7 @@ void	command_oper(Databasable *database, SentMessage *message, replies_generator
 {
 	ParsedMessageConnectionOper	*oper_msg = static_cast<ParsedMessageConnectionOper*>(message->message);
 
-	Client	*client = database->get_user_from_nickname(oper_msg->name);
+	Client	*client = database->get_user_from_fd(message->sender->Fd());
 
 	if (oper_msg->name == server_info->oper_name)
 	{

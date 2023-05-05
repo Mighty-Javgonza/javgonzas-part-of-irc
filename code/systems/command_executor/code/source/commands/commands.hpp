@@ -27,6 +27,8 @@ void	command_names(Databasable *database, SentMessage *message, replies_generato
 void	command_list(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
 void	command_chanmode(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
 void	command_notice(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
+void	command_join(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
+void	mixed_command_mode(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
 
 void	send_text_message_to_target(Client *sender, std::string message_str, msgto_parameter *t, Databasable *database, std::string level, replies_generator *replier);
 void	send_message_to_users_in_chan(std::string message, Chan *channel, Databasable *database);

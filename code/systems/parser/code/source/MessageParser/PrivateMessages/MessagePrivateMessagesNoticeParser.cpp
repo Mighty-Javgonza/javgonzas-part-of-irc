@@ -22,4 +22,5 @@ void	MessagePrivateMessagesNoticeParser::parse_specific_part(void)
 void	MessagePrivateMessagesNoticeParser::create_specific_message(void)
 {
 	specific_message = new ParsedMessagePrivateMessagesNotice();
+	in_progress_message = specific_message;
 }

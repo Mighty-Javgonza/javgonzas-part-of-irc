@@ -13,13 +13,19 @@ static void	priv_to_user_host(Databasable *database, msgto_parameter *t, std::st
 {
 	Client *client = database->get_user_from_user_host(t->user, t->host);
 	if (client != NULL)
-		*client << (sender_preffix + " " + level + " " + t->user + "%" + t->host + " :" + message + "\x0d\x0a");
+		*client << (":" + sender_preffix + " " + level + " " + t->user + "%" + t->host + " :" + message + "\x0d\x0a");
 }
 
-static void	priv_to_chan(Databasable *database, msgto_parameter *t, Client *sender, std::string sender_preffix, std::string level, std::string message)
+static void	priv_to_chan(Databasable *database, msgto_parameter *t, Client *sender, std::string sender_preffix, std::string level, std::string message, replies_generator *replier)
 {
-	std::vector<ClientId> *clients = database->get_channel_users(t->channel.name, &sender->Id());
-	std::string reply_msg = sender_preffix + " " + level + " #" + t->channel.name + " :" + message + "\x0d\x0a";
+	Chan	*chan = database->get_channel(t->channel.name);
+	if (!chan)
+	{
+		*sender << replier->privmsg_cannotsendtochan(t->channel.name);
+		return ;
+	}
+	std::vector<ClientId> *clients = database->get_channel(t->channel.name)->Subscribers();
+	std::string reply_msg = ":" + sender_preffix + " " + level + " #" + t->channel.name + " :" + message + "\x0d\x0a";
 
 	for (std::vector<ClientId>::iterator client_it = clients->begin(); client_it != clients->end(); client_it++)
 	{
@@ -42,7 +48,7 @@ void	send_text_message_to_target(Client *sender, std::string message_str, msgto_
 			priv_to_user_host(database, t, sender_preffix, level, message_str);
 	}
 	else if (t->is_channel)
-		priv_to_chan(database, t, sender, sender_preffix, level, message_str);
+		priv_to_chan(database, t, sender, sender_preffix, level, message_str, replier);
 }
 
 void	command_privmsg(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
