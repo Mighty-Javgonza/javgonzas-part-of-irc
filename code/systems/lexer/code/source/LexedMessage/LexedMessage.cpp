@@ -36,6 +36,8 @@ void	LexedMessage::setCommand(std::string str)
 {
 	hasCommand = true;
 	command = str;
+	for (size_t i = 0; i < command.length(); i++)
+		command[i] = std::toupper(command[i]);
 }
 
 void	LexedMessage::setTrailing(std::string str)

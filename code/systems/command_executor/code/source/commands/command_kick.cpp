@@ -19,7 +19,7 @@ void	kick_user_chan(Databasable *database, Client *kicker, Client *kickee, Chan 
 			kick_reply += " " + kick_msg->comment + "\r\n";
 		else
 			kick_reply += "\r\n";
-		std::vector<ClientId> *chan_users = channel->Subscribers(kicker->Id());
+		std::vector<ClientId> *chan_users = channel->Subscribers();
 		for (std::vector<ClientId>::iterator it = chan_users->begin(); it != chan_users->end(); it++)
 		{
 			Client *chan_user = database->get_user_from_fd(it->Fd());

@@ -26,7 +26,7 @@ public:
 	class NeedMoreParamsException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The command specified requires more parameters\n");
+			return ("That command needs more params. You stupid.");
 		}
 	} needMoreParamsException;
 };

@@ -3,7 +3,7 @@
 set COMMANDS_FILE [lindex $argv 0]
 set PORT [lindex $argv 1]
 
-spawn nc -c -i 1 localhost $PORT
+spawn nc -c localhost $PORT
 
 set file [open $COMMANDS_FILE r]
 while {[gets $file line] != -1} {

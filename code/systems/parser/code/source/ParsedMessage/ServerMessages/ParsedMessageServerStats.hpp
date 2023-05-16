@@ -20,6 +20,7 @@ public:
 		bool	command_usage_count;
 		bool	list_configured_privileged_users;
 		bool	display_server_time_alive;
+		bool	number_of_database_get_from_fd;
 	};
 	struct s_query query;
 	bool				has_target;

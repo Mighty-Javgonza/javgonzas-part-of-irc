@@ -25,4 +25,4 @@ make clean
 make
 
 cd ../main_loop
-c++ main_loop.cpp ../vicmarti/vicmarti.a ../tomartin/tomartin.a ../command_executor/code/build/**/*.o ../parser/parser.a ../lexer/lexer.a ../input_stream_orquestator/CommandActionAssociator.cpp -I ../vicmarti/src -g3 -fsanitize=address
+c++ main_loop.cpp ../vicmarti/vicmarti.a ../tomartin/tomartin.a ../command_executor/code/build/**/*.o ../parser/parser.a ../lexer/lexer.a ../input_stream_orquestator/CommandActionAssociator.cpp -I ../vicmarti/src -g3

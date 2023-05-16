@@ -14,6 +14,14 @@ void	command_oper(Databasable *database, SentMessage *message, replies_generator
 			{
 				client->Mode(Client::LocalOperator, true);
 				*client << replier->oper_ok();
+				std::vector<ClientId> *all_users = database->get_all_users();
+				std::string notif = ":" + server_info->get_preffix_string() + " WALLOPS :" + client->Nick() + " is now an operator\r\n";
+				for (std::vector<ClientId>::iterator it = all_users->begin(); it != all_users->end(); it++)
+				{
+					Client	*client = database->get_user_from_fd(it->Fd());
+					*client <<  notif;
+				}
+				delete all_users;
 			}
 		}
 		else

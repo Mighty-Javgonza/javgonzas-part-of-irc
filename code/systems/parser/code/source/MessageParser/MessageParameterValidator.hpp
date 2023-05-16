@@ -31,105 +31,105 @@ public:
 	static class ErroneousNicknameException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The nickname provided does not follow the naming rules\n");
+			return ("Invalid nickname");
 		}
 	} erroneousNicknameException;
 
 	static class ErroneousUserStringException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The user provided does not follow the naming rules\n");
+			return ("Invalid user");
 		}
 	} erroneousUserStringException;
 
 	static class ErroneousChanstringException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The chanstring contains forbidden characters\n");
+			return ("Invalid chanstring");
 		}
 	} erroneousChanstringException;
 
 	static class ErroneousChannelidException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The channelid provided does not follow the naming rules\n");
+			return ("Invalid channel");
 		}
 	} erroneousChannelidException;
 
 	static class ErroneousChannelException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The channelid provided does not follow the naming rules\n");
+			return ("Invalid channel");
 		}
 	} erroneousChannelException;
 
 	static class ErroneousIP4Exception : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The ipv4 provided does not follow the parsing rules\n");
+			return ("Invalid IPv4");
 		}
 	} erroneousIP4Exception;
 
 	static class ErroneousIP6Exception : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The ipv6 provided does not follow the parsing rules\n");
+			return ("Invalid IPv6");
 		}
 	} erroneousIP6Exception;
 
 	static class ErroneousHostnameException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The hostname provided does not follow the naming rules\n");
+			return ("Invalid hostname");
 		}
 	} erroneousHostnameException;
 
 	static class ErroneousHostException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The host provided does not follow the naming rules\n");
+			return ("Invalid host");
 		}
 	} erroneousHostException;
 
 	static class ErroneousMsgtoException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The msgto provided does not follow the naming rules\n");
+			return ("Invalid message target");
 		}
 	} erroneousMsgtoException;
 
 	static class ErroneousMsgtargetException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The msgtarget provided does not follow the naming rules\n");
+			return ("Invalid message target");
 		}
 	} erroneousMsgtargetException;
 
 	static class ErroneousTargetException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The target provided does not follow the naming rules\n");
+			return ("Invalid target");
 		}
 	} erroneousTargetException;
 
 	static class ErroneousKeyException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The key provided does not follow the naming rules\n");
+			return ("Invalid key");
 		}
 	} erroneousKeyException;
 
 	static class ErroneousQueryException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The query provided does not follow the naming rules\n");
+			return ("Invalid query");
 		}
 	} erroneousQueryException;
 
 	static class ErroneousMaskException : public std::exception {
 		public:
 			virtual const char *what() const throw() {
-			return ("ERROR: The mask provided does not follow the naming rules\n");
+			return ("Invalid mask");
 		}
 	} erroneousMaskException;
 };

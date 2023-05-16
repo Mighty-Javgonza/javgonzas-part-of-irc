@@ -4,7 +4,7 @@
 static void	reply_with_all_nicks_in_chan(Databasable *database, Client *receiver, Chan *channel, replies_generator *replier, std::set<ClientId> &seenIds)
 {
 	std::string	all_nicknames = "";
-	std::vector<ClientId>	*chan_users = channel->Subscribers(receiver->Id());
+	std::vector<ClientId>	*chan_users = channel->Subscribers();
 
 	if (!chan_users)
 		chan_users = new std::vector<ClientId>;

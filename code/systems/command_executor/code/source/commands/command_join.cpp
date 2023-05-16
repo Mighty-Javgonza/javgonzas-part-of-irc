@@ -1,4 +1,5 @@
 #include "commands.hpp"
+#include "../../../../vicmarti/src/db/Database.hpp"
 
 static void	part_all_channels(Databasable *database, Client *client) {
 	std::vector<ChanId> *sender_channels = client->Subscriptions();
@@ -9,14 +10,14 @@ static void	part_all_channels(Databasable *database, Client *client) {
 	delete sender_channels;
 }
 
-static void	try_join(Databasable *database, Client *client, Chan *chan, std::string const &key = "") {
+static void	try_join(Databasable *database, Client *client, Chan *chan, replies_generator *replier, std::string const &key = "") {
 
 	(void)key;	
-//	if (chan->Mode(Chan:::Invite) && !chan->invited(*user)) {
-		//TODO Gestionar invite en el loop general
-//		client  << replier->Error(ERR_INVITEONLYCHAN, chan);
-//		return;
-//	}
+	if (chan->Mode(Chan::InviteOnly) && !chan->IsInvited(*client))
+	{
+		*client  << replier->invite_chanoprivsneeded(chan->Title());
+		return;
+	}
 //	if (chan->hasLimit() && chan->full()) {
 		//TODO reply stuff
 		//replier->Error(ERR_CHANNELISFULL, chan);
@@ -27,8 +28,8 @@ static void	try_join(Databasable *database, Client *client, Chan *chan, std::str
 		//replier->Error(ERR_BADCHANNELKEY, chan);
 //		return;
 //	}
-	//TODO esta doble llamada para registrar la misma info no me mola.
-	//TODO NO see si es nesesario
+	if (chan->Mode(Chan::InviteOnly))
+		chan->DeleteInvite(client->Nick());
 	chan->Join(*client);
 	
 	std::string	reply = ":" + client->MessagePrefix() + " JOIN " + chan->Title() + "\r\n";
@@ -43,6 +44,7 @@ static void	try_join(Databasable *database, Client *client, Chan *chan, std::str
 
 void	command_join(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info) {
 	(void)server_info;
+	(void)replier;
 	ParsedMessageChannelJoin	*join_msg = static_cast<ParsedMessageChannelJoin*>(message->message);
 	Client *sender = database->get_user_from_fd(message->sender->Fd());
 
@@ -58,11 +60,10 @@ void	command_join(Databasable *database, SentMessage *message, replies_generator
 				target_chan = database->get_channel(chan_param.name);
 			}
 			if (join_msg->has_key_list)
-				try_join(database, sender, target_chan, join_msg->key_list.keys[i]);
+				try_join(database, sender, target_chan, replier, join_msg->key_list.keys[i]);
 			else
-				try_join(database, sender, target_chan);
+				try_join(database, sender, target_chan, replier);
 		}
 	}
-	(void)replier;
 }
 

@@ -22,6 +22,11 @@ public:
 
 	MessageParser *get_parser(std::string command);
 	command_function get_executor(std::string command);
+	size_t get_command_id(std::string command);
+	static size_t get_command_count();
+	std::string	get_command_by_id(size_t cid);
+
+	bool	is_unregistered_executable(command_function);
 
 private:
 
@@ -29,8 +34,10 @@ private:
 	{
 		MessageParser 		*parser;
 		command_function	executor;
+		size_t				unique_id;
 	};
 
+	static size_t	command_count;
 	std::map<std::string, struct commandActuators> action_map;
 
 };

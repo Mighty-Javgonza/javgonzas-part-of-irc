@@ -36,6 +36,10 @@ void	MessageServerStatsParser::parse_specific_part()
 				specific_message->query.id = 3;
 				specific_message->query.display_server_time_alive = true;
 				break;
+			case 'd':
+				specific_message->query.id = 4;
+				specific_message->query.number_of_database_get_from_fd = true;
+				break;
 			default :
 				throw (MessageParameterValidator::erroneousQueryException);
 		}

@@ -10,23 +10,22 @@ void	command_invite(Databasable *database, SentMessage *message, replies_generat
 	std::string	chan_name = invite_msg->channel.name;
 	Chan	*channel = database->get_channel(chan_name);
 
-	//TODO: if invite only. An invitation should perform the Joining.
 	if (channel == NULL)
 	{
 		*inviter << replier->invite_notonchannel(chan_name);
 	}
-//	else if (channel->Mode(Chan::Invite) && !channel->IsChop(inviter))
-//	{
-//		*inviter << replier->invite_chanoprivsneeded(channel->Title());
-//	}
+	else if (channel->Mode(Chan::InviteOnly) && !channel->IsSubscriptor(inviter->Id()))
+	{
+		*inviter << replier->invite_chanoprivsneeded(channel->Title());
+	}
 	else if (invitee == NULL)
 	{
 		*inviter << replier->invite_nosuchnick(invite_msg->nickname);
 	}
-//	else if (channel->user_in_chan(invitee))
-//	{
-//		*inviter << replier->invite_useronchannel(invitee->Nick(), channel->Title());
-//	}
+	else if (channel->IsSubscriptor(invitee->Id()))
+	{
+		*inviter << replier->invite_useronchannel(invitee->Nick(), channel->Title());
+	}
 // NOT IMPLEMENTED IN CLIENT
 //	else if (invitee->Modes(Away))
 //	{
@@ -34,6 +33,8 @@ void	command_invite(Databasable *database, SentMessage *message, replies_generat
 //	}
 	else
 	{
+		if (!channel->IsInvited(*invitee))
+			channel->Invite(invitee->Nick());
 		*inviter << replier->invite_ok(channel->Title(), inviter->Nick());
 		std::string invitation = ":" + inviter->MessagePrefix() + " INVITE " + inviter->Nick() + " #" + channel->Title() + "\r\n";
 		*invitee << invitation;

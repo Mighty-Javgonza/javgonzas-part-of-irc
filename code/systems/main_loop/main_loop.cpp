@@ -6,19 +6,23 @@
 #include "../tomartin/inc/ft_ircserv.hpp"
 #include "../lexer/code/source/all_headers.hpp"
 
+replies_generator		rg;
+
+void  signal_handler(int sig)
+{
+	std::cout << "A client exited rudely" << std::endl;
+}
+
 void	update_listener(orchestator &orchest, Database &db)
 {
 	orchest.preparation_com(); 
 	orchest.accept_new_connect();
-//	orchest.orchestation();
-	orchest.check_status();
-	orchest.clean_up();
+	orchest.delete_users_from_list();
 }
 
 void	process_first_message_of_client_data(Database &database, ServerInfo &server_info, ClientData *client)
 {
 	SentMessage				sent_message;
-	replies_generator		rg;
 
 	if (client->msg_in.msg_q_size() != 0)
 	{
@@ -29,12 +33,28 @@ void	process_first_message_of_client_data(Database &database, ServerInfo &server
 std::cout << "MESSAGE RECEIVED   ->" << message << "<-" << std::endl;
 			//TODO Instanciar solo una vez
 			LexerParserConnector	parser;
-			sent_message.message = parser.parse_string(message);
+			try
+			{
+				sent_message.message = parser.parse_string(message);
+			} catch (std::exception &e) {
+				*client << ":" + server_info.get_preffix_string() + " ERROR :" + e.what() + "\r\n";
+				return ;
+			}
 			if (sent_message.message != NULL)
 			{
+				client->user_times.reset_t_last_msg();
 				sent_message.sender = (ClientId *)&client->Id();
 				CommandActionAssociator::command_function	executor = commandActionAssociator.get_executor(sent_message.message->command);
-				executor(&database, &sent_message, &rg, &server_info);
+				bool already_registered = database.Clients().IdExists(client->Id());
+				if (already_registered)
+					rg.target_string = client->Id().FullHostname();
+				if (!already_registered && !commandActionAssociator.is_unregistered_executable(executor))
+					*client << ":" + server_info.get_preffix_string() + " ERROR :You are not registered. You can't use that command\r\n";
+				else
+				{
+					executor(&database, &sent_message, &rg, &server_info);
+					server_info.count_command(sent_message.message->command, message);
+				}
 			}
 			else
 			{
@@ -44,20 +64,26 @@ std::cout << "MESSAGE RECEIVED   ->" << message << "<-" << std::endl;
 	}
 }
 
-void update_user_queues_and_receive_events(orchestator &orchest, int fd)
+void update_user_queues_and_receive_events(orchestator &orchest, int fd, Database &database)
 {
 	orchest.recv_msgs(fd);
 	orchest.send_msgs(fd);
 
 	if (orchest.get_revent(fd) & POLLHUP)
-		orchest.kill_list.push(std::make_pair(fd, std::string("POLLHUP")));
+	{
+		ClientData *cd = database.get_client_data_from_fd(fd);
+		if (database.Clients().IdExists(cd->Id()))
+			cd->msg_in.add_msg("QUIT\r\n");
+		else
+			orchest.kill_list.push(std::make_pair(fd, std::string("POLLHUP")));
+	}
 }
 
 static void	process_one_message_of_each_client_of_client_id_vector(std::vector<ClientId> *clients, Database &database, orchestator &orchest, ServerInfo &server_info)
 {
 	for (std::vector<ClientId>::iterator it = clients->begin(); it != clients->end(); it++) 
 	{
-		update_user_queues_and_receive_events(orchest, it->Fd());
+		update_user_queues_and_receive_events(orchest, it->Fd(), database);
 		try {
 			ClientData *client = database.get_client_data_from_fd(it->Fd());
 			process_first_message_of_client_data(database, server_info, client);
@@ -81,68 +107,82 @@ void	process_one_message_from_each_queue(Database &database, orchestator &orches
 	delete all_unclients;
 }
 
-void	send_first_message_of_one_client(orchestator &orchest, Client *client)
+void	send_ping(ClientData *client, ServerInfo &server_info)
 {
-	int send_leng;
-	int	cfd = client->Id().Fd();
-
-	if(client->msg_out.msg_q_size() == 0)
-		return;
-	if(!(orchest.get_event(cfd) & POLLOUT) || (orchest.get_revent(cfd) & POLLOUT)) 
-   {
-		send_leng = orchest.send_msg(cfd, client->msg_out.extract_msg());
-		if(send_leng < client->msg_out.msg_front_len())
-			client->msg_out.erase_front_msg(send_leng);
-		else
-		    client->msg_out.pop_msg();
-			if(orchest.get_revent(cfd) & POLLOUT)
-				orchest.set_value_poll_list(cfd, POLLIN);
-    }
+	client->msg_out.add_msg(std::string(":" + server_info.get_preffix_string() + " PING " + server_info.get_preffix_string() + "\x0d\x0a"));
+	client->user_times.launch_t_ping();
 }
 
-void	process_one_reply_from_each_queue(Databasable &database, orchestator &orchest)
+void	update_ping_pong_of_client(Database &database, ClientData *client, ServerInfo &server_info)
+{
+	client->user_times.check_if_kick_logged();
+
+	if (client->user_times.get_kick() == KICK)
+	{
+		database.kill_user((ClientId *)&client->Id());
+	}
+	else if (client->user_times.launch_send_ping() && client->user_times.get_s_ping() == false)
+		send_ping(client, server_info);
+}
+
+void	update_ping_pong_of_unclient(Database &database, ClientData *client, ServerInfo &server_info, orchestator &orchest)
+{
+	client->user_times.check_if_kick_not_logged();
+
+	if (client->user_times.get_kick() == KICK)
+	{
+		orchest.kill_list.push(std::make_pair(client->Id().Fd(), std::string("REGISTER TIMEOUT")));
+		database.UnregisteredClients().Remove(client->Id());
+	}
+	else if (client->user_times.launch_send_ping() && client->user_times.get_s_ping() == false)
+		send_ping(client, server_info);
+}
+
+void	update_pinger_ponger(Database &database, ServerInfo &server_info, orchestator &orchest)
 {
 	std::vector<ClientId> *all_clients = database.get_all_users();
 
 	for (std::vector<ClientId>::iterator it = all_clients->begin(); it != all_clients->end(); it++) 
 	{
-		Client	*client = database.get_user_from_fd(it->Fd());
-		send_first_message_of_one_client(orchest, client);
-	}
-	delete all_clients;
-}
-
-void	update_ping_pong_of_client(Database &database, Client *client, ServerInfo &server_info)
-{
-	client->user_times.check_if_kick();
-
-	if (client->user_times.get_kick())
-	{
-		//TODO: DO
-//		if (database.Clients().IdExists(client->Id()))
-//			kill_registered_client(&database, client);
-//		else
-//			kill_unregistered_client(&database, client);
-	}
-	else if (client->user_times.launch_send_ping() &&
-		client->user_times.get_s_ping() == false)
-	{
-		client->msg_out.direct_push(std::string(":" + server_info.get_preffix_string() + " PING" + "\x0d\x0a"));
-		client->user_times.launch_t_ping();
-		client->user_times.set_s_ping(true);
-	}
-}
-
-void	update_pinger_ponger(Database &database, ServerInfo &server_info)
-{
-	std::vector<ClientId> *all_clients = database.get_all_users();
-
-	for (std::vector<ClientId>::iterator it = all_clients->begin(); it != all_clients->end(); it++) 
-	{
-		Client *client = database.get_user_from_fd(it->Fd());
+		ClientData *client = database.get_client_data_from_fd(it->Fd());
 		update_ping_pong_of_client(database, client, server_info);
 	}
 	delete all_clients;
+
+	std::vector<ClientId> *all_unclients = database.UnregisteredClients().Vector();
+	for (std::vector<ClientId>::iterator it = all_unclients->begin(); it != all_unclients->end(); it++) 
+	{
+		ClientData *client = database.get_client_data_from_fd(it->Fd());
+		update_ping_pong_of_unclient(database, client, server_info, orchest);
+	}
+	delete all_unclients;
+}
+
+void kill_zombies(Database &database, orchestator &orchest)
+{
+	std::vector<ClientId> *zombies = database.get_zombies();
+
+	for (size_t i = 0; i < zombies->size(); i++)
+	{
+		Client *zombie = database.get_zombie((*zombies)[i]);
+
+		std::vector<ChanId> *subscribed_channels = zombie->Subscriptions();
+
+		for (size_t i = 0; i < subscribed_channels->size(); i++)
+		{
+			Chan	*channel = database.get_channel_from_id((*subscribed_channels)[i]);
+			part_user_from_chan(zombie, zombie, channel, false, "", &database);
+		}
+		delete subscribed_channels;
+		size_t msgs_length = zombie->msg_out.msg_q_size();
+		for (size_t j = 0; j < msgs_length; j++)
+		{
+			orchest.send_msgs(zombie->Id().Fd());
+		}
+		orchest.kill_list.push(std::make_pair(zombie->Id().Fd(), std::string("QUIT")));
+		database.douse_in_holy_water(zombie->Id());
+	}
+	delete zombies;
 }
 
 void	main_loop(int port)
@@ -151,24 +191,34 @@ void	main_loop(int port)
 	orchestator	orchest(port, database);
 	ServerInfo	server_info;
 
-	server_info.oper_name = "admin";
-	server_info.oper_password = "admin";
 	server_info.has_password = true;
 	server_info.password = "1234";
+	server_info.oper_name = "admin";
+	server_info.oper_password = "admin";
+
+	server_info.version = "0.9";
+	server_info.hostname = "localhost";
+	server_info.debug_lvl= "BEGGINING";
+	server_info.comment = "This is definitely a server";
+	server_info.motd= "Quien tenga miedo a vivir, que no nazca.";
+
+	rg.hostname = server_info.hostname;
 
 std::cout << "SERVER IS UP" << std::endl;
 	while (true)
 	{
 		update_listener(orchest, database);
+		kill_zombies(database, orchest);
 		process_one_message_from_each_queue(database, orchest, server_info);
-//	update_database(database);
-//	update_pinger_ponger(database, server_info);
-//	process_one_reply_from_each_queue(database, orchest);
+		update_pinger_ponger(database, server_info, orchest);
 	}
 }
+
 
 int main(int argc, char **argv)
 {
 	int port = atoi(argv[1]);
+//	signal(SIGINT, signal_handler);
+	signal(SIGPIPE, signal_handler);
 	main_loop(port);
 }
