@@ -40,7 +40,6 @@ void	command_part(Databasable *database, SentMessage *message, replies_generator
 
 	Client *client = database->get_user_from_fd(message->sender->Fd());
 	
-	//TODO delete channel if empty
 	for (std::vector<channel_parameter>::iterator it = part_msg->channel_list.channels.begin(); it != part_msg->channel_list.channels.end(); it++)
 	{
 		std::string channel_name = (*it).name;

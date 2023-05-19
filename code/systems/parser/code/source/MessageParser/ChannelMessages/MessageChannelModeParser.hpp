@@ -8,8 +8,10 @@ class MessageChannelModeParser;
 # include "../../ParsedMessage/ChannelMessages/ParsedMessageChannelMode.hpp"
 
 # define VALID_MODE_FLAGS "OovaimnqpsrtklbeI"
-# define MODE_FLAGS_WITH_NO_PARAMS "Oovaimnqpsrt"
-# define MODE_FLAGS_WITH_PARAMS "klbeI"
+# define MODE_FLAGS_WITH_NO_PARAMS_ON_ADD "aimnqpsrt"
+# define MODE_FLAGS_WITH_NO_PARAMS_ON_REMOVE "aimnqpsrtkl"
+# define MODE_FLAGS_WITH_PARAMS_ON_ADD "OovklbeI"
+# define MODE_FLAGS_WITH_PARAMS_ON_REMOVE "OovbeI"
 
 class MessageChannelModeParser : virtual public MessageParser {
 

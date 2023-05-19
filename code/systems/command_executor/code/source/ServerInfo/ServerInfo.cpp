@@ -3,11 +3,13 @@
 
 ServerInfo::ServerInfo()
 {
+    char buff[100];
+	
+	gethostname(buff, 100);
 	has_password = false;
-	hostname = "tvj.irc.42madrid";
+	hostname = buff;
 
 	time_t now = std::time(NULL);
-    char buff[100];
 
     std::strftime(buff, sizeof(buff), "%H:%M:%S %d-%m-%Y", std::localtime(&now));
 

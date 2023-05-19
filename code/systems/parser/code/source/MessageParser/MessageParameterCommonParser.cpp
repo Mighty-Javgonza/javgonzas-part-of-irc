@@ -58,6 +58,16 @@ void	MessageParameterCommonParser::parse_channel_id_part(std::string str, channe
 		channel.id = channelid;
 }
 
+msgto_parameter::s_msgto_parameter()
+{
+	memset(this, '\0', sizeof(*this));
+}
+
+target_parameter::s_target_parameter()
+{
+	memset(this, '\0', sizeof(*this));
+}
+
 msgto_parameter	MessageParameterCommonParser::parse_msgto(std::string str)
 {
 	msgto_parameter	msgto;

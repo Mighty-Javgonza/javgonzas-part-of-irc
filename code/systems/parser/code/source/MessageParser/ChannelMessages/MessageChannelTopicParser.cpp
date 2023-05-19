@@ -3,7 +3,7 @@
 
 MessageChannelTopicParser::MessageChannelTopicParser()
 {
-	create_specific_message();
+
 }
 
 MessageChannelTopicParser::~MessageChannelTopicParser()

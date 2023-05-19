@@ -51,7 +51,11 @@ bool	MessageChannelModeParser::is_valid_mode_flag(char flag)
 
 channel_mode_flag	MessageChannelModeParser::set_needs_parameter(channel_mode_flag &chanflag)
 {
-	std::string	mode_flags_no_params = MODE_FLAGS_WITH_NO_PARAMS;
+	std::string	mode_flags_no_params;
+	if (chanflag.action == CHANNEL_MODE_FLAG_ACTION_ADD)
+		mode_flags_no_params = MODE_FLAGS_WITH_NO_PARAMS_ON_ADD;
+	else
+		mode_flags_no_params = MODE_FLAGS_WITH_NO_PARAMS_ON_REMOVE;
 
 	chanflag.needs_parameter = (mode_flags_no_params.find(chanflag.flag) == std::string::npos);
 	return (chanflag);
@@ -79,7 +83,7 @@ void	MessageChannelModeParser::push_flag_to_list(char flag, int action)
 		channel_mode_flag	chanflag;
 
 		chanflag.flag = flag;
-		set_needs_parameter(chanflag);
 		chanflag.action = action;
+		set_needs_parameter(chanflag);
 		specific_message->flags.push_back(chanflag);
 }

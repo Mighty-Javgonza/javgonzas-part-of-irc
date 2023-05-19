@@ -7,7 +7,8 @@ void	send_message_to_users_in_chan(std::string message, Chan *channel, Databasab
 	{
 		Client *client = database->get_user_from_fd(it->Fd());
 
-		*client << message;
+		if (client != NULL)
+			*client << message;
 	}
 	delete clients;
 }

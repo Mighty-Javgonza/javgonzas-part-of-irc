@@ -3,7 +3,7 @@
 
 MessagePrivateMessagesNoticeParser::MessagePrivateMessagesNoticeParser()
 {
-	create_specific_message();
+
 }
 
 MessagePrivateMessagesNoticeParser::~MessagePrivateMessagesNoticeParser()

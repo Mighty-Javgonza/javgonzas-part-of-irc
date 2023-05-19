@@ -23,7 +23,9 @@ void	command_list(Databasable *database, SentMessage *message, replies_generator
 
 		for (std::vector<channel_parameter>::iterator it = chans.begin(); it != chans.end(); it++)
 		{
-			Chan	*chan = database->get_channel(it->name);
+			Chan	*chan = database->as_outsider_get_channel(client, it->name);
+			if (!chan)
+				chan = database->get_channel(client, it->name);
 			if (chan != NULL)
 			{
 				std::pair<std::string, std::string> channel_topic;

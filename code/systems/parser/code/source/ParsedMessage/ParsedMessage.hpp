@@ -7,7 +7,7 @@ class ParsedMessage {
 
 public:
 	ParsedMessage();
-	~ParsedMessage();
+	virtual ~ParsedMessage();
 
 	std::string	command;
 	std::string	preffix;

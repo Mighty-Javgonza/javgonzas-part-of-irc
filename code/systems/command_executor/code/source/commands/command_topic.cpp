@@ -18,9 +18,11 @@ void	command_topic(Databasable *database, SentMessage *message, replies_generato
 	(void)server_info;
 	ParsedMessageChannelTopic	*topic_msg = static_cast<ParsedMessageChannelTopic*>(message->message);
 	Client	*client = database->get_user_from_fd(message->sender->Fd());
-	Chan	*chan = database->get_channel(topic_msg->channel.name);
+	Chan	*chan = database->get_channel(client, topic_msg->channel.name);
 
-	if (!topic_msg->has_topic)
+	if (!chan)
+		*client << replier->join_nosuchchannel(topic_msg->channel.name);
+	else if (!topic_msg->has_topic)
 		try_to_reply_with_the_channel_topic(chan, client, replier);
 	else
 	{

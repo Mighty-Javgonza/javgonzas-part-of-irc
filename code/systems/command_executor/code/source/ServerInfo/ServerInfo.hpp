@@ -4,6 +4,7 @@ class ServerInfo;
 # define SERVERINFO_HPP
 
 #include <iostream>
+#include <unistd.h>
 
 #include "../../../../input_stream_orquestator/CommandActionAssociator.hpp"
 

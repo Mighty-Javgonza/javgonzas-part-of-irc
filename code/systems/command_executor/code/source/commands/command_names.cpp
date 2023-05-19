@@ -23,8 +23,13 @@ static void	reply_with_all_nicks_of_msg_chans(ParsedMessageChannelNames *names_m
 {
 	for (std::vector<channel_parameter>::iterator it = names_msg->channel_list.channels.begin(); it != names_msg->channel_list.channels.end(); it++)
 	{
-		Chan	*channel = database->get_channel(it->name);
-		reply_with_all_nicks_in_chan(database, client, channel, replier, seenIds);
+		Chan	*channel = database->as_outsider_get_channel(client, it->name);
+		if (!channel)
+			channel = database->get_channel(client, it->name);
+		if (!channel)
+			*client << replier->join_nosuchchannel(it->name);
+		else
+			reply_with_all_nicks_in_chan(database, client, channel, replier, seenIds);
 	}
 }
 
@@ -33,8 +38,11 @@ static void	reply_with_all_nicks_of_all_chans(Databasable *database, Client *cli
 	std::vector<ChanId> *all_chans = database->get_all_channels();
 	for (std::vector<ChanId>::iterator it = all_chans->begin(); it != all_chans->end(); it++)
 	{
-		Chan *chan = database->get_channel_from_id(*it);
-		reply_with_all_nicks_in_chan(database, client, chan, replier, seenIds);
+		Chan *channel = database->as_outsider_get_channel_from_id(client, *it);
+		if (!channel)
+			channel = database->get_channel_from_id(client, *it);
+		if (channel != NULL)
+			reply_with_all_nicks_in_chan(database, client, channel, replier, seenIds);
 	}
 	delete all_chans;
 }
@@ -59,7 +67,7 @@ void	command_names(Databasable *database, SentMessage *message, replies_generato
 	{
 		reply_with_all_nicks_of_all_chans(database, client, replier, seenIds);
 
-		std::vector<ClientId>	*all_users = database->get_all_users();
+		std::vector<ClientId>	*all_users = database->get_all_users(client);
 		std::string	rogue_users = "";
 		for (std::vector<ClientId>::iterator it = all_users->begin(); it != all_users->end(); it++)
 		{

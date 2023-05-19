@@ -6,9 +6,9 @@ void	command_invite(Databasable *database, SentMessage *message, replies_generat
 	ParsedMessageChannelInvite	*invite_msg = static_cast<ParsedMessageChannelInvite*>(message->message);
 
 	Client	*inviter = database->get_user_from_fd(message->sender->Fd());
-	Client	*invitee = database->get_user_from_nickname(invite_msg->nickname);
+	Client	*invitee = database->get_user_from_nickname(inviter, invite_msg->nickname);
 	std::string	chan_name = invite_msg->channel.name;
-	Chan	*channel = database->get_channel(chan_name);
+	Chan	*channel = database->get_channel(inviter, chan_name);
 
 	if (channel == NULL)
 	{

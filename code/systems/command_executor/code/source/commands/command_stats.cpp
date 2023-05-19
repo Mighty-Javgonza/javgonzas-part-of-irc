@@ -56,7 +56,7 @@ void	command_stats(Databasable *database, SentMessage *message, replies_generato
 			send_server_uptime(client, replier, server_info);
 		else if (stats_msg->query.list_server_connections)
 		{
-			std::vector<ClientId> *all_users = database->get_all_users();
+			std::vector<ClientId> *all_users = database->get_all_users(client);
 			for (std::vector<ClientId>::iterator it = all_users->begin(); it != all_users->end(); it++)
 			{
 				ClientData	*cd = database->get_client_data_from_fd(it->Fd());
@@ -70,9 +70,9 @@ void	command_stats(Databasable *database, SentMessage *message, replies_generato
 				 std::ostringstream oss;
 
 				oss << days << " days " << std::setw(2) << std::setfill('0') << hours << ":" << std::setw(2) << std::setfill('0') << minutes << ":" << std::setw(2) << std::setfill('0') << seconds;
-				(void)cd;
-
-//TODO				std::string	linkinfo = cd->Id().FullHostname() + " " + cd->msg_out.msg_q_size() + " " + cd->messages_received + " " + cd->kilobytes_received + " " + cd->messages_sent + " " + cd->kilobytes_sent + " " <<  oss;
+				std::stringstream	linkinfo;
+				linkinfo << ":" << server_info->get_preffix_string() << " 211 " << cd->Id().FullHostname() << " " << cd->msg_out.msg_q_size() << " " << cd->messages_received << " " << cd->kilobytes_received << " " << cd->messages_sent << " " << cd->kilobytes_sent << " " <<  oss << "\r\n";
+				*client << linkinfo.str();
 			}
 			*client << replier->stats_end("l");
 			delete all_users;

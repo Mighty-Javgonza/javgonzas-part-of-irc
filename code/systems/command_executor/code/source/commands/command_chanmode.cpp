@@ -1,17 +1,23 @@
 #include "commands.hpp"
 
-static void	set_flag(Client const *changer, int action, enum Chan::Mode flag, Chan *channel, char letter, Databasable *database)
+static void	set_flag(Client const *changer, ParsedMessageChannelMode::channel_mode_flag cflag, enum Chan::Mode flag, Chan *channel, char letter, Databasable *database)
 {
 	std::string relay_message;
 
-	if (action == CHANNEL_MODE_FLAG_ACTION_ADD)
+	if (cflag.action == CHANNEL_MODE_FLAG_ACTION_ADD)
 	{
-		std::string	relay_message = ":" + changer->MessagePrefix() + " MODE +" + letter + "\r\n";
+		if (cflag.needs_parameter)
+			relay_message = ":" + changer->MessagePrefix() + " MODE +" + letter + " " + cflag.parameter + "\r\n";
+		else
+			relay_message = ":" + changer->MessagePrefix() + " MODE +" + letter + "\r\n";
 		channel->Mode(changer->Id(), flag, true);
 	}
-	else if (action == CHANNEL_MODE_FLAG_ACTION_REMOVE)
+	else if (cflag.action == CHANNEL_MODE_FLAG_ACTION_REMOVE)
 	{
-		std::string	relay_message = ":" + changer->MessagePrefix() + " MODE -" + letter + "\r\n";
+		if (cflag.needs_parameter)
+			relay_message = ":" + changer->MessagePrefix() + " MODE " + channel->Title() + " -" + letter + " " + cflag.parameter + "\r\n";
+		else
+			relay_message = ":" + changer->MessagePrefix() + " MODE " + channel->Title() + "-" + letter + "\r\n";
 		channel->Mode(changer->Id(), flag, false);
 	}
 	send_message_to_users_in_chan(relay_message, channel, database);
@@ -22,7 +28,7 @@ void	command_chanmode(Databasable *database, SentMessage *message, replies_gener
 	(void)server_info;
 	ParsedMessageChannelMode	*chanmode_msg = static_cast<ParsedMessageChannelMode*>(message->message);
 	Client *client = database->get_user_from_fd(message->sender->Fd());
-	Chan	*channel = database->get_channel(chanmode_msg->channel.name);
+	Chan	*channel = database->get_channel(client, chanmode_msg->channel.name);
 
 	if (channel == NULL)
 		*client << replier->mode_nosuchchannel(chanmode_msg->channel.name);
@@ -34,23 +40,36 @@ void	command_chanmode(Databasable *database, SentMessage *message, replies_gener
 	{
 		ParsedMessageChannelMode::channel_mode_flag	mode_flag = chanmode_msg->flags[0];
 		if (mode_flag.flag == 'a')
-			set_flag(client, mode_flag.action, Chan::Anonymous, channel, 'a', database);
+			set_flag(client, mode_flag, Chan::Anonymous, channel, 'a', database);
 		if (mode_flag.flag == 'i')
-			set_flag(client, mode_flag.action, Chan::InviteOnly, channel, 'i', database);
+		{
+			set_flag(client, mode_flag, Chan::InviteOnly, channel, 'i', database);
+			if (mode_flag.action == CHANNEL_MODE_FLAG_ACTION_ADD)
+				channel->ClearInvites();
+		}
 		if (mode_flag.flag == 'q')
-			set_flag(client, mode_flag.action, Chan::Quiet, channel, 'q', database);
+			set_flag(client, mode_flag, Chan::Quiet, channel, 'q', database);
 		if (mode_flag.flag == 'p')
-			set_flag(client, mode_flag.action, Chan::Private, channel, 'p', database);
+			set_flag(client, mode_flag, Chan::Private, channel, 'p', database);
 		if (mode_flag.flag == 's')
-			set_flag(client, mode_flag.action, Chan::Secret, channel, 's', database);
+			set_flag(client, mode_flag, Chan::Secret, channel, 's', database);
 		if (mode_flag.flag == 'r')
-			set_flag(client, mode_flag.action, Chan::Reop, channel, 'r', database);
+			set_flag(client, mode_flag, Chan::Reop, channel, 'r', database);
 		if (mode_flag.flag == 't')
-			set_flag(client, mode_flag.action, Chan::TopicRestricted, channel, 't', database);
+			set_flag(client, mode_flag, Chan::TopicRestricted, channel, 't', database);
+		if (mode_flag.flag == 'l')
+		{
+			if (mode_flag.action == CHANNEL_MODE_FLAG_ACTION_ADD)
+			{
+				int	limit = std::stoi(mode_flag.parameter);
+				channel->LimitMaxSubs(client->Id(), limit);
+			}
+			set_flag(client, mode_flag, Chan::Limited, channel, 'l', database);
+		}
 		if (mode_flag.flag == 'o')
 		{
-			Client *oper = database->get_user_from_nickname(mode_flag.parameter);
-std::cout << oper << "  " << mode_flag.parameter  << std::endl;
+			Client *oper = database->get_user_from_nickname(client, mode_flag.parameter);
+std::cout << "oper parameter is:" << mode_flag.parameter << std::endl;
 
 			if (oper == NULL)
 				*client << replier->mode_usernotinchannel(mode_flag.parameter, channel->Title());
@@ -60,7 +79,7 @@ std::cout << oper << "  " << mode_flag.parameter  << std::endl;
 				{
 					if (!channel->IsChop(oper->Id()))
 					{
-						send_message_to_users_in_chan(":" + server_info->get_preffix_string() + " WALLOPS :" + oper->Nick() + " has been made an operator of #" + channel->Title() + " by " + client->Nick(), channel, database);
+						send_message_to_users_in_chan(":" + server_info->get_preffix_string() + " WALLOPS :" + oper->Nick() + " has been made an operator of #" + channel->Title() + " by " + client->Nick() + "\r\n", channel, database);
 						channel->Chop(client->Id(), oper->Id());
 					}
 				}
@@ -68,7 +87,7 @@ std::cout << oper << "  " << mode_flag.parameter  << std::endl;
 				{
 					if (channel->IsChop(oper->Id()))
 					{
-						send_message_to_users_in_chan(":" + server_info->get_preffix_string() + " WALLOPS :" + client->Nick() + "has revoked the Chanop permissions of " + oper->Nick() + " in #" + channel->Title(), channel, database);
+						send_message_to_users_in_chan(":" + server_info->get_preffix_string() + " WALLOPS :" + client->Nick() + " has revoked the Chanop permissions of " + oper->Nick() + " in #" + channel->Title() + "\r\n", channel, database );
 						channel->Unchop(client->Id(), oper->Id());
 					}
 				}

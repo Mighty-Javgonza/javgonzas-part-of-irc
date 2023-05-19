@@ -29,6 +29,7 @@ typedef struct s_msgto_parameter
 	std::string	server;
 	std::string	nickname;
 	channel_parameter	channel;
+	s_msgto_parameter();
 }				msgto_parameter;
 
 typedef struct s_target_parameter
@@ -38,6 +39,7 @@ typedef struct s_target_parameter
 
 	std::string	nickname;
 	std::string	servername;
+	s_target_parameter();
 }				target_parameter;
 
 typedef struct s_msgtarget_parameter

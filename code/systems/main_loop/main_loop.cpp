@@ -30,7 +30,7 @@ void	process_first_message_of_client_data(Database &database, ServerInfo &server
 		client->msg_in.pop_msg();
 		if (message != "")
 		{
-std::cout << "MESSAGE RECEIVED   ->" << message << "<-" << std::endl;
+std::cout << "   ->" << message << "<-" << std::endl;
 			//TODO Instanciar solo una vez
 			LexerParserConnector	parser;
 			try
@@ -109,7 +109,8 @@ void	process_one_message_from_each_queue(Database &database, orchestator &orches
 
 void	send_ping(ClientData *client, ServerInfo &server_info)
 {
-	client->msg_out.add_msg(std::string(":" + server_info.get_preffix_string() + " PING " + server_info.get_preffix_string() + "\x0d\x0a"));
+//	client->msg_out.add_msg(std::string(":" + server_info.get_preffix_string() + " PING " + server_info.get_preffix_string() + "\r\n"));
+	client->msg_out.add_msg(std::string("PING "+ server_info.get_preffix_string() +"\r\n"));
 	client->user_times.launch_t_ping();
 }
 
@@ -197,7 +198,6 @@ void	main_loop(int port)
 	server_info.oper_password = "admin";
 
 	server_info.version = "0.9";
-	server_info.hostname = "localhost";
 	server_info.debug_lvl= "BEGGINING";
 	server_info.comment = "This is definitely a server";
 	server_info.motd= "Quien tenga miedo a vivir, que no nazca.";

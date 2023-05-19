@@ -12,6 +12,8 @@ MessageLexer::~MessageLexer()
 
 LexedMessage	MessageLexer::lex(std::string str)
 {
+	while (str[str.length() - 1] == ' ')
+		str.erase(str.end() - 1);
 	setAnalysisString(str);
 	setMessagePreffixIfItExists();
 	if (analyzed_chars >= analysis_string.length())

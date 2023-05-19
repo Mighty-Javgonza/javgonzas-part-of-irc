@@ -47,17 +47,17 @@ void	command_kick(Databasable *database, SentMessage *message, replies_generator
 	{
 		for (size_t i = 0; i < kick_msg->channel_list.channels.size(); i++)
 		{
-			Client	*kickee = database->get_user_from_nickname(kick_msg->user_list.users[i]);
-			Chan	*channel = database->get_channel(kick_msg->channel_list.channels[i].name);
+			Client	*kickee = database->get_user_from_nickname(kicker, kick_msg->user_list.users[i]);
+			Chan	*channel = database->get_channel(kicker, kick_msg->channel_list.channels[i].name);
 			kick_user_chan(database, kicker, kickee, channel, replier, kick_msg);
 		}
 	}
 	else
 	{
-		Chan	*channel = database->get_channel(kick_msg->channel_list.channels[0].name);
+		Chan	*channel = database->get_channel(kicker, kick_msg->channel_list.channels[0].name);
 		for (size_t i = 0; i < kick_msg->user_list.users.size(); i++)
 		{
-			Client	*kickee = database->get_user_from_nickname(kick_msg->user_list.users[i]);
+			Client	*kickee = database->get_user_from_nickname(kicker, kick_msg->user_list.users[i]);
 			kick_user_chan(database, kicker, kickee, channel, replier, kick_msg);
 		}
 	}
