@@ -1,0 +1,10 @@
+COMPILER_COMMAND = clang++
+COMPILER_FLAGS = -Wall -Wextra -Werror --std=c++98 #TODO degug stuff -g3
+PREPROCESSOR_FLAGS = -MMD
+LINKER_FLAGS =
+#TODO
+#CPPFLAGS := -MD #TODO MM?
+#LDFLAGS := # TODO -fsanitize=address for sanitize compiling
+
+#TODO:
+#Somehow modify flags for debug
