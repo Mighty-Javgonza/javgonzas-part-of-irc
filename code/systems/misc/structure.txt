@@ -1,0 +1,12 @@
+Listener V -> Lexer V -> Parser V -> Command executor -> Database -> Replier -> Writer V
+           .           .          .                   .           .           .
+
+
+Orquestador lexer-parser. Recibir string. Transformar en clase parseada.
+
+Instanciar un Lexeador -> Recibir string -> Obtener string lexeado -> Instanciar Parseador -> Obtener mensaje parseado
+
+
+
+
+MasterLoop va rebotando entre Listener y Database
