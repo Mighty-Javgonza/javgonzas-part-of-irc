@@ -3,7 +3,7 @@ class CommandExecutor;
 #ifndef COMMANDEXECUTOR_HPP
 # define COMMANDEXECUTOR_HPP
 
-#include "../Databasable.hpp"
+#include "../../../../database/db/Databasable.hpp"
 
 class CommandExecutor {
 

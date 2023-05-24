@@ -4,7 +4,7 @@
 #include "code/source/ParsedMessage/ParsedMessage.hpp"
 #include "../command_executor/code/source/UserID.hpp"
 
-#include "../vicmarti/src/db/Client.hpp"
+#include "../database/db/Client.hpp"
 
 typedef struct s_SentMessage
 {

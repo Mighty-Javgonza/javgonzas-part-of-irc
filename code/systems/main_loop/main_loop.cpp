@@ -1,21 +1,21 @@
-#include "../tomartin/inc/com.hpp"
-#include "../vicmarti/src/db/Database.hpp"
+#include "../sockets/inc/com.hpp"
+#include "../database/db/Database.hpp"
 #include "../command_executor/code/source/all_headers.hpp"
-#include "../tomartin/inc/orchestator.hpp"
+#include "../sockets/inc/orchestator.hpp"
 #include "../input_stream_orquestator/CommandActionAssociator.hpp"
-#include "../tomartin/inc/ft_ircserv.hpp"
+#include "../sockets/inc/ft_ircserv.hpp"
 #include "../lexer/code/source/all_headers.hpp"
 
 replies_generator		rg;
 
-void  signal_handler(int sig)
+void  signal_handler(int)
 {
 	std::cout << "A client exited rudely" << std::endl;
 }
 
-void	update_listener(orchestator &orchest, Database &db)
+void	update_listener(orchestator &orchest, Database &)
 {
-	orchest.preparation_com(); 
+	orchest.preparation_com();
 	orchest.accept_new_connect();
 	orchest.delete_users_from_list();
 }
@@ -215,7 +215,7 @@ std::cout << "SERVER IS UP" << std::endl;
 }
 
 
-int main(int argc, char **argv)
+int main(int, char **argv)
 {
 	int port = atoi(argv[1]);
 //	signal(SIGINT, signal_handler);

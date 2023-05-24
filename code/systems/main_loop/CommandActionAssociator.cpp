@@ -1,6 +1,6 @@
 #include "CommandActionAssociator.hpp"
 
-#include "AllMessageParsers.hpp"
+#include "../input_stream_orquestator/AllMessageParsers.hpp"
 #include "../command_executor/code/source/commands/commands.hpp"
 
 CommandActionAssociator::CommandActionAssociator()

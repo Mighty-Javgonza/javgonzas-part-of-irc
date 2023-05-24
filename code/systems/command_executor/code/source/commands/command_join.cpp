@@ -1,5 +1,5 @@
 #include "commands.hpp"
-#include "../../../../vicmarti/src/db/Database.hpp"
+#include "../../../../database/db/Database.hpp"
 
 static void	part_all_channels(Databasable *database, Client *client) {
 	std::vector<ChanId> *sender_channels = client->Subscriptions();

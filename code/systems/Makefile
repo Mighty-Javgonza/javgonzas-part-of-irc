@@ -26,6 +26,49 @@ ALL_CODE_SOURCE_FOLDERS:=$(shell find -H command_executor/code -type d -mindepth
 #ALL_CODE_SOURCE_FOLDERS:=$(ALL_CODE_SOURCE_FOLDERS) $(shell find -H command_executor/code -type l -mindepth 1)
 ALL_CODE_SOURCE_FILES+=$(foreach dir, $(ALL_CODE_SOURCE_FOLDERS), $(wildcard $(dir)/*.cpp))
 
+ALL_CODE_SOURCE_FOLDERS:=$(shell find -H input_stream_orquestator/code -type d -mindepth 1)
+#ALL_CODE_SOURCE_FOLDERS:=$(ALL_CODE_SOURCE_FOLDERS) $(shell find -H parser/code -type l -mindepth 1)
+ALL_CODE_SOURCE_FILES+=$(foreach dir, $(ALL_CODE_SOURCE_FOLDERS), $(wildcard $(dir)/*.cpp))
+#
+# Source files and includes
+SRC :=
+BASE_DIR :=
+#  Database
+BASE_DIR := database/db
+SRC += $(BASE_DIR)/ClientId.cpp
+SRC += $(BASE_DIR)/ClientData.cpp
+SRC += $(BASE_DIR)/Unregistered.cpp
+SRC += $(BASE_DIR)/Key.cpp
+SRC += $(BASE_DIR)/TextMask.cpp
+SRC += $(BASE_DIR)/Client.cpp
+SRC += $(BASE_DIR)/ChanId.cpp
+SRC += $(BASE_DIR)/Chan.cpp
+SRC += $(BASE_DIR)/IdManager.cpp
+SRC += $(BASE_DIR)/Database.cpp
+# Exceptions
+BASE_DIR := database/db/exceptions
+SRC += $(BASE_DIR)/InvalidId.cpp
+SRC += $(BASE_DIR)/InvalidState.cpp
+SRC += $(BASE_DIR)/RegisterNotFound.cpp
+#  Strings
+BASE_DIR := database/db/strings
+SRC += $(BASE_DIR)/equalsNoCase.cpp
+SRC += $(BASE_DIR)/toLower.cpp
+SRC += $(BASE_DIR)/toUpper.cpp
+#  End
+BASE_DIR :=
+#TODO
+ALL_CODE_SOURCE_FILES += $(SRC)
+
+SRC_DIR = sockets/src/
+#TODO tamartin sources
+SRC_FILES = com.cpp com_exceptions.cpp orchestator.cpp user.cpp \
+			msg.cpp replies.cpp replies_generator.cpp aux_server.cpp \
+			time_control.cpp log.cpp others.cpp internal_commands.cpp
+ALL_CODE_SOURCE_FILES += $(addprefix $(SRC_DIR), $(SRC_FILES))
+
+#TODO I AM DESPERATE, JUST APPEND
+ALL_CODE_SOURCE_FILES += main_loop/CommandActionAssociator.cpp main_loop/main_loop.cpp
 
 OBJ_DIR := obj
 OBJ := $(ALL_CODE_SOURCE_FILES:%.cpp=$(OBJ_DIR)/%.o)
