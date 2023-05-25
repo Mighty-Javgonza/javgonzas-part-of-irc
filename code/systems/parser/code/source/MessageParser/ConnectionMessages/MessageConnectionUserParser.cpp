@@ -2,7 +2,7 @@
 
 MessageConnectionUserParser::MessageConnectionUserParser()
 {
-	create_specific_message();
+
 }
 
 MessageConnectionUserParser::~MessageConnectionUserParser()

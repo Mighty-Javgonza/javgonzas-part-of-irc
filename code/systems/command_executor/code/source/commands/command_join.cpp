@@ -35,12 +35,21 @@ static void	try_join(Databasable *database, Client *client, Chan *chan, replies_
 	
 	std::string	reply = ":" + client->MessagePrefix() + " JOIN #" + chan->Title() + "\r\n";
 	std::vector<ClientId>	*clients_of_chan = chan->Subscribers();
+	std::string clients_in = "";
 	for (std::vector<ClientId>::iterator it = clients_of_chan->begin(); it < clients_of_chan->end(); it++)
 	{
 		Client	*client = database->get_user_from_fd(it->Fd());
+		if (client == NULL)
+			continue ;
 		*client << reply;
+		if (chan->IsChop(client->Id()))
+			clients_in += "@" + client->Nick() + " ";
+		else
+			clients_in += client->Nick() + " ";
 	}
 	delete  clients_of_chan;
+	*client << replier->names_ok(chan->TypedChanstring(), clients_in);
+	client->msg_in.add_msg("TOPIC #" + chan->Title() + "\r\n");
 }
 
 void	command_join(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info) {

@@ -12,7 +12,12 @@ static void	reply_with_all_nicks_in_chan(Databasable *database, Client *receiver
 		for (std::vector<ClientId>::iterator it = chan_users->begin(); it != chan_users->end(); it++)
 		{
 			Client	*client = database->get_user_from_fd(it->Fd());
-			all_nicknames += " " + client->Nick();
+			if (client == NULL)
+				continue ;
+			if (channel->IsChop(client->Id()))
+				all_nicknames += "@" + client->Nick() + " ";
+			else
+				all_nicknames += client->Nick() + " ";
 			seenIds.insert(*it);
 		}
 	*receiver << replier->names_ok(channel->TypedChanstring(), all_nicknames);
@@ -74,11 +79,12 @@ void	command_names(Databasable *database, SentMessage *message, replies_generato
 			if (seenIds.find(*it) == seenIds.end())
 			{
 				Client	*client = database->get_user_from_fd(it->Fd());
-				rogue_users += " " + client->Nick();
+				rogue_users += client->Nick() + " ";
 			}
 		}
 		if (rogue_users != "")
 			*client << replier->names_ok("*", rogue_users);
+		*client << replier->names_end("*");
 		delete all_users;
 	}
 }

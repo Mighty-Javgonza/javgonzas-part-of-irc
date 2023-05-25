@@ -22,6 +22,8 @@ void	ModeParser::parse_specific_part(void)
 
 void	ModeParser::create_specific_message(void)
 {
+	if (lexedMessage.parameters.size() < 1)
+		throw MessageParser::needMoreParamsException;
 	try {
 		MessageParameterValidator::validate_nickname(lexedMessage.parameters[0]);
 		in_progress_message = MessageConnectionModeParser::specific_message;

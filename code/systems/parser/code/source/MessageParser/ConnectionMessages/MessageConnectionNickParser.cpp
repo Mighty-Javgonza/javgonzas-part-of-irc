@@ -4,7 +4,7 @@
 
 MessageConnectionNickParser::MessageConnectionNickParser()
 {
-	create_specific_message();
+
 }
 
 MessageConnectionNickParser::~MessageConnectionNickParser()

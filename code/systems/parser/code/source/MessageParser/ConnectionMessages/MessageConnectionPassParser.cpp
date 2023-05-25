@@ -3,7 +3,7 @@
 
 MessageConnectionPassParser::MessageConnectionPassParser()
 {
-	create_specific_message();
+
 }
 
 MessageConnectionPassParser::~MessageConnectionPassParser()

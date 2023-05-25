@@ -3,7 +3,6 @@
 
 MessageConnectionOperParser::MessageConnectionOperParser()
 {
-	create_specific_message();
 }
 
 MessageConnectionOperParser::~MessageConnectionOperParser()

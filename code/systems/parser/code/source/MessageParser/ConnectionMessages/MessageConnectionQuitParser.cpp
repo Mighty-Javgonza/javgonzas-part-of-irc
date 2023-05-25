@@ -3,7 +3,6 @@
 
 MessageConnectionQuitParser::MessageConnectionQuitParser()
 {
-	create_specific_message();
 }
 
 MessageConnectionQuitParser::~MessageConnectionQuitParser()

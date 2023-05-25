@@ -13,10 +13,14 @@ void	command_user(Databasable *database, SentMessage *message, replies_generator
 	else
 	{
 		Unregistered *registering_user = database->get_unregistered_from_fd(message->sender->Fd());
+		if (registering_user->__valid_pass == false)
+			return ;
 		int fd = message->sender->Fd();
 		Unregistered *an_attempt_at_poetry_ByVicmarti = database->alter_unregistered_username(registering_user, user_msg->user);
 		database->register_user(an_attempt_at_poetry_ByVicmarti);
 		Client *registered_user = database->get_user_from_fd(fd);
+		if (registered_user == NULL)
+			return ;
 		if (user_msg->mode & 0b1000)
 			registered_user->Mode(ClientData::Invisible, true);
 		if (user_msg->mode & 0b100)

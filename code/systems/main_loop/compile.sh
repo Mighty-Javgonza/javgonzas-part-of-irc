@@ -22,4 +22,4 @@ cd ../command_executor
 make
 
 cd ../main_loop
-c++ main_loop.cpp ../vicmarti/vicmarti.a ../tomartin/tomartin.a ../command_executor/code/build/**/*.o ../parser/parser.a ../lexer/lexer.a ../input_stream_orquestator/CommandActionAssociator.cpp -I ../vicmarti/src -g3
+c++ main_loop.cpp server_shutdown.cpp ../vicmarti/vicmarti.a ../tomartin/tomartin.a ../command_executor/code/build/**/*.o ../parser/parser.a ../lexer/lexer.a ../input_stream_orquestator/CommandActionAssociator.cpp -I ../vicmarti/src -g3

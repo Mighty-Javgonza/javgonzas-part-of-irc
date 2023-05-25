@@ -5,12 +5,22 @@
 #include "../input_stream_orquestator/CommandActionAssociator.hpp"
 #include "../tomartin/inc/ft_ircserv.hpp"
 #include "../lexer/code/source/all_headers.hpp"
+#include "main_loop.hpp"
 
 replies_generator		rg;
 
 void  signal_handler(int sig)
 {
 	std::cout << "A client exited rudely" << std::endl;
+}
+
+Database *database_ref;
+ServerInfo *server_info_ref;
+orchestator *orchestator_ref;
+
+void  signal_server_shutdown(int sig)
+{
+	server_shutdown(database_ref, orchestator_ref, server_info_ref);
 }
 
 void	update_listener(orchestator &orchest, Database &db)
@@ -35,9 +45,12 @@ std::cout << "   ->" << message << "<-" << std::endl;
 			LexerParserConnector	parser;
 			try
 			{
+				sent_message.message = NULL;
 				sent_message.message = parser.parse_string(message);
 			} catch (std::exception &e) {
 				*client << ":" + server_info.get_preffix_string() + " ERROR :" + e.what() + "\r\n";
+				if (sent_message.message != NULL)
+					delete sent_message.message;
 				return ;
 			}
 			if (sent_message.message != NULL)
@@ -55,6 +68,7 @@ std::cout << "   ->" << message << "<-" << std::endl;
 					executor(&database, &sent_message, &rg, &server_info);
 					server_info.count_command(sent_message.message->command, message);
 				}
+				delete sent_message.message;
 			}
 			else
 			{
@@ -120,7 +134,7 @@ void	update_ping_pong_of_client(Database &database, ClientData *client, ServerIn
 
 	if (client->user_times.get_kick() == KICK)
 	{
-		database.kill_user((ClientId *)&client->Id());
+		client->msg_in.add_msg("QUIT\r\n");
 	}
 	else if (client->user_times.launch_send_ping() && client->user_times.get_s_ping() == false)
 		send_ping(client, server_info);
@@ -186,14 +200,25 @@ void kill_zombies(Database &database, orchestator &orchest)
 	delete zombies;
 }
 
-void	main_loop(int port)
+void	main_loop(int port, std::string password)
 {
-	Database	database;
-	orchestator	orchest(port, database);
-	ServerInfo	server_info;
+	database_ref = new Database();
+	orchestator_ref = new orchestator(port, *database_ref);
+	server_info_ref = new ServerInfo();
 
-	server_info.has_password = true;
-	server_info.password = "1234";
+	Database &database = *database_ref;
+	ServerInfo &server_info = *server_info_ref;
+	orchestator &orchest= *orchestator_ref;
+
+	Database *database_ref = &database;
+	ServerInfo *server_info_ref = &server_info;
+	orchestator *orchestator_ref = &orchest;
+
+	if (password != "")
+		server_info.has_password = true;
+	else
+		server_info.has_password = false;
+	server_info.password = password;
 	server_info.oper_name = "admin";
 	server_info.oper_password = "admin";
 
@@ -204,21 +229,26 @@ void	main_loop(int port)
 
 	rg.hostname = server_info.hostname;
 
-std::cout << "SERVER IS UP" << std::endl;
+std::cout << "SERVER IS UP on hostname: " << server_info.hostname << std::endl;
+	size_t loops = 0;
 	while (true)
 	{
 		update_listener(orchest, database);
 		kill_zombies(database, orchest);
 		process_one_message_from_each_queue(database, orchest, server_info);
 		update_pinger_ponger(database, server_info, orchest);
+		loops++;
+		std::cout << '\r';
+		std::cout << std::setw(10) << loops << "    " << std::flush;
 	}
 }
 
 
 int main(int argc, char **argv)
 {
-	int port = atoi(argv[1]);
-//	signal(SIGINT, signal_handler);
+	std::pair<int, std::string> args = parse_arg(argc, argv);
+	int port = args.first;
+	signal(SIGINT, signal_server_shutdown);
 	signal(SIGPIPE, signal_handler);
-	main_loop(port);
+	main_loop(args.first, args.second);
 }

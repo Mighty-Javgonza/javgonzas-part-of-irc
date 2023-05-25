@@ -2,7 +2,6 @@
 
 MessageConnectionModeParser::MessageConnectionModeParser()
 {
-	create_specific_message();
 }
 
 MessageConnectionModeParser::~MessageConnectionModeParser()
