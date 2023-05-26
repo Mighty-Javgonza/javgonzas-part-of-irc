@@ -6,7 +6,7 @@
 /*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:45:18 by tomartin          #+#    #+#             */
-/*   Updated: 2023/05/17 20:07:17 by javgonza         ###   ########.fr       */
+/*   Updated: 2023/05/26 19:03:30 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define RPL_WHOWASUSER(nick, user, host, realname) (nick + " " + user + " " + host + " * :" + realname + "\r\n")
 # define RPL_ENDOFWHOWAS(nick) (nick + " :End of WHOWAS\r\n")
 # define RPL_LISTSTART() ("Channel :Users Name\r\n")
-# define RPL_LIST(channel, topic) (channel + " :" + topic + "\r\n")
+# define RPL_LIST(channel, topic) ("#" + channel + " :" + topic + "\r\n")
 # define RPL_LISTEND() (" :End of LIST\r\n")
 # define RPL_CHANNELMODEIS(channel, mode, params) (channel + " " + mode + " " + params + "\r\n")
 # define RPL_NOTOPIC(channel) (channel + " :No topic is set\r\n")
