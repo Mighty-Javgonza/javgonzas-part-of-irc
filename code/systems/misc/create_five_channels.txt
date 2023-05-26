@@ -1,7 +1,0 @@
-NICK chanator
-USER chanator 0 * :The Lord Of All Channels
-JOIN #random
-JOIN #discussions
-JOIN #particle_physics
-JOIN #management
-JOIN #paperclip_factory_planning

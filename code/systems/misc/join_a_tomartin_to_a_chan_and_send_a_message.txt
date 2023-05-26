@@ -1,5 +1,0 @@
-PASS 1234
-NICK tomartin
-USER tom 0 * :Tomartin
-JOIN #bienvenida
-PRIVMSG #bienvenida :Hola Chan

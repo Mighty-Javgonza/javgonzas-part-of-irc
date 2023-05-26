@@ -1,6 +1,0 @@
-Clase Pinger que acepta un update
-
-	En la base de datos va a haber time_since_last_response
-	UserTimeouter: Pasa por los user
-		Pinger -> si su time_since_last_response es mayor que 42 lanza el comando ping.
-		Kicker -> si su time_since_last_response es mayor que 84 se le kickea
