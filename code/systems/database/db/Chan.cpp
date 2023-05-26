@@ -49,7 +49,6 @@ bool	Chan::operator==(Chan const &rhs) const {
 }
 
 bool	Chan::operator<(Chan const &rhs) const {
-	//TODO case insensitive comparison
 	return __title.compare(rhs.__title) < 0;
 }
 
