@@ -242,12 +242,14 @@ std::cout << "SERVER IS UP on hostname: " << server_info.hostname << std::endl;
 
 int main(int argc, char **argv)
 {
-	(void) database_ref;
-	(void) server_info_ref;
-	(void) orchestator_ref;
-
-	std::pair<int, std::string> args = parse_arg(argc, argv);
-	signal(SIGINT, signal_server_shutdown);
-	signal(SIGPIPE, signal_handler);
-	main_loop(args.first, args.second);
+	try {
+		std::pair<int, std::string> args = parse_arg(argc, argv);
+		signal(SIGINT, signal_server_shutdown);
+		signal(SIGPIPE, signal_handler);
+		main_loop(args.first, args.second);
+	} catch (com_exceptions const &) {
+		std::cerr << "Could not start server communications" << std::endl;
+	} catch (std::exception const &e) {
+		std::cerr << "Unexpected error" << std::endl;
+	}
 }
