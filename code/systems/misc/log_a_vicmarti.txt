@@ -1,0 +1,2 @@
+NICK vicmarti
+USER thicc 0 * :The Thickest of Martis

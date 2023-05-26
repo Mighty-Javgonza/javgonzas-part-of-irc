@@ -28,7 +28,7 @@
 #include "code/source/MessageParser/ServerMessages/MessageServerStatsParser.hpp"
 #include "code/source/MessageParser/ServerMessages/MessageServerTimeParser.hpp"
 #include "code/source/MessageParser/ServerMessages/MessageServerVersionParser.hpp"
-#include "code/source/MessageParser/TestMessages/MessageTestSampleParser.hpp"
+//#include "code/source/MessageParser/TestMessages/MessageTestSampleParser.hpp" TODO REMOVE
 #include "code/source/MessageParser/UserMessages/MessageUserErrorParser.hpp"
 #include "code/source/MessageParser/UserMessages/MessageUserKillParser.hpp"
 #include "code/source/MessageParser/UserMessages/MessageUserPingParser.hpp"

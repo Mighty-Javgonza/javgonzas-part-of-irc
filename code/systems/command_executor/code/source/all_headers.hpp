@@ -2,7 +2,7 @@
 # define ALL_HEADERS_COMMAND_EXECUTOR_HPP
 
 # include "executor/CommandExecutor.hpp"
-# include "Databasable.hpp"
+# include "../../../database/db/Databasable.hpp"
 # include "ServerInfo/ServerInfo.hpp"
 
 #include "LexerParserConnector/LexerParserConnector.hpp"

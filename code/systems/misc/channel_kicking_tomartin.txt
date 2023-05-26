@@ -1,0 +1,3 @@
+NICK tomartin
+USER tom 0 * :Tomartin
+JOIN #jav_rand1

@@ -1,0 +1,5 @@
+NICK javgonza
+USER jav 0 * :Javier
+JOIN #jav_rand1
+JOIN #jav_rand2
+KICK #jav_rand1,#jav_rand2 tomartin,vicmarti

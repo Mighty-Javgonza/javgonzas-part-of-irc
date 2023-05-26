@@ -1,0 +1,5 @@
+PASS 1234
+NICK javgonza
+USER jav 0 * :Javier
+MODE javgonza +i
+MODE javgonza -i

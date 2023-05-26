@@ -1,0 +1,4 @@
+NICK javgonza
+USER jav 0 * :Javier
+JOIN #bienvenida
+MODE #bienvenida +t

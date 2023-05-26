@@ -1,12 +1,12 @@
 #ifndef COMMANDS_HPP
 # define COMMANDS_HPP
 
-#include "../Databasable.hpp"
+#include "../../../../database/db/Databasable.hpp"
 #include "../ServerInfo/ServerInfo.hpp"
 #include "../../../../input_stream_orquestator/SentMessage.hpp"
 #include "../../../../input_stream_orquestator/AllParsedMessages.hpp"
-#include "../../../../tomartin/inc/replies_generator.hpp"
-#include "../../../../vicmarti/src/db/Chan.hpp"
+#include "../../../../sockets/inc/replies_generator.hpp"
+#include "../../../../database/db/Chan.hpp"
 
 void	command_nick(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
 void	command_pass(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info);
