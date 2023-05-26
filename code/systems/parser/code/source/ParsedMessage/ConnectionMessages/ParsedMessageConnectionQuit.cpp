@@ -1,7 +1,7 @@
 #include "ParsedMessageConnectionQuit.hpp"
 
 
-ParsedMessageConnectionQuit::ParsedMessageConnectionQuit()
+ParsedMessageConnectionQuit::ParsedMessageConnectionQuit() : has_quit_message(false)
 {
 
 }

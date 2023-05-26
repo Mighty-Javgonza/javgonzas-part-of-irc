@@ -1,7 +1,7 @@
 #include "ParsedMessageChannelNames.hpp"
 
 
-ParsedMessageChannelNames::ParsedMessageChannelNames()
+ParsedMessageChannelNames::ParsedMessageChannelNames() : has_target(false)
 {
 
 }

@@ -1,7 +1,7 @@
 #include "ParsedMessageUserWhois.hpp"
 
 
-ParsedMessageUserWhois::ParsedMessageUserWhois()
+ParsedMessageUserWhois::ParsedMessageUserWhois() : has_target(false)
 {
 
 }

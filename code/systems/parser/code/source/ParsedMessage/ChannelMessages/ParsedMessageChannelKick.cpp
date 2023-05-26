@@ -1,7 +1,7 @@
 #include "ParsedMessageChannelKick.hpp"
 
 
-ParsedMessageChannelKick::ParsedMessageChannelKick()
+ParsedMessageChannelKick::ParsedMessageChannelKick() : has_comment(false)
 {
 
 }

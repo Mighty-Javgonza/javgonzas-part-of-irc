@@ -1,6 +1,7 @@
 #include "ParsedMessageConnectionUser.hpp"
 
 
+
 ParsedMessageConnectionUser::ParsedMessageConnectionUser()
 {
 

@@ -1,7 +1,7 @@
 #include "ParsedMessageServerInfo.hpp"
 
 
-ParsedMessageServerInfo::ParsedMessageServerInfo()
+ParsedMessageServerInfo::ParsedMessageServerInfo() : has_target(false)
 {
 
 }

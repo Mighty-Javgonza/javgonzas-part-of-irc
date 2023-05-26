@@ -1,7 +1,7 @@
 #include "ParsedMessageUserPong.hpp"
 
 
-ParsedMessageUserPong::ParsedMessageUserPong()
+ParsedMessageUserPong::ParsedMessageUserPong() : has_destination_target(false)
 {
 
 }

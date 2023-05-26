@@ -1,7 +1,7 @@
 #include "ParsedMessageConnectionMode.hpp"
 
 
-ParsedMessageConnectionMode::ParsedMessageConnectionMode()
+ParsedMessageConnectionMode::ParsedMessageConnectionMode() : intends_to_change_modes(false)
 {
 
 }

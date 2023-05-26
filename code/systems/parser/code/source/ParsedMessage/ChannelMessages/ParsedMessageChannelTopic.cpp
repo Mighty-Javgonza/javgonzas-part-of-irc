@@ -1,7 +1,7 @@
 #include "ParsedMessageChannelTopic.hpp"
 
 
-ParsedMessageChannelTopic::ParsedMessageChannelTopic()
+ParsedMessageChannelTopic::ParsedMessageChannelTopic() : has_topic(false)
 {
 
 }

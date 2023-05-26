@@ -1,7 +1,7 @@
 #include "ParsedMessageUserPing.hpp"
 
 
-ParsedMessageUserPing::ParsedMessageUserPing()
+ParsedMessageUserPing::ParsedMessageUserPing() : has_destination_target(false)
 {
 
 }

@@ -1,7 +1,7 @@
 #include "ParsedMessageServerStats.hpp"
 
 
-ParsedMessageServerStats::ParsedMessageServerStats()
+ParsedMessageServerStats::ParsedMessageServerStats() : has_query(false), has_target(false)
 {
 
 }

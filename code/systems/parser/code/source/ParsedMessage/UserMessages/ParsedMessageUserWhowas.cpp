@@ -1,7 +1,7 @@
 #include "ParsedMessageUserWhowas.hpp"
 
 
-ParsedMessageUserWhowas::ParsedMessageUserWhowas()
+ParsedMessageUserWhowas::ParsedMessageUserWhowas() : has_count(false), has_target(false)
 {
 
 }

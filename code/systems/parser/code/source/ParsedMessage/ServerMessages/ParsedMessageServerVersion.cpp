@@ -1,7 +1,7 @@
 #include "ParsedMessageServerVersion.hpp"
 
 
-ParsedMessageServerVersion::ParsedMessageServerVersion()
+ParsedMessageServerVersion::ParsedMessageServerVersion() : has_target(false)
 {
 
 }

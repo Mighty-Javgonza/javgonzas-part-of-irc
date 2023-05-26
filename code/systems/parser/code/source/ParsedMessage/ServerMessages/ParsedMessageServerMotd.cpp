@@ -1,6 +1,6 @@
 #include "ParsedMessageServerMotd.hpp"
 
-ParsedMessageServerMotd::ParsedMessageServerMotd()
+ParsedMessageServerMotd::ParsedMessageServerMotd() : has_target(false)
 {
 
 }

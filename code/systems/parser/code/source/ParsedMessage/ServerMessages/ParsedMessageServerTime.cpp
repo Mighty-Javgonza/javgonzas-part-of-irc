@@ -1,7 +1,7 @@
 #include "ParsedMessageServerTime.hpp"
 
 
-ParsedMessageServerTime::ParsedMessageServerTime()
+ParsedMessageServerTime::ParsedMessageServerTime() : has_target(false)
 {
 
 }

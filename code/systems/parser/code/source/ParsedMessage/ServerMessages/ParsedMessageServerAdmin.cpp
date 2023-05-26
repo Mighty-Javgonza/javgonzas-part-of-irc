@@ -1,7 +1,7 @@
 #include "ParsedMessageServerAdmin.hpp"
 
 
-ParsedMessageServerAdmin::ParsedMessageServerAdmin()
+ParsedMessageServerAdmin::ParsedMessageServerAdmin() : has_target(false)
 {
 
 }
