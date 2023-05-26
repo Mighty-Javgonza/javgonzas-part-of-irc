@@ -4,6 +4,7 @@
 *.a
 *.test
 *TestMessages*
+irc
 tomartin
 vicmarti
 commands_repo
