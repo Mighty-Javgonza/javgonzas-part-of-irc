@@ -6,7 +6,7 @@
 /*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 16:52:09 by tomartin          #+#    #+#             */
-/*   Updated: 2023/05/17 20:06:10 by javgonza         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:50:26 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,12 @@ std::string replies_generator::names_ok(const string& channel_name, const string
 {
 	std::string answ;
 	answ.append(generate_msg(353, channel_name, channel_names_list, "", ""));
+	return(answ);
+}
+
+std::string replies_generator::names_end(const string& channel_name)
+{
+	std::string answ;
 	answ.append(generate_msg(366, channel_name, "", "", ""));
 	return(answ);
 }

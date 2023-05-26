@@ -1,5 +1,6 @@
 #include "Database.hpp"
 #include "exceptions/InvalidState.hpp"
+#include "../../command_executor/code/source/ServerInfo/ServerInfo.hpp"
 
 Database::Database(void) {}
 
@@ -58,6 +59,22 @@ std::vector<ClientId>	*Database::get_all_users(void) {
 	return Clients().Vector();
 }
 
+std::vector<ClientId>	*Database::get_all_users(Client *client) {
+	std::vector<ClientId>	*clients = Clients().Vector();
+	if (client->IsOp())
+		return (clients);
+	for (std::vector<ClientId>::iterator it = clients->begin(); it != clients->end(); it++)
+	{
+		Client	*candidate = get_user_from_fd(it->Fd());
+		if (candidate->Mode(ClientData::Invisible) && candidate != client)
+		{
+			clients->erase(it);
+			it = clients->begin();
+		}
+	}
+	return (clients);
+}
+
 std::vector<ClientId>	*Database::get_all_users_and_unregistereds(void) {
 	std::vector<ClientId> *all_client_ids = Clients().Vector();
 	std::vector<ClientId> *all_unregistered_ids = UnregisteredClients().Vector();
@@ -89,6 +106,19 @@ Client	*Database::get_user_from_user_host(std::string const& user,
 	return request;
 }
 
+Client	*Database::get_user_from_user_host(Client *authority, std::string const&  user, std::string const& host)
+{
+	Client *client = get_user_from_user_host(user, host);
+
+	if (!client)
+		return (NULL);
+	if (authority->IsOp())
+		return (client);
+	if (client->Mode(ClientData::Invisible) && client != authority)
+		return (NULL);
+	return (client);
+}
+
 Client	*Database::get_user_from_nickname(std::string const& nick) {
 	Client						*request = NULL;
 
@@ -106,8 +136,22 @@ Client	*Database::get_user_from_nickname(std::string const& nick) {
 	return request;
 }
 
+Client	*Database::get_user_from_nickname(Client *authority, std::string const& nickname)
+{
+	Client	*client = get_user_from_nickname(nickname);
+
+	if (!client)
+		return (NULL);
+	if (authority->IsOp())
+		return (client);
+	if (client->Mode(ClientData::Invisible) && client != authority)
+		return (NULL);
+	return (client);
+}
+
 Client	*Database::get_user_from_fd(int fd) {
 	Client						*request = NULL;
+	stater.calls_to_database_get_from_fd++;
 
 	if (Clients().RegisterExists<int>(fd, Client::CompareFd)) {
 		try {
@@ -130,8 +174,8 @@ Unregistered	*Database::get_unregistered_from_fd(int fd) {
 			UnregisteredClients().IdOf<int>(fd, Unregistered::CompareFd);
 		request = &(UnregisteredClients().Find(target_cid));
 		} catch (std::out_of_range const& oor) {
-		std::cerr << "OOR after sucessful RegisterExists<int>." << std::endl;
-		request = NULL;
+			std::cerr << "OOR after sucessful RegisterExists<int>." << std::endl;
+			request = NULL;
 		}
 	}
 	return request;
@@ -176,6 +220,31 @@ Chan*	Database::get_channel_from_id(ChanId const &cid) {
 	}
 	return request;
 }
+
+Chan	*Database::as_outsider_get_channel_from_id(Client *authority, ChanId const &cid)
+{
+	Chan *chan = get_channel_from_id(cid);
+
+	if (!chan)
+		return (NULL);
+	if (authority->IsOp())
+		return (chan);
+	if (chan->IsBanned(authority->Id()))
+		return (NULL);
+	return (chan);
+}
+
+Chan	*Database::get_channel_from_id(Client *authority, const ChanId &cid)
+{
+	Chan *chan = get_channel_from_id(cid);
+
+	if (!chan)
+		return (NULL);
+	if (!chan->IsSubscriptor(authority->Id()))
+		return (NULL);
+	return (chan);
+}
+
 Chan	*Database::get_channel(std::string const& name) {
 	Chan	*request = NULL;
 
@@ -189,11 +258,33 @@ Chan	*Database::get_channel(std::string const& name) {
 			<< std::endl;
 		request = NULL;
 		}
-	} else {
-		std::cerr << "Channel not found: " << name
-			<< std::endl;
 	}
 	return request;
+}
+
+Chan	*Database::get_channel(Client *authority, std::string const& name)
+{
+	Chan *chan = get_channel(name);
+
+	if (!chan)
+		return (NULL);
+	if (!chan->IsSubscriptor(authority->Id()))
+		return (NULL);
+	return (chan);
+}
+
+
+Chan	*Database::as_outsider_get_channel(Client *authority, std::string const& name)
+{
+	Chan *chan = get_channel(name);
+
+	if (!chan)
+		return (NULL);
+	if (authority->IsOp())
+		return (chan);
+	if (chan->IsBanned(authority->Id()))
+		return (NULL);
+	return (chan);
 }
 
 std::vector<ChanId>	*Database::get_all_channels(void) {
@@ -256,8 +347,6 @@ void	Database::kill_user(ClientId * cid) {
 	if (!__clients.IdExists(*cid))
 		return ;
 	Client target = __clients.Find(*cid);
-	if (!target.CanQuit())
-		throw InvalidState("User left while subscribed to channels.");
 	Zombies().Insert(target);
 	__clients.Remove(*cid);
 }

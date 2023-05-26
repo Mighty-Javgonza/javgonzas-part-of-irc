@@ -116,9 +116,6 @@ sockets/src/com_exceptions.cpp \
 sockets/src/gest_signal.cpp \
 sockets/src/internal_commands.cpp \
 sockets/src/log.cpp \
-sockets/src/log_exceptions.cpp \
-sockets/src/main.cpp \
-sockets/src/main_resp.cpp \
 sockets/src/msg.cpp \
 sockets/src/orchestator.cpp \
 sockets/src/orchestator_exceptions.cpp \
@@ -126,10 +123,9 @@ sockets/src/others.cpp \
 sockets/src/replies.cpp \
 sockets/src/replies_exception.cpp \
 sockets/src/replies_generator.cpp \
-sockets/src/send_message_to_user_vector.cpp \
 sockets/src/time_control.cpp \
-sockets/src/tommy_commands.cpp \
 sockets/src/user.cpp \
+main_loop/server_shutdown.cpp \
 main_loop/CommandActionAssociator.cpp \
 main_loop/main_loop.cpp
 
@@ -140,19 +136,11 @@ NAME := irc
 
 CXX := g++ -std=c++98
 CXXFLAGS := -Wall -Wextra -Werror # TODO -g3 -fsanitize=address  for sanitize compiling
-CPPFLAGS := -MMD
+CPPFLAGS := #TODO reactivar -MMD
 LDFLAGS := # TODO -fsanitize=address for sanitize compiling
 
-#Directories
-#SRC_DIR := src
-#OBJ_DIR := obj
 DEP_DIR := $(OBJ_DIR)
-
-#Full relpath of sources, objects and dependency files
-#OBJ := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 DEP := $(SRC:%.cpp=$(DEP_DIR)/%.d)
-#SRC := $(addprefix $(SRC_DIR)/, $(SRC))
-
 
 # Rules
 all: $(NAME)
@@ -168,26 +156,21 @@ $(OBJ_DIR)/%.o: %.cpp
 
 $(NAME): $(OBJ)
 	@echo "Frankenstein powered by Javgonza, Vicmarti & Tomartin in 42Madrid"
-	$(COMPILER_COMMAND) $(LINKER_FLAGS) $(OBJ) -o $(NAME)
+	$(CXX) $(LDFLAGS) $(OBJ) -o $(NAME)
 
 bonus: all
 
-# clean rule
 clean:
-#	@make -C ./src/tests tests_clean
+	@rm -Rf $(DEP_DIR)
 	@rm -Rf $(OBJ_DIR)
 	@echo "Objects removed!"
 
-# fclean rule
 fclean: clean
 	@rm -f $(NAME)
 	@echo "$(NAME) removed!"
 
-# re rule
 re: fclean all
 
-# phony
 .PHONY: all clean fclean re
 
-# default
 .DEFAULT_GOAL := all

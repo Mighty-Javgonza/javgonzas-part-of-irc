@@ -29,8 +29,6 @@
 # include "MessageParser/ChannelMessages/MessageChannelNamesParser.hpp"
 # include "ParsedMessage/ChannelMessages/ParsedMessageChannelPart.hpp"
 # include "MessageParser/ChannelMessages/MessageChannelPartParser.hpp"
-//# include "MessageParser/TestMessages/MessageTestSampleParser.hpp" TODO Remove
-//# include "ParsedMessage/TestMessages/ParsedMessageTestSample.hpp" TODO Remove
 # include "MessageParser/ChannelMessages/MessageChannelJoinParser.hpp"
 # include "ParsedMessage/ChannelMessages/ParsedMessageChannelJoin.hpp"
 # include "MessageParser/ChannelMessages/MessageChannelListParser.hpp"

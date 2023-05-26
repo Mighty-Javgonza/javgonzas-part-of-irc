@@ -20,6 +20,7 @@ orchestator *orchestator_ref;
 
 void  signal_server_shutdown(int sig)
 {
+	(void)sig;
 	server_shutdown(database_ref, orchestator_ref, server_info_ref);
 }
 
@@ -41,7 +42,6 @@ void	process_first_message_of_client_data(Database &database, ServerInfo &server
 		if (message != "")
 		{
 std::cout << "   ->" << message << "<-" << std::endl;
-			//TODO Instanciar solo una vez
 			LexerParserConnector	parser;
 			try
 			{
@@ -128,7 +128,7 @@ void	send_ping(ClientData *client, ServerInfo &server_info)
 	client->user_times.launch_t_ping();
 }
 
-void	update_ping_pong_of_client(Database &database, ClientData *client, ServerInfo &server_info)
+void	update_ping_pong_of_client(ClientData *client, ServerInfo &server_info)
 {
 	client->user_times.check_if_kick_logged();
 
@@ -160,7 +160,7 @@ void	update_pinger_ponger(Database &database, ServerInfo &server_info, orchestat
 	for (std::vector<ClientId>::iterator it = all_clients->begin(); it != all_clients->end(); it++) 
 	{
 		ClientData *client = database.get_client_data_from_fd(it->Fd());
-		update_ping_pong_of_client(database, client, server_info);
+		update_ping_pong_of_client(client, server_info);
 	}
 	delete all_clients;
 
@@ -210,10 +210,6 @@ void	main_loop(int port, std::string password)
 	ServerInfo &server_info = *server_info_ref;
 	orchestator &orchest= *orchestator_ref;
 
-	Database *database_ref = &database;
-	ServerInfo *server_info_ref = &server_info;
-	orchestator *orchestator_ref = &orchest;
-
 	if (password != "")
 		server_info.has_password = true;
 	else
@@ -233,7 +229,7 @@ std::cout << "SERVER IS UP on hostname: " << server_info.hostname << std::endl;
 	size_t loops = 0;
 	while (true)
 	{
-		update_listener(orchest, database);
+		update_listener(orchest);
 		kill_zombies(database, orchest);
 		process_one_message_from_each_queue(database, orchest, server_info);
 		update_pinger_ponger(database, server_info, orchest);
@@ -246,8 +242,11 @@ std::cout << "SERVER IS UP on hostname: " << server_info.hostname << std::endl;
 
 int main(int argc, char **argv)
 {
+	(void) database_ref;
+	(void) server_info_ref;
+	(void) orchestator_ref;
+
 	std::pair<int, std::string> args = parse_arg(argc, argv);
-	int port = args.first;
 	signal(SIGINT, signal_server_shutdown);
 	signal(SIGPIPE, signal_handler);
 	main_loop(args.first, args.second);

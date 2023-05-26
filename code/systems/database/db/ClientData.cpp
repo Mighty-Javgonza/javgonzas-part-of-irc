@@ -54,6 +54,8 @@ bool	ClientData::operator<(ClientData const &rhs) const {
 	return _id < rhs._id;
 }
 void	ClientData::operator<<(std::string const &message) {
+	messages_sent += 1;
+	kilobytes_sent += message.length();
 	msg_out.add_msg(message);
 }
 
@@ -105,5 +107,11 @@ std::string	ClientData::ModeString(void) const {
 		active_modes += "o";
 	if (Mode(LocalOperator))
 		active_modes += "O";
+	if (Mode(Wallops))
+		active_modes += "w";
 	return (active_modes);
+}
+bool	ClientData::IsOp(void) const
+{
+	return (Mode(LocalOperator) || Mode(Operator));
 }

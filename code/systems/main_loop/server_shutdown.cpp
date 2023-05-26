@@ -1,10 +1,10 @@
 
-#include "../tomartin/inc/com.hpp"
-#include "../vicmarti/src/db/Database.hpp"
+#include "../sockets/inc/com.hpp"
+#include "../database/db/Database.hpp"
 #include "../command_executor/code/source/all_headers.hpp"
-#include "../tomartin/inc/orchestator.hpp"
+#include "../sockets/inc/orchestator.hpp"
 #include "../input_stream_orquestator/CommandActionAssociator.hpp"
-#include "../tomartin/inc/ft_ircserv.hpp"
+#include "../sockets/inc/ft_ircserv.hpp"
 #include "../lexer/code/source/all_headers.hpp"
 #include "main_loop.hpp"
 

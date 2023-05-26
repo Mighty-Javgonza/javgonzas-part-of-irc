@@ -19,8 +19,6 @@ class Unregistered : public ClientData
 		Unregistered	&operator=(Unregistered const &rhs);
 		void	ValidatePass(void);
 		bool	IsReady(void) const;
-	private:
 		bool	__valid_pass;
 };
 #endif
-

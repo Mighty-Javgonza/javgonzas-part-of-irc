@@ -35,6 +35,11 @@ class ClientData : public IComparable<ClientData> , public IIndexed<ClientId>
 		msg				msg_in;
 		msg				msg_out;
 
+		size_t			messages_sent;
+		size_t			kilobytes_sent;
+		size_t			messages_received;
+		size_t			kilobytes_received;
+
 		ClientData(void);
 		ClientData(ClientId const &rhs);
 		ClientData(ClientData const &rhs);
@@ -52,6 +57,7 @@ class ClientData : public IComparable<ClientData> , public IIndexed<ClientId>
 		bool	Mode(UserMode const mode) const;
 		void	Mode(UserMode const mode, bool value);
 		std::string	ModeString(void) const;
+		bool	IsOp(void) const;
 	protected:
 		ClientId				_id;
 		std::string				_nickname;
