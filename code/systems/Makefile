@@ -135,9 +135,9 @@ OBJ := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 NAME := irc
 
 CXX := g++ -std=c++98
-CXXFLAGS := -Wall -Wextra -Werror # TODO -g3 -fsanitize=address  for sanitize compiling
+CXXFLAGS := -Wall -Wextra -Werror -g3 -fsanitize=address # TODO  for sanitize compiling
 CPPFLAGS := #TODO reactivar -MMD
-LDFLAGS := # TODO -fsanitize=address for sanitize compiling
+LDFLAGS := -fsanitize=address # TODO for sanitize compiling
 
 DEP_DIR := $(OBJ_DIR)
 DEP := $(SRC:%.cpp=$(DEP_DIR)/%.d)

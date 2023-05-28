@@ -17,7 +17,13 @@ void	MessageChannelModeParser::parse_specific_part()
 	if (lexedMessage.parameters.size() == 0)
 		throw (needMoreParamsException);
 	specific_message->channel = MessageParameterCommonParser::parse_channel(lexedMessage.parameters[0]);
-	if (lexedMessage.parameters.size() > 1)
+	specific_message->intends_to_change_modes = false;
+	if (lexedMessage.parameters.size() == 1)
+	{
+		specific_message->intends_to_change_modes = true;
+		return ;
+	}
+	else
 		parse_flag_list(lexedMessage.parameters[1]);
 
 	size_t	flag_index = 0;
@@ -63,7 +69,7 @@ channel_mode_flag	MessageChannelModeParser::set_needs_parameter(channel_mode_fla
 
 void	MessageChannelModeParser::parse_flag_list(std::string str)
 {
-	int	current_action;
+	int	current_action = CHANNEL_MODE_FLAG_ACTION_ADD;
 	char	c;
 
 	for (size_t i = 0; i < str.length(); i++)

@@ -25,7 +25,6 @@ static void	set_flag(Client const *changer, ParsedMessageChannelMode::channel_mo
 
 void	command_chanmode(Databasable *database, SentMessage *message, replies_generator *replier, ServerInfo *server_info)
 {
-	(void)server_info;
 	ParsedMessageChannelMode	*chanmode_msg = static_cast<ParsedMessageChannelMode*>(message->message);
 	Client *client = database->get_user_from_fd(message->sender->Fd());
 	Chan	*channel = database->get_channel(client, chanmode_msg->channel.name);
@@ -33,7 +32,7 @@ void	command_chanmode(Databasable *database, SentMessage *message, replies_gener
 	if (channel == NULL)
 		*client << replier->mode_nosuchchannel(chanmode_msg->channel.name);
 	else if (chanmode_msg->flags.size() == 0)
-		*client << replier->mode_needmoreparams();
+		*client << replier->mode_channelmodeis(channel->Title(), channel->ModeString(), "");
 	else if (!channel->IsChop(client->Id()))
 		*client << replier->mode_chanoprivsneeded(channel->Title());
 	else

@@ -25,7 +25,7 @@ class Chan : public IComparable<Chan>, public IIndexed<ChanId>
 			Private = 5,
 			Secret = 6,
 			Reop = 7,
-			TopicRestricted = 9,
+			TopicRestricted = 8,
 			Limited = 9,
 			ChannelKey = 10,
 			MODE_SIZE = 11
@@ -47,6 +47,7 @@ class Chan : public IComparable<Chan>, public IIndexed<ChanId>
 		void	LimitMaxSubs(ClientId const& sender, uint64_t limit);
 		void	Mode(ClientId const &sender, enum Mode const mode, bool value);
 		bool	Mode(enum Mode const mode) const;
+		std::string ModeString(void) const;
 		bool	IsChop(ClientId const& cid) const;
 		void	Invite(std::string const &nick);
 		void	DeleteInvite(std::string const &nick);

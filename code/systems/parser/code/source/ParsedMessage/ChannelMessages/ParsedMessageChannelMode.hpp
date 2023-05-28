@@ -25,6 +25,7 @@ public:
 		int			action;
 	}				channel_mode_flag;
 
+	bool intends_to_change_modes;
 	std::vector<channel_mode_flag> flags;
 };
 

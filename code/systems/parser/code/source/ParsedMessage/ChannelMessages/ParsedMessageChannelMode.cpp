@@ -1,7 +1,7 @@
 #include "ParsedMessageChannelMode.hpp"
 
 
-ParsedMessageChannelMode::ParsedMessageChannelMode()
+ParsedMessageChannelMode::ParsedMessageChannelMode() : intends_to_change_modes(false)
 {
 
 }

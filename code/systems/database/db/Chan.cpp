@@ -101,6 +101,54 @@ bool	Chan::Mode(enum Mode const mode) const {
 	return __mode_flags[mode];
 }
 
+std::string	Chan::ModeString(void) const {
+	std::string	flags("+");
+
+	char mode_c;
+	for(int i = 0; i < MODE_SIZE; i++) {
+		if (Mode(static_cast<enum Mode>(i))) {
+			switch (i) {
+				case Anonymous:
+					mode_c = 'a';
+					break;
+				case InviteOnly:
+					mode_c = 'i';
+					break;
+				case Moderated:
+					mode_c = 'm';
+					break;
+				case NoMessages:
+					mode_c = 'n';
+					break;
+				case Quiet:
+					mode_c = 'q';
+					break;
+				case Private:
+					mode_c = 'p';
+					break;
+				case Secret:
+					mode_c = 's';
+					break;
+				case Reop:
+					mode_c = 'r';
+					break;
+				case TopicRestricted:
+					mode_c = 't';
+					break;
+				case Limited:
+					mode_c = 'l';
+					break;
+				default:
+					mode_c = 'k';
+			}
+			flags.push_back(mode_c);
+		}
+	}
+	if (flags.size() == 1)
+		return "";
+	return flags;
+}
+
 bool	Chan::IsChop(ClientId const& cid) const {
 	return __operators.count(cid) == 1;
 }
