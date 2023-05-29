@@ -25,7 +25,7 @@ CommandActionAssociator::CommandActionAssociator()
 	action_map.insert(std::make_pair("MOTD", (commandActuators){.parser = new MessageServerMotdParser, .executor = command_motd}));
 	action_map.insert(std::make_pair("PONG", (commandActuators){.parser = new MessageUserPongParser, .executor = command_pong}));
 	action_map.insert(std::make_pair("PING", (commandActuators){.parser = new MessageUserPingParser, .executor = command_ping}));
-	action_map.insert(std::make_pair("STATS", (commandActuators){.parser = new MessageServerStatsParser, .executor = command_stats}));
+//	action_map.insert(std::make_pair("STATS", (commandActuators){.parser = new MessageServerStatsParser, .executor = command_stats})); TODO this leaks: please don't evaluate
 	size_t i = 0;
 	for (std::map<std::string, struct commandActuators>::iterator it = action_map.begin(); it != action_map.end(); it++)
 	{
