@@ -6,7 +6,7 @@
 /*   By: tomartin <tomartin@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:35:15 by tomartin          #+#    #+#             */
-/*   Updated: 2023/05/10 18:12:41 by javgonza         ###   ########.fr       */
+/*   Updated: 2023/05/29 18:37:53 by javgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int    com::preparation_com()
 {
     int answ;
 
-    answ = poll(&this->poll_list[0], this->poll_list.size(), 100);
+    answ = poll(&this->poll_list[0], this->poll_list.size(), 20);
     if(answ == -1)
     	throw com_exceptions("Error Poll list", 5);
     return answ;
