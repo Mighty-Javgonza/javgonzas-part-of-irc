@@ -5,7 +5,10 @@ void	command_ping(Databasable *database, SentMessage *message, replies_generator
 	(void)replier;
 	(void)server_info;
 
-	Client *client = database->get_user_from_fd(message->sender->Fd());
+	ClientData *data = database->get_user_from_fd(message->sender->Fd());
 
-	*client << ":" + server_info->get_preffix_string() + " PONG " + server_info->get_preffix_string() + "\r\n";
+	if (!data)
+		data = database->get_unregistered_from_fd(message->sender->Fd());
+	else
+		*data << ":" + server_info->get_preffix_string() + " PONG " + server_info->get_preffix_string() + "\r\n";
 }

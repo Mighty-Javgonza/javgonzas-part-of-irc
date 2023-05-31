@@ -6,7 +6,7 @@
 /*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 13:13:09 by tomartin          #+#    #+#             */
-/*   Updated: 2023/05/19 14:09:18 by javgonza         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:15:22 by javgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@
 
 //--------------Time values config-----------------//
 //--Time in seconds?-------------------------------//
-#define	TIME_PING 2 //time need to kick when dont response a ping
-#define	TIME_LAST_PING 2 //time need to respone a ping or kick
+#define	TIME_PING 60 //time need to kick when dont response a ping
+#define	TIME_LAST_PING 60 //time need to respone a ping or kick
 #define TIME_DONT_LOGIN	30 //time need to kick when dont login
 #define TIME_LAST_MSG 20 //time need to send a ping when dont send msg
 #define TIME_POLLOUT 300 //time need to send a ping when the user is in pollout

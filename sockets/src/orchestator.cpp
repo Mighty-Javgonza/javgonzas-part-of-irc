@@ -6,7 +6,7 @@
 /*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:53:28 by tomartin          #+#    #+#             */
-/*   Updated: 2023/05/24 00:52:38 by vicmarti         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:20:20 by javgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	orchestator::accept_new_connect()
 	//
 		//TODO: End the troubles
 		ClientId id("", get_host_name(), fd);
-		db.UnregisteredClients().Insert(Unregistered(id, true));
+		db.UnregisteredClients().Insert(Unregistered(id, false));
 	//
 		///END OF THE BEGGINING
 

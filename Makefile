@@ -132,7 +132,7 @@ main_loop/main_loop.cpp
 OBJ_DIR := obj
 OBJ := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
-NAME := irc
+NAME := ircserv
 
 CXX := g++ -std=c++98
 CXXFLAGS := -Wall -Wextra -Werror

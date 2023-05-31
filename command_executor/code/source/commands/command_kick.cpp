@@ -4,9 +4,9 @@ void	kick_user_chan(Databasable *database, Client *kicker, Client *kickee, Chan 
 {
 	if (channel == NULL)
 		*kicker << replier->kick_nosuchchannel(channel->Title());
-	else if (!channel->IsSubscriptor(kicker->Id()))
-		*kicker << replier->kick_notonchannel(channel->Title());
 	else if (kickee == NULL)
+		*kicker << replier->kick_notonchannel(channel->Title());
+	else if (!channel->IsSubscriptor(kicker->Id()))
 		*kicker << replier->kick_notonchannel(channel->Title());
 	else if (!channel->IsSubscriptor(kickee->Id()))
 		*kicker << replier->kick_notonchannel(channel->Title());

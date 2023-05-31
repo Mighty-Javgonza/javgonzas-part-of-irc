@@ -244,12 +244,17 @@ int main(int argc, char **argv)
 {
 	try {
 		std::pair<int, std::string> args = parse_arg(argc, argv);
+		if (args.second == "")
+		{
+std::cout << "./ircserv <port> <password>" << std::endl;
+			return (1);
+		}
 		signal(SIGINT, signal_server_shutdown);
 		signal(SIGPIPE, signal_handler);
 		main_loop(args.first, args.second);
 	} catch (com_exceptions const &) {
 		std::cerr << "Could not start server communications" << std::endl;
 	} catch (std::exception const &e) {
-		std::cerr << "Unexpected error" << std::endl;
+		std::cerr << "./ircserv <port> <password>" << std::endl;
 	}
 }

@@ -7,6 +7,13 @@ void	command_pong(Databasable *database, SentMessage *message, replies_generator
 
 	Client *client = database->get_user_from_fd(message->sender->Fd());
 
-	client->user_times.reset_t_ping();
+	if (client != NULL)
+		client->user_times.reset_t_ping();
+	else
+	{
+		Unregistered *unregistered = database->get_unregistered_from_fd(message->sender->Fd());
+		unregistered->user_times.reset_t_ping();
+	}
+
 
 }
